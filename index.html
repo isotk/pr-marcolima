@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pr. Marco Lima — Devocional Diário</title>
+    <meta name="description" content="Devocionais diários em português com versículo, reflexão pastoral, arrependimento, salvação e evangelho de Cristo Jesus." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://pr-marcolima.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pr. Marco Lima — Devocional Diário" />
+    <meta property="og:description" content="Uma Palavra diária para fé, arrependimento e salvação em Cristo Jesus." />
+    <meta property="og:url" content="https://pr-marcolima.vercel.app/" />
+    <meta property="og:image" content="https://pr-marcolima.vercel.app/assets/devotional-images/dia-001-a-gratidao-que-transforma.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -38,6 +47,22 @@
             <span>Devocional de Hoje</span>
           </div>
           <div id="today-card"></div>
+        </div>
+      </section>
+
+      <section class="section-explore" id="buscar">
+        <div class="container">
+          <div class="section-label">
+            <span class="label-icon">🔎</span>
+            <span>Buscar por Palavra ou Tema</span>
+          </div>
+          <div class="search-panel">
+            <label class="search-label" for="devotional-search">Encontre devocionais por tema, referência ou trecho</label>
+            <input id="devotional-search" class="search-input" type="search" placeholder="Ex.: ansiedade, oração, João, arrependimento..." autocomplete="off" />
+            <div id="theme-filters" class="theme-filters" aria-label="Filtros por tema"></div>
+            <div id="search-summary" class="search-summary"></div>
+          </div>
+          <div id="search-results" class="search-results"></div>
         </div>
       </section>
 

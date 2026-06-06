@@ -11,11 +11,17 @@ const state = {
   devotionals: [],
   currentDevotionals: [],
   favorites: new Set(JSON.parse(localStorage.getItem("devocional:favorites") || "[]")),
+  search: "",
+  activeTheme: "Todos",
 };
 
 const todayContainer = document.getElementById("today-card");
 const pastContainer = document.getElementById("past-cards");
 const vodContainer = document.getElementById("verse-of-the-day");
+const searchInput = document.getElementById("devotional-search");
+const themeFilters = document.getElementById("theme-filters");
+const searchResults = document.getElementById("search-results");
+const searchSummary = document.getElementById("search-summary");
 
 const FIXED_COUNT = 5;
 const START_DATE = new Date(2026, 5, 1);
@@ -24,6 +30,23 @@ function fullDate(offset) {
   const d = new Date();
   d.setDate(d.getDate() + offset);
   return `${d.getDate()} de ${MONTHS[d.getMonth()]} de ${d.getFullYear()}`;
+}
+
+function devotionalDate(devotional) {
+  const match = String(devotional.id || "").match(/(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return null;
+  return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+}
+
+function dateLabelForDevotional(devotional) {
+  const d = devotionalDate(devotional);
+  if (!d) return "Devocional";
+  return `${d.getDate()} de ${MONTHS[d.getMonth()]} de ${d.getFullYear()}`;
+}
+
+function devotionalPath(devotional) {
+  const day = String(devotional.id || "").match(/^dia-\d{3}/)?.[0] || devotional.id;
+  return `devocional/${day}/`;
 }
 
 function daysSinceStart(date) {
@@ -64,11 +87,12 @@ function renderVerseOfDay(dev) {
 }
 
 /* ─── Devotional Card ─── */
-function renderCard(devotional, offset, isToday) {
-  const dateStr = fullDate(offset);
+function renderCard(devotional, offset, isToday, options = {}) {
+  const dateStr = options.dateLabel || fullDate(offset);
   const label = isToday ? "Devocional de Hoje" : dateStr;
   const isFav = state.favorites.has(devotional.id);
   const savedNote = localStorage.getItem(noteKey(devotional.id)) || "";
+  const path = devotionalPath(devotional);
 
   return `
     <article class="devo-card" data-id="${devotional.id}" style="animation-delay: ${Math.abs(offset) * 0.15}s">
@@ -93,7 +117,7 @@ function renderCard(devotional, offset, isToday) {
           <div class="verse-label">📖 ${devotional.reference}</div>
           <blockquote>${devotional.scripture}</blockquote>
           <div class="verse-footer">
-            <a class="verse-link" href="${bibleGatewayUrl(devotional.reference)}" target="_blank" rel="noopener noreferrer">Ler na Bíblia NVI →</a>
+            <a class="verse-link" href="${bibleGatewayUrl(devotional.reference)}" target="_blank" rel="noopener noreferrer">Ler na Bíblia NVT →</a>
           </div>
         </div>
 
@@ -131,6 +155,8 @@ function renderCard(devotional, offset, isToday) {
             <span class="share-letter">f</span>
             Facebook
           </button>
+          <a class="btn-open" href="${path}" title="Abrir página do devocional">Abrir página</a>
+          ${devotional.image ? `<a class="btn-download" href="${devotional.image}" download title="Baixar imagem do devocional">Baixar imagem</a>` : ""}
           <button class="btn-copy" data-id="${devotional.id}" title="Copiar texto">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
             Copiar
@@ -153,7 +179,67 @@ function renderCard(devotional, offset, isToday) {
 
 /* ─── Events ─── */
 function buildShareText(dev) {
-  return `📖 *${dev.title}*\n_${dev.theme}_\n\n${dev.scripture}\n— ${dev.reference}\n\n💭 ${dev.reflection}\n\n✅ ${dev.application.join("\n✅ ")}\n\n🙏 ${dev.prayer}\n\n— Pr. Marco Lima`;
+  return `📖 *${dev.title}*\n_${dev.theme}_\n\n${dev.scripture}\n— ${dev.reference}\n\n💭 ${dev.reflection}\n\n✅ ${dev.application.join("\n✅ ")}\n\n🙏 ${dev.prayer}\n\nLeia e compartilhe: ${location.origin}/${devotionalPath(dev)}\n\n— Pr. Marco Lima`;
+}
+
+function normalizeText(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function renderThemeFilters() {
+  if (!themeFilters) return;
+  const themes = ["Todos", ...new Set(state.devotionals.map(d => d.theme).filter(Boolean).sort((a, b) => a.localeCompare(b, "pt-BR")))];
+  themeFilters.innerHTML = themes.map(theme => `
+    <button class="theme-filter ${state.activeTheme === theme ? "active" : ""}" data-theme="${theme}">${theme}</button>
+  `).join("");
+  themeFilters.querySelectorAll(".theme-filter").forEach(btn => {
+    btn.addEventListener("click", () => {
+      state.activeTheme = btn.dataset.theme;
+      renderExplore();
+    });
+  });
+}
+
+function matchesDevotional(devotional, query) {
+  if (!query) return true;
+  const haystack = normalizeText([
+    devotional.title,
+    devotional.theme,
+    devotional.reference,
+    devotional.scripture,
+    devotional.reflection,
+    devotional.prayer,
+    ...(devotional.application || [])
+  ].join(" "));
+  return haystack.includes(query);
+}
+
+function renderExplore() {
+  if (!searchResults || !searchSummary) return;
+  const query = normalizeText(state.search.trim());
+  const filtered = state.devotionals.filter(dev => {
+    const themeOk = state.activeTheme === "Todos" || dev.theme === state.activeTheme;
+    return themeOk && matchesDevotional(dev, query);
+  });
+  const shouldShow = query || state.activeTheme !== "Todos";
+  searchSummary.textContent = shouldShow
+    ? `${filtered.length} devocional${filtered.length === 1 ? "" : "ais"} encontrado${filtered.length === 1 ? "" : "s"}${filtered.length > 24 ? "; mostrando os 24 primeiros." : "."}`
+    : "Digite uma palavra ou selecione um tema para pesquisar os 365 devocionais.";
+  searchResults.innerHTML = shouldShow
+    ? filtered.slice(0, 24).map(dev => renderCard(dev, 0, false, { dateLabel: dateLabelForDevotional(dev) })).join("")
+    : "";
+  attachEvents(searchResults);
+}
+
+function attachSearchEvents() {
+  if (!searchInput) return;
+  searchInput.addEventListener("input", () => {
+    state.search = searchInput.value;
+    renderExplore();
+  });
 }
 
 function attachEvents(container) {
@@ -266,6 +352,8 @@ async function renderAll() {
   attachEvents(pastContainer);
 
   renderVerseOfDay(today);
+  renderThemeFilters();
+  renderExplore();
 }
 
 /* ─── Bible Links ─── */
@@ -374,6 +462,7 @@ function markToday() {
 async function boot() {
   const devotionalsResponse = await fetch("./data/devocionais.json");
   state.devotionals = await devotionalsResponse.json();
+  attachSearchEvents();
   await renderAll();
   markToday();
 }
