@@ -168,6 +168,22 @@ function buildApiDevotional(reference, verse, fallback, offset) {
   };
 }
 
+async function fetchAiReflection({ reference, scripture, context, theme }) {
+  try {
+    const response = await fetch("/api/reflection", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reference, scripture, context, theme })
+    });
+
+    const data = await response.json();
+    if (!response.ok || !data.reflection) return null;
+    return data.reflection;
+  } catch (_) {
+    return null;
+  }
+}
+
 async function devotionalForOffset(offset) {
   const fallback = fallbackDevotionalForOffset(offset);
   const reference = referenceForOffset(offset);
@@ -176,7 +192,18 @@ async function devotionalForOffset(offset) {
 
   try {
     const verse = await fetchApiVerse(reference.reference);
-    return verse ? buildApiDevotional(reference, verse, fallback, offset) : fallback;
+    if (!verse) return fallback;
+
+    const devotional = buildApiDevotional(reference, verse, fallback, offset);
+    const aiReflection = await fetchAiReflection({
+      reference: devotional.reference,
+      scripture: devotional.scripture,
+      context: devotional.context,
+      theme: devotional.theme
+    });
+
+    if (aiReflection) devotional.reflection = aiReflection;
+    return devotional;
   } catch (_) {
     return fallback;
   }
