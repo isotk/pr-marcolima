@@ -100,10 +100,44 @@ async function fetchApiVerse(reference) {
   const data = await response.json();
   if (!response.ok || data.error || !data.text) return null;
 
+  const context = await fetchApiContext(data);
+
   return {
     reference: data.reference,
-    scripture: data.text.replace(/\s+/g, " ").trim()
+    scripture: data.text.replace(/\s+/g, " ").trim(),
+    context
   };
+}
+
+async function fetchApiContext(verseData) {
+  if (!verseData.verses?.length) return null;
+
+  const firstVerse = verseData.verses[0];
+  const lastVerse = verseData.verses[verseData.verses.length - 1];
+  const chapterPath = `${firstVerse.book_id.toLowerCase()}+${firstVerse.chapter}`;
+
+  try {
+    const response = await fetch(`https://bible-api.com/${chapterPath}?translation=almeida`);
+    const chapterData = await response.json();
+    if (!response.ok || chapterData.error || !chapterData.verses?.length) return null;
+
+    const before = chapterData.verses
+      .filter(v => v.verse >= Math.max(1, firstVerse.verse - 2) && v.verse < firstVerse.verse)
+      .map(v => `${v.verse}. ${v.text.replace(/\s+/g, " ").trim()}`)
+      .join(" ");
+
+    const after = chapterData.verses
+      .filter(v => v.verse > lastVerse.verse && v.verse <= lastVerse.verse + 2)
+      .map(v => `${v.verse}. ${v.text.replace(/\s+/g, " ").trim()}`)
+      .join(" ");
+
+    const beforeText = before ? `Antes do versículo, o capítulo diz: “${before}” ` : "";
+    const afterText = after ? `Na sequência, o texto continua: “${after}” ` : "";
+
+    return `${verseData.reference} está dentro de ${firstVerse.book_name} ${firstVerse.chapter}. ${beforeText}${afterText}Esse contexto imediato ajuda a ler o versículo dentro do fluxo do capítulo, evitando uma aplicação isolada e fortalecendo a meditação bíblica do dia.`;
+  } catch (_) {
+    return null;
+  }
 }
 
 function buildApiDevotional(reference, verse, fallback, offset) {
@@ -117,7 +151,7 @@ function buildApiDevotional(reference, verse, fallback, offset) {
     theme,
     reference: verse.reference,
     scripture: verse.scripture,
-    context: `Devocional diário gerado a partir da leitura bíblica de ${verse.reference}. O texto foi buscado automaticamente na API Bible API, tradução Almeida, e aplicado como meditação para este dia.`,
+    context: verse.context || `Devocional diário gerado a partir da leitura bíblica de ${verse.reference}. O texto foi buscado automaticamente na API Bible API, tradução Almeida, e aplicado como meditação para este dia.`,
     commentary: [
       { author: "Charles Spurgeon", text: "A Palavra de Deus deve ser lida como voz viva do Senhor para a alma, conduzindo o coração à fé e à obediência." },
       { author: "Matthew Henry", text: "Cada passagem das Escrituras possui proveito espiritual quando recebida com reverência, oração e desejo sincero de obedecer." },
@@ -157,7 +191,6 @@ function findDevotionalById(id) {
 /* ─── Verse of the Day ─── */
 function renderVerseOfDay(dev) {
   if (!vodContainer || !dev) return;
-  if (!dev) return;
   vodContainer.innerHTML = `
     <div class="vod-inner">
       <span class="vod-badge">Versículo do Dia</span>
