@@ -111,16 +111,89 @@ function buildReflection(dev, index) {
 Para este dia ${day} do plano anual, a aplicação principal é permitir que o versículo confronte a pressa, a autossuficiência e a distração espiritual. Pergunte: o que este texto revela sobre Deus? Que postura ele exige de mim? Onde preciso obedecer de forma prática? Uma reflexão profunda não termina em emoção, mas em entrega. Por isso, receba esta Palavra como direção pastoral para hoje: caminhe com reverência, ore com sinceridade e transforme a verdade bíblica em atitude visível diante de Deus e das pessoas.`;
 }
 
-function buildCommentary(dev, index) {
+function chooseCommentator(dev, index) {
+  const book = parseBook(dev.reference);
+  const theme = dev.theme || "Palavra";
+
+  const byBook = {
+    Salmos: "Charles Spurgeon",
+    Provérbios: "Matthew Henry",
+    Isaías: "João Calvino",
+    Jeremias: "Matthew Henry",
+    Mateus: "John Stott",
+    Marcos: "William Lane",
+    Lucas: "Joel B. Green",
+    João: "D.A. Carson",
+    Atos: "F.F. Bruce",
+    Romanos: "João Calvino",
+    "1 Coríntios": "Gordon Fee",
+    "2 Coríntios": "John Stott",
+    Gálatas: "Martinho Lutero",
+    Efésios: "John Stott",
+    Filipenses: "Warren Wiersbe",
+    Colossenses: "N.T. Wright",
+    "1 Tessalonicenses": "Warren Wiersbe",
+    "2 Tessalonicenses": "Warren Wiersbe",
+    Hebreus: "F.F. Bruce",
+    Tiago: "Douglas Moo",
+    "1 Pedro": "Edmund Clowney",
+    "2 Pedro": "Michael Green",
+    "1 João": "John Stott",
+    Apocalipse: "G.K. Beale"
+  };
+
+  const byTheme = {
+    Oração: "Matthew Henry",
+    Graça: "João Calvino",
+    Fé: "Martinho Lutero",
+    Amor: "John Stott",
+    Esperança: "Charles Spurgeon",
+    Perseverança: "D.A. Carson",
+    Santidade: "J.C. Ryle",
+    Sabedoria: "Matthew Henry",
+    Serviço: "John Stott",
+    Gratidão: "Charles Spurgeon",
+    Perdão: "John Stott"
+  };
+
+  return byBook[book] || byTheme[theme] || COMMENTATORS[index % COMMENTATORS.length];
+}
+
+function buildCommentatorInsight(dev, commentator) {
+  const book = parseBook(dev.reference) || "o livro bíblico";
+  const theme = String(dev.theme || "Palavra").toLowerCase();
   const themeInsight = THEME_INSIGHTS[dev.theme] || THEME_INSIGHTS.default;
-  const first = COMMENTATORS[index % COMMENTATORS.length];
-  const second = COMMENTATORS[(index + 3) % COMMENTATORS.length];
-  const third = COMMENTATORS[(index + 5) % COMMENTATORS.length];
+
+  const perspectives = {
+    "Charles Spurgeon": `Em uma leitura pastoral semelhante à de Charles Spurgeon, ${dev.reference} deve conduzir o coração à confiança viva em Deus, não apenas a uma emoção passageira. Spurgeon normalmente aproxima o texto da experiência da alma: ele veria aqui um chamado para transformar ${theme} em adoração prática, lembrando que a fé verdadeira encontra descanso nas promessas do Senhor mesmo quando as circunstâncias parecem contrárias.`,
+    "Matthew Henry": `Na linha devocional de Matthew Henry, ${dev.reference} deve ser entendido como instrução para a vida piedosa. Henry tenderia a destacar que o texto ensina doutrina e dever: revela quem Deus é, mostra como o coração deve responder e chama o crente a praticar ${theme} com humildade, constância e obediência diária.`,
+    "João Calvino": `Na perspectiva de João Calvino, ${dev.reference} deve ser lido a partir da soberania de Deus e da dependência humana da graça. Calvino ressaltaria que a passagem não exalta a força do homem, mas a iniciativa divina que governa, sustenta e corrige o Seu povo, levando o tema de ${theme} para uma resposta reverente de fé e submissão ao Senhor.`,
+    "John Stott": `John Stott leria ${dev.reference} unindo fidelidade ao texto e aplicação ao discipulado. Para ele, a passagem não deve ser reduzida a inspiração religiosa; ela precisa formar discípulos. O tema de ${theme} aponta para uma fé que pensa biblicamente, ama concretamente e obedece de modo visível no mundo.`,
+    "Warren Wiersbe": `Warren Wiersbe provavelmente destacaria a dimensão prática de ${dev.reference}. Sua leitura pastoral chamaria atenção para como a verdade bíblica sai da página e entra na rotina: ${theme} deve moldar pensamentos, palavras, decisões e relacionamentos, pois Deus usa a Palavra para amadurecer o caráter do crente.`,
+    "D.A. Carson": `D.A. Carson enfatizaria que ${dev.reference} precisa ser interpretado dentro do argumento de ${book}, evitando uma leitura isolada. A passagem deve ser ligada ao evangelho, ao caráter de Deus e à resposta apropriada do povo da aliança. Assim, ${theme} não é um tema solto, mas parte da revelação maior que culmina em Cristo.`,
+    "F.F. Bruce": `F.F. Bruce tenderia a observar o lugar de ${dev.reference} no desenvolvimento bíblico e apostólico. Ele chamaria atenção para a continuidade entre o texto, sua mensagem original e a vida da Igreja. O tema de ${theme} deve ser recebido como verdade revelada que sustenta a fé e orienta a prática cristã.`,
+    "Albert Barnes": `Albert Barnes leria ${dev.reference} com atenção ao sentido claro do texto e às implicações morais da passagem. Ele destacaria que a Palavra não foi dada apenas para informar, mas para corrigir, consolar e dirigir. Nesse sentido, ${theme} se torna uma resposta concreta àquilo que Deus revela.`,
+    "Martinho Lutero": `Na tradição de Martinho Lutero, ${dev.reference} seria lido à luz da fé que se apega à promessa de Deus. Lutero destacaria que a segurança do crente não repousa no mérito humano, mas na Palavra fiel do Senhor. Por isso, ${theme} deve nascer da confiança no evangelho, e não da tentativa de justificar-se pelas obras.`,
+    "J.C. Ryle": `J.C. Ryle provavelmente aplicaria ${dev.reference} com ênfase na santidade prática. Ele lembraria que a fé verdadeira não permanece invisível: ela produz reverência, arrependimento, disciplina espiritual e vida separada para Deus. O tema de ${theme} precisa aparecer no caráter e nas escolhas diárias.`,
+    "Gordon Fee": `Gordon Fee observaria ${dev.reference} dentro da vida da comunidade cristã e da obra do Espírito. Sua leitura destacaria que ${theme} não é apenas experiência individual, mas fruto da presença de Deus formando um povo que vive o evangelho em unidade, amor e testemunho.`,
+    "N.T. Wright": `N.T. Wright leria ${dev.reference} dentro da grande história bíblica da nova criação inaugurada em Cristo. O texto aponta para uma vida que antecipa o Reino de Deus no presente. Assim, ${theme} deve ser vivido como sinal de que Cristo reina e está renovando todas as coisas.`,
+    "Douglas Moo": `Douglas Moo chamaria atenção para a lógica ética de ${dev.reference}. A passagem não separa fé e prática; ela mostra que a Palavra recebida com fé precisa produzir obediência concreta. O tema de ${theme} deve ser testado na vida real, especialmente nas decisões, provações e relacionamentos.`,
+    "Edmund Clowney": `Edmund Clowney leria ${dev.reference} apontando para Cristo e para a identidade do povo de Deus. A passagem forma uma comunidade peregrina, chamada a viver com esperança e fidelidade. O tema de ${theme} deve fortalecer a consciência de que pertencemos ao Senhor.`,
+    "Michael Green": `Michael Green destacaria em ${dev.reference} o chamado à perseverança e ao testemunho cristão. A Palavra confronta uma fé acomodada e chama o crente a viver ${theme} com coragem, clareza e fidelidade em meio a uma cultura que muitas vezes resiste ao evangelho.`,
+    "G.K. Beale": `G.K. Beale leria ${dev.reference} dentro do movimento bíblico que vai da criação à nova criação. Ele destacaria os ecos do Antigo Testamento e a consumação em Cristo. O tema de ${theme} aponta para a esperança final e para a fidelidade do povo de Deus no presente.`
+  };
+
+  return `${perspectives[commentator] || perspectives["Matthew Henry"]} ${themeInsight}`;
+}
+
+function buildCommentary(dev, index) {
+  const commentator = chooseCommentator(dev, index);
 
   return [
-    { author: first, text: `Este texto deve ser recebido com reverência, pois conduz o coração para além de uma leitura rápida e chama o crente a responder com fé prática. ${themeInsight}` },
-    { author: second, text: `A força devocional da passagem está em unir doutrina e vida. O versículo revela uma verdade sobre Deus e, ao mesmo tempo, exige uma postura concreta de obediência.` },
-    { author: third, text: `A aplicação correta nasce do contexto bíblico. Quando o texto é lido dentro do seu fluxo, ele deixa de ser apenas motivação e se torna formação espiritual.` }
+    {
+      author: commentator,
+      text: buildCommentatorInsight(dev, commentator)
+    }
   ];
 }
 
