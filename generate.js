@@ -105,10 +105,54 @@ No devocional de hoje, o tema é ${String(dev.theme || "Palavra").toLowerCase()}
 function buildReflection(dev, index) {
   const day = index + 1;
   const theme = String(dev.theme || "Palavra").toLowerCase();
+  const situations = [
+    "quando o dia começa cheio de demandas e a alma já se sente atrasada",
+    "quando uma conversa difícil precisa ser conduzida com graça e verdade",
+    "quando a espera parece longa e a fé é tentada a buscar atalhos",
+    "quando o coração está cansado de fazer o que é certo sem ver resultados imediatos",
+    "quando uma decisão precisa ser tomada sem que todos os detalhes estejam claros",
+    "quando a mente insiste em voltar para preocupações que você já entregou em oração",
+    "quando a rotina espiritual corre o risco de virar apenas hábito sem presença de Deus",
+    "quando uma ferida antiga tenta determinar a maneira como você enxerga o presente",
+    "quando a comparação rouba a gratidão e enfraquece a confiança no cuidado do Pai",
+    "quando Deus chama você a obedecer antes de entender completamente o caminho",
+    "quando o silêncio de Deus parece maior que as respostas que você esperava",
+    "quando o orgulho tenta transformar convicção em dureza de coração",
+    "quando a correria rouba a sensibilidade para ouvir a voz do Espírito",
+    "quando uma bênção recebida precisa se transformar em louvor, não em autossuficiência",
+    "quando o medo tenta diminuir a coragem que nasce da presença do Senhor",
+    "quando a Palavra confronta uma área que você preferia não mexer",
+    "quando a fé precisa aparecer em atitudes pequenas, não apenas em grandes discursos",
+    "quando a vida comum precisa ser vivida como culto diante de Deus"
+  ];
+  const openings = [
+    `${dev.reference} fala com força especial ${situations[index % situations.length]}.`,
+    `O devocional de hoje começa no ponto em que a Palavra encontra a vida real: ${situations[index % situations.length]}.`,
+    `Há uma verdade em ${dev.reference} que precisa descer do entendimento para a prática, especialmente ${situations[index % situations.length]}.`,
+    `Este texto não pede apenas admiração; ele pede resposta, sobretudo ${situations[index % situations.length]}.`,
+    `A beleza de ${dev.reference} está em mostrar que Deus se importa com a vida concreta, inclusive ${situations[index % situations.length]}.`,
+    `Hoje, a Escritura nos chama a diminuir o ruído interior e ouvir Deus com honestidade ${situations[index % situations.length]}.`
+  ];
+  const movements = [
+    `O primeiro passo é reconhecer que ${theme} não nasce de esforço religioso, mas de um coração reposicionado diante do Senhor.`,
+    `A Palavra nos impede de tratar ${theme} como teoria; ela nos chama a uma obediência que pode ser vista nas escolhas do dia.`,
+    `Deus usa esse texto para arrancar a fé da superfície e conduzi-la para um lugar de confiança mais profunda.`,
+    `Nem sempre a aplicação será grandiosa; muitas vezes ela começa com uma resposta humilde, uma palavra mansa ou uma decisão silenciosa.`,
+    `O texto nos lembra que maturidade espiritual aparece quando a verdade bíblica governa reações, prioridades e desejos.`,
+    `Antes de perguntar o que Deus fará por nós, o texto nos convida a perguntar o que Deus quer formar em nós.`
+  ];
+  const endings = [
+    `Leve essa Palavra para uma situação específica de hoje e transforme a meditação em obediência.`,
+    `Ore antes de agir, aja com simplicidade e deixe que Cristo seja visto em uma atitude concreta.`,
+    `Não termine esta leitura apenas informado; termine rendido, disponível e disposto a obedecer.`,
+    `Escolha uma prática simples para hoje e permita que ela seja uma resposta sincera ao Senhor.`,
+    `O fruto deste devocional será percebido quando a Palavra mudar sua postura diante de pessoas e circunstâncias.`,
+    `Que a verdade lida aqui acompanhe suas conversas, decisões e pensamentos até o fim do dia.`
+  ];
 
-  return `Há dias em que lemos a Bíblia procurando apenas uma resposta rápida, mas ${dev.reference} nos convida a algo mais profundo: parar diante de Deus e permitir que a Palavra revele o estado real do nosso coração. Este texto fala sobre ${theme}, mas não de forma distante. Ele toca a maneira como reagimos às pressões, como tratamos as pessoas, como tomamos decisões e como mantemos a fé quando a rotina tenta nos distrair do Senhor.
+  return `${openings[index % openings.length]} O texto fala sobre ${theme}, mas não de maneira distante ou decorativa. Ele toca o modo como você responde às pressões, como administra expectativas, como trata pessoas e como mantém a fé quando a rotina tenta ocupar o lugar de Deus.
 
-Hoje, no dia ${day} do plano anual, receba esta passagem como uma direção prática para a sua caminhada. Não leia apenas para concordar; leia para obedecer. Pergunte ao Senhor onde essa verdade precisa ganhar forma: em uma conversa, em uma escolha, em um perdão, em uma renúncia ou em uma atitude de fé. Deus não entrega Sua Palavra para enfeitar o dia, mas para conduzir a vida. Que esta meditação não fique somente na mente, mas desça ao coração e se transforme em uma resposta sincera diante de Cristo.`;
+${movements[index % movements.length]} Por isso, no dia ${day} do plano anual, não leia apenas para concordar; leia para obedecer. Pergunte ao Senhor onde essa verdade precisa ganhar forma: em uma conversa, em uma escolha, em um perdão, em uma renúncia ou em uma atitude de fé. ${endings[index % endings.length]}`;
 }
 
 function chooseCommentator(dev, index) {
@@ -165,21 +209,21 @@ function buildCommentatorInsight(dev, commentator) {
   const themeInsight = THEME_INSIGHTS[dev.theme] || THEME_INSIGHTS.default;
 
   const perspectives = {
-    "Charles Spurgeon": `Síntese interpretativa de Charles Spurgeon: em ${dev.reference}, o ponto central não é uma ideia religiosa abstrata, mas o chamado da alma para confiar e se alegrar no Deus vivo. Spurgeon costumava aproximar o texto bíblico da experiência concreta do crente; por isso, destacaria que ${theme} precisa se tornar adoração, descanso e dependência prática, especialmente quando as circunstâncias tentam obscurecer a bondade do Senhor.`,
-    "Matthew Henry": `Síntese interpretativa de Matthew Henry: ${dev.reference} ensina doutrina e dever. Henry normalmente observa no texto aquilo que Deus revela e aquilo que o crente deve praticar. A passagem, portanto, mostra que ${theme} não pode ficar apenas no campo das ideias; deve produzir humildade, reverência, obediência e uma vida diária ordenada pela Palavra.`,
-    "João Calvino": `Síntese interpretativa de João Calvino: ${dev.reference} deve ser lido à luz da soberania de Deus e da incapacidade humana de sustentar a própria vida espiritual sem a graça. Calvino chamaria atenção para o fato de que ${theme} nasce quando o coração reconhece o governo do Senhor, submete-se à Sua vontade e descansa mais na fidelidade divina do que na força humana.`,
-    "John Stott": `Síntese interpretativa de John Stott: ${dev.reference} une verdade bíblica e discipulado. Stott enfatizaria que o texto exige uma resposta integral: mente renovada, coração submisso e prática cristã visível. O tema de ${theme} precisa ser compreendido à luz de Cristo e vivido no mundo como testemunho coerente do evangelho.`,
-    "Warren Wiersbe": `Síntese interpretativa de Warren Wiersbe: ${dev.reference} revela uma verdade que precisa sair da página e entrar na rotina. Wiersbe destacaria a dimensão pastoral e prática do texto, mostrando que ${theme} amadurece quando a Palavra influencia pensamentos, escolhas, relacionamentos e atitudes simples do dia a dia.`,
-    "D.A. Carson": `Síntese interpretativa de D.A. Carson: ${dev.reference} precisa ser lido dentro do argumento de ${book}, e não como frase solta. Carson enfatizaria a conexão da passagem com o evangelho, com o caráter de Deus e com a resposta exigida do povo da aliança. Assim, ${theme} é parte da revelação maior que encontra seu centro em Cristo.`,
-    "F.F. Bruce": `Síntese interpretativa de F.F. Bruce: ${dev.reference} deve ser entendido dentro do desenvolvimento bíblico e apostólico. Bruce observaria como a passagem sustenta a fé da Igreja e conecta o ensino do texto à vida do povo de Deus. O tema de ${theme} aparece como verdade revelada que orienta a caminhada cristã com sobriedade e firmeza.`,
-    "Albert Barnes": `Síntese interpretativa de Albert Barnes: ${dev.reference} deve ser lido buscando o sentido claro do texto e suas implicações morais. Barnes destacaria que a Escritura corrige, consola e dirige; por isso, ${theme} se torna uma resposta obediente àquilo que Deus torna evidente na passagem.`,
-    "Martinho Lutero": `Síntese interpretativa de Martinho Lutero: ${dev.reference} aponta para a fé que se agarra à promessa de Deus. Lutero destacaria que a segurança do crente não repousa em mérito pessoal, mas na Palavra fiel do Senhor. Desse modo, ${theme} deve brotar do evangelho e da confiança na graça, não da tentativa de provar valor diante de Deus.`,
-    "J.C. Ryle": `Síntese interpretativa de J.C. Ryle: ${dev.reference} precisa produzir santidade prática. Ryle insistiria que a fé verdadeira não permanece invisível; ela aparece em reverência, disciplina, arrependimento e decisões concretas. O tema de ${theme} deve alcançar hábitos, prioridades e relacionamentos.`,
-    "Gordon Fee": `Síntese interpretativa de Gordon Fee: ${dev.reference} deve ser lido considerando a ação do Espírito na comunidade cristã. Fee destacaria que ${theme} não é apenas experiência individual, mas fruto da presença de Deus formando um povo que vive o evangelho em unidade, amor e testemunho.`,
-    "Douglas Moo": `Síntese interpretativa de Douglas Moo: ${dev.reference} mostra que fé e prática não podem ser separadas. Moo destacaria a lógica ética do texto: a Palavra recebida com fé precisa produzir obediência verificável. O tema de ${theme} deve ser testado nas provações, decisões e relacionamentos reais.`,
-    "Edmund Clowney": `Síntese interpretativa de Edmund Clowney: ${dev.reference} deve ser lido apontando para Cristo e para a identidade do povo de Deus. Clowney destacaria que a passagem forma peregrinos chamados à esperança e fidelidade. O tema de ${theme} fortalece a consciência de que pertencemos ao Senhor.`,
-    "Michael Green": `Síntese interpretativa de Michael Green: ${dev.reference} chama o cristão a uma fé pública, perseverante e missionária. Green destacaria que ${theme} confronta a acomodação espiritual e encoraja o crente a viver com clareza, coragem e fidelidade em uma cultura que resiste ao evangelho.`,
-    "G.K. Beale": `Síntese interpretativa de G.K. Beale: ${dev.reference} deve ser lido dentro da grande história bíblica, da criação à nova criação. Beale destacaria os ecos da revelação e sua consumação em Cristo. O tema de ${theme} aponta para esperança final e fidelidade presente.`
+    "Charles Spurgeon": `Comentário inspirado na abordagem pastoral de Charles Spurgeon: ${dev.reference} coloca a alma diante do Deus que sustenta, consola e chama à confiança. Em sua pregação, Spurgeon frequentemente conduzia o leitor do texto para a experiência viva da fé; por isso, sua leitura destacaria que ${theme} não deve permanecer como sentimento religioso, mas tornar-se dependência do Senhor, adoração e descanso nas promessas divinas.`,
+    "Matthew Henry": `Comentário inspirado na abordagem de Matthew Henry: ${dev.reference} apresenta doutrina e dever. Henry costumava perguntar o que o texto revela sobre Deus e que resposta exige do crente. Nessa linha, a passagem ensina que ${theme} precisa formar uma vida ordenada pela piedade, com reverência, humildade e obediência nas práticas comuns.`,
+    "João Calvino": `Comentário inspirado na abordagem de João Calvino: ${dev.reference} deve ser lido reconhecendo a soberania de Deus e a dependência humana da graça. Calvino enfatizaria que ${theme} não nasce da autossuficiência, mas de um coração governado pela Palavra, submetido à vontade divina e sustentado pela fidelidade do Senhor.`,
+    "John Stott": `Comentário inspirado na abordagem de John Stott: ${dev.reference} une fidelidade bíblica e discipulado. Stott destacaria que o texto precisa ser compreendido com a mente e obedecido com a vida. Assim, ${theme} não é uma ideia devocional isolada, mas uma expressão concreta de seguir Cristo no mundo.`,
+    "Warren Wiersbe": `Comentário inspirado na abordagem de Warren Wiersbe: ${dev.reference} mostra uma verdade bíblica que precisa funcionar na rotina. Wiersbe tenderia a destacar o movimento do texto para a prática: ${theme} amadurece quando a Palavra começa a orientar pensamentos, escolhas, relacionamentos e reações cotidianas.`,
+    "D.A. Carson": `Comentário inspirado na abordagem de D.A. Carson: ${dev.reference} precisa ser interpretado dentro do argumento de ${book}, evitando usos isolados do versículo. Carson chamaria atenção para a relação da passagem com o evangelho, com o caráter de Deus e com a resposta esperada do povo da aliança.`,
+    "F.F. Bruce": `Comentário inspirado na abordagem de F.F. Bruce: ${dev.reference} deve ser observado dentro do desenvolvimento bíblico e da vida da Igreja. Bruce destacaria o sentido histórico e apostólico do texto, mostrando que ${theme} é uma verdade revelada para sustentar fé, perseverança e prática cristã sóbria.`,
+    "Albert Barnes": `Comentário inspirado na abordagem de Albert Barnes: ${dev.reference} deve ser lido buscando seu sentido claro e suas implicações morais. Barnes destacaria que a Escritura foi dada para corrigir, consolar e dirigir; portanto, ${theme} é resposta objetiva ao que Deus torna evidente no texto.`,
+    "Martinho Lutero": `Comentário inspirado na abordagem de Martinho Lutero: ${dev.reference} aponta para a fé que se agarra à promessa de Deus. Lutero ressaltaria que a segurança do crente não repousa em mérito pessoal, mas na Palavra fiel do Senhor; por isso, ${theme} deve brotar da confiança no evangelho.`,
+    "J.C. Ryle": `Comentário inspirado na abordagem de J.C. Ryle: ${dev.reference} exige santidade prática. Ryle destacaria que a fé verdadeira não fica invisível; ela aparece em arrependimento, disciplina espiritual, reverência e decisões concretas. O tema de ${theme} deve alcançar hábitos e prioridades.`,
+    "Gordon Fee": `Comentário inspirado na abordagem de Gordon Fee: ${dev.reference} deve ser lido considerando a obra do Espírito na comunidade cristã. Fee destacaria que ${theme} não é apenas experiência individual, mas fruto da presença de Deus formando um povo que vive o evangelho em unidade e testemunho.`,
+    "Douglas Moo": `Comentário inspirado na abordagem de Douglas Moo: ${dev.reference} mostra que fé e prática caminham juntas. Moo destacaria a lógica ética da passagem: a Palavra recebida com fé precisa produzir obediência verificável. O tema de ${theme} deve ser testado nas decisões e nos relacionamentos reais.`,
+    "Edmund Clowney": `Comentário inspirado na abordagem de Edmund Clowney: ${dev.reference} deve ser lido apontando para Cristo e para a identidade do povo de Deus. Clowney destacaria que a passagem forma peregrinos chamados à esperança e fidelidade; ${theme} fortalece a consciência de pertencimento ao Senhor.`,
+    "Michael Green": `Comentário inspirado na abordagem de Michael Green: ${dev.reference} chama o cristão a uma fé perseverante e pública. Green destacaria que ${theme} confronta acomodação espiritual e encoraja o crente a viver com clareza, coragem e fidelidade em meio a uma cultura resistente ao evangelho.`,
+    "G.K. Beale": `Comentário inspirado na abordagem de G.K. Beale: ${dev.reference} deve ser lido dentro da grande história bíblica, da criação à nova criação. Beale destacaria ecos da revelação e sua consumação em Cristo, mostrando que ${theme} aponta para esperança final e fidelidade presente.`
   };
 
   return `${perspectives[commentator] || perspectives["Matthew Henry"]} ${themeInsight} Essa leitura enfatiza o sentido bíblico antes da aplicação pessoal: primeiro entendemos o que o texto afirma sobre Deus e Sua obra; depois respondemos com fé, arrependimento e obediência.`;
