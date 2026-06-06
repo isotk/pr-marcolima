@@ -97,12 +97,6 @@ function renderCard(devotional, offset, isToday) {
           </div>
         </div>
 
-        ${devotional.context ? `
-        <div class="devo-section devo-context">
-          <h4><span class="section-icon">📜</span> Contexto Bíblico</h4>
-          <p>${devotional.context}</p>
-        </div>` : ""}
-
         <div class="devo-section devo-reflection">
           <h4><span class="section-icon">💭</span> Reflexão</h4>
           <p>${devotional.reflection}</p>
