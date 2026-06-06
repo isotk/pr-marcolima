@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Não Pela Força - Zacarias 4:6</title>
+  <desc id="desc">Arte devocional única sobre Espírito, Vida no Espírito, baseada em Zacarias 4:6.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6d5d82"/>
+      <stop offset="1" stop-color="#ddd3ea"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#fff8dc" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#1f231d" flood-opacity=".22"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#glow)"/>
+  <g opacity=".16" stroke="#fff" stroke-width="2">
+    <path d="M-92 120 C 150 30, 330 210, 590 120 S 990 40, 1320 150" fill="none"/>
+    <path d="M28 700 C 230 600, 390 740, 650 650 S 1030 590, 1280 710" fill="none"/>
+  </g>
+  <circle cx="264" cy="216" r="180" fill="#fff" opacity=".12"/>
+  <circle cx="1010" cy="610" r="230" fill="#2b312a" opacity=".10"/>
+  <g transform="rotate(1 620 470)" color="#ffffff" filter="url(#soft)"><path d="M622 748c-104 0-177-74-177-172 0-79 46-128 89-175 35-38 68-73 69-121 85 64 150 151 94 267 46-27 68-73 68-135 58 49 88 108 88 172 0 93-89 164-231 164z" fill="currentColor" opacity=".84"/></g>
+  <rect x="76" y="70" width="1048" height="660" rx="44" fill="#fff" opacity=".13" stroke="#fff" stroke-opacity=".26"/>
+  <text x="96" y="130" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" letter-spacing="3">DEVOCIONAL DIÁRIO 073</text>
+  <text x="96" y="188" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="700">Zacarias 4:6</text>
+  <text x="96" y="590" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">Não Pela Força</text>
+  <text x="96" y="646" fill="#fff" font-family="Arial, sans-serif" font-size="26" opacity=".92">Espírito • Vida no Espírito</text>
+  <text x="96" y="696" fill="#fff" font-family="Arial, sans-serif" font-size="22" opacity=".82">Pr. Marco Lima</text>
+</svg>

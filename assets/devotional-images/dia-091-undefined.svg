@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">undefined - Esdras 8:23</title>
+  <desc id="desc">Arte devocional única sobre Jejuamos e Pedimos, Busca e dependência, baseada em Esdras 8:23.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5d6878"/>
+      <stop offset="1" stop-color="#d8dde5"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#fff8dc" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#1f231d" flood-opacity=".22"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#glow)"/>
+  <g opacity=".16" stroke="#fff" stroke-width="2">
+    <path d="M-10 120 C 150 30, 330 210, 590 120 S 990 40, 1320 150" fill="none"/>
+    <path d="M110 700 C 230 600, 390 740, 650 650 S 1030 590, 1280 710" fill="none"/>
+  </g>
+  <circle cx="290" cy="210" r="180" fill="#fff" opacity=".12"/>
+  <circle cx="1010" cy="610" r="230" fill="#2b312a" opacity=".10"/>
+  <g transform="rotate(6 620 470)" color="#ffffff" filter="url(#soft)"><path d="M330 586c94 20 159 51 196 94 22 26 48 39 80 39h189c-25 36-63 55-114 55H536c-57 0-100-19-130-57l-76-97v-34zm580 0v34l-76 97c-30 38-73 57-130 57h-41c38-21 66-49 84-84 15-30 8-59-18-88-37 5-72 2-105-10-55-20-102-56-141-108 90 6 168 30 234 72 41 26 105 36 193 30z" fill="currentColor" opacity=".82"/></g>
+  <rect x="76" y="70" width="1048" height="660" rx="44" fill="#fff" opacity=".13" stroke="#fff" stroke-opacity=".26"/>
+  <text x="96" y="130" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" letter-spacing="3">DEVOCIONAL DIÁRIO 091</text>
+  <text x="96" y="188" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="700">Esdras 8:23</text>
+  <text x="96" y="590" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">undefined</text>
+  <text x="96" y="646" fill="#fff" font-family="Arial, sans-serif" font-size="26" opacity=".92">Jejuamos e Pedimos • Busca e dependência</text>
+  <text x="96" y="696" fill="#fff" font-family="Arial, sans-serif" font-size="22" opacity=".82">Pr. Marco Lima</text>
+</svg>

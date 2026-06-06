@@ -72,7 +72,7 @@ function renderCard(devotional, offset, isToday) {
 
   return `
     <article class="devo-card" data-id="${devotional.id}" style="animation-delay: ${Math.abs(offset) * 0.15}s">
-      ${devotional.image ? `<img src="${devotional.image}" alt="${devotional.title}" class="devo-image" loading="lazy" />` : ""}
+      ${devotional.image ? `<img src="${devotional.image}" alt="${devotional.imageAlt || devotional.title}" class="devo-image" loading="lazy" />` : ""}
       <div class="devo-card-header">
         <div class="devo-date-full">
           <span class="devo-date-icon">📅</span>

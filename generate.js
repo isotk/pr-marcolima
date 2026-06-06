@@ -5,24 +5,78 @@ const path = require("path");
 
 const filePath = path.join(__dirname, "data/devocionais.json");
 const source = JSON.parse(fs.readFileSync(filePath, "utf8"));
+const imageDir = path.join(__dirname, "assets/devotional-images");
 
 const START_DATE = new Date(2026, 5, 1);
 const TOTAL_DAYS = 365;
 
-const IMAGES = [
-  "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=800&q=80",
-  "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=800&q=80",
-  "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80",
-  "https://images.unsplash.com/photo-1518199267010-20d029a38318?w=800&q=80",
-  "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=800&q=80",
-  "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800&q=80",
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-  "https://images.unsplash.com/photo-1505778276668-26b3ff7af103?w=800&q=80",
-  "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80",
-  "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80",
-  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-  "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=800&q=80"
-];
+const THEME_VISUALS = {
+  Ansiedade: { symbol: "dove", colors: ["#6f8fa8", "#d9e7ef"], words: "Entrega e paz" },
+  Amor: { symbol: "heart", colors: ["#8f4d4d", "#f3d2c5"], words: "Amor de Cristo" },
+  Coragem: { symbol: "mountain", colors: ["#405f4f", "#d6c3a5"], words: "Firmeza no Senhor" },
+  Descanso: { symbol: "shepherd", colors: ["#5f8069", "#e5dfc7"], words: "Descanso em Cristo" },
+  Esperança: { symbol: "sunrise", colors: ["#c98635", "#f5dfae"], words: "Esperança viva" },
+  Fé: { symbol: "cross", colors: ["#465f82", "#d8c49a"], words: "Crer e seguir" },
+  Força: { symbol: "mountain", colors: ["#3f4d3f", "#c9b57e"], words: "Força na graça" },
+  Gratidão: { symbol: "sunrise", colors: ["#b3783d", "#f0d6a3"], words: "Graça recebida" },
+  Oração: { symbol: "dove", colors: ["#5d6f8f", "#ddd7c7"], words: "Comunhão com Deus" },
+  Paz: { symbol: "dove", colors: ["#5f8276", "#d9ece5"], words: "Paz com Deus" },
+  Perdão: { symbol: "cross", colors: ["#7a5a75", "#e5d5df"], words: "Perdão na cruz" },
+  Perseverança: { symbol: "path", colors: ["#6b704a", "#d8d1a6"], words: "Perseverar em fé" },
+  Sabedoria: { symbol: "lamp", colors: ["#7c6335", "#ead8a6"], words: "Sabedoria do alto" },
+  Santidade: { symbol: "flame", colors: ["#7d4738", "#ecd0b5"], words: "Vida separada" },
+  Serviço: { symbol: "hands", colors: ["#506f67", "#d3e1d7"], words: "Servir como Cristo" },
+  Palavra: { symbol: "bible", colors: ["#4c5f3c", "#ded6b8"], words: "Palavra viva" },
+  Proteção: { symbol: "shield", colors: ["#3f5f67", "#c9dce0"], words: "Guardado por Deus" },
+  Identidade: { symbol: "cross", colors: ["#654c75", "#ded1e7"], words: "Filhos em Cristo" },
+  Missão: { symbol: "path", colors: ["#786234", "#e6d29b"], words: "Ide e anunciai" },
+  Generosidade: { symbol: "hands", colors: ["#6e7d45", "#dfe8bd"], words: "Graça que reparte" },
+  Luz: { symbol: "sunrise", colors: ["#b58a35", "#f4e7bc"], words: "Cristo ilumina" },
+  Pastor: { symbol: "shepherd", colors: ["#55735d", "#dfd9bd"], words: "O Bom Pastor" },
+  Guia: { symbol: "path", colors: ["#596f8a", "#d9dec8"], words: "Caminho de Deus" },
+  Desejos: { symbol: "heart", colors: ["#7d5c67", "#ead4d8"], words: "Coração rendido" },
+  Carga: { symbol: "hands", colors: ["#6b6757", "#ded6c2"], words: "Entrega ao Senhor" },
+  Perfeição: { symbol: "cross", colors: ["#5d6347", "#dfd6ab"], words: "Cristo completa" },
+  Bondade: { symbol: "sunrise", colors: ["#9a723a", "#ead8a8"], words: "Bondade do Senhor" },
+  Obediência: { symbol: "path", colors: ["#53674d", "#d8d9b8"], words: "Seguir Jesus" },
+  Provisão: { symbol: "hands", colors: ["#6b7a47", "#e2ddb5"], words: "Deus provê" },
+  Renovação: { symbol: "flame", colors: ["#4f7467", "#d6e2d5"], words: "Novo coração" },
+  Restauração: { symbol: "sunrise", colors: ["#80633f", "#e8d1a8"], words: "Deus restaura" },
+  Glória: { symbol: "sunrise", colors: ["#8a6731", "#f2dda4"], words: "Glória de Deus" },
+  Espírito: { symbol: "flame", colors: ["#6d5d82", "#ddd3ea"], words: "Vida no Espírito" },
+  Dízimos: { symbol: "hands", colors: ["#627146", "#e0dcb8"], words: "Fidelidade e entrega" },
+  Testemunho: { symbol: "lamp", colors: ["#5a6f72", "#d9e3de"], words: "Luz diante do mundo" },
+  Prioridade: { symbol: "cross", colors: ["#556b4e", "#ded7b9"], words: "Reino em primeiro lugar" },
+  Discipulado: { symbol: "path", colors: ["#4f6355", "#d8deca"], words: "Tomar a cruz" },
+  Poder: { symbol: "mountain", colors: ["#465b6e", "#d5d7c4"], words: "Deus pode todas as coisas" },
+  Paciência: { symbol: "path", colors: ["#687055", "#e2d9b8"], words: "Esperar em Deus" },
+  Convite: { symbol: "cross", colors: ["#725a7b", "#e4d5e8"], words: "Cristo à porta" },
+  Consolação: { symbol: "dove", colors: ["#637f8b", "#dce7e9"], words: "Consolo eterno" },
+  Lealdade: { symbol: "heart", colors: ["#6c6f4e", "#ded8b6"], words: "Aliança fiel" },
+  Coração: { symbol: "heart", colors: ["#7c4f57", "#ead4d2"], words: "Deus vê o coração" },
+  "O Dobro do Teu Espírito": { symbol: "flame", colors: ["#6c5678", "#ded1e4"], words: "Unção para servir" },
+  "Jejuamos e Pedimos": { symbol: "hands", colors: ["#5d6878", "#d8dde5"], words: "Busca e dependência" },
+  Alegria: { symbol: "sunrise", colors: ["#b47a30", "#f0d69a"], words: "Alegria do Senhor" },
+  Propósito: { symbol: "path", colors: ["#596c54", "#d8dfc4"], words: "Chamado de Deus" },
+  Tempo: { symbol: "sunrise", colors: ["#7d7150", "#e5d9b6"], words: "Tudo no tempo de Deus" },
+  Temor: { symbol: "lamp", colors: ["#654f3a", "#e3d0aa"], words: "Reverência ao Senhor" },
+  default: { symbol: "cross", colors: ["#536b57", "#e7dcc0"], words: "Evangelho de Jesus" }
+};
+
+const SYMBOLS = {
+  cross: `<path d="M589 210h62v198h174v62H651v310h-62V470H415v-62h174z" fill="currentColor" opacity=".9"/>`,
+  dove: `<path d="M412 534c115-10 210-66 284-170-25 108-79 190-160 246 58 11 109 2 156-26-64 74-147 106-250 91-72-11-132-44-180-100 50 21 100 8 150-41zm120-66c-74-45-127-98-159-160 88 31 167 78 239 141-25 8-52 14-80 19z" fill="currentColor" opacity=".88"/>`,
+  heart: `<path d="M620 728S352 574 352 398c0-77 55-133 126-133 55 0 92 31 142 88 50-57 87-88 142-88 71 0 126 56 126 133 0 176-268 330-268 330z" fill="currentColor" opacity=".86"/>`,
+  mountain: `<path d="M250 710l236-330 106 146 74-96 264 280H250zm236-206l-82 115h185l-103-115z" fill="currentColor" opacity=".84"/>`,
+  sunrise: `<path d="M260 665h720v46H260v-46zm95-70c42-110 145-187 265-187s223 77 265 187H355zm265-286v-96h42v96h-42zm-221 72l-68-68 30-30 68 68-30 30zm442 0l-30-30 68-68 30 30-68 68z" fill="currentColor" opacity=".86"/>`,
+  shepherd: `<path d="M372 694c70-122 151-210 242-264 92-55 184-74 276-57-74 31-139 74-195 129 69 18 123 58 162 120-102-24-188-18-258 19-71 37-143 55-227 53zm248-244c-43-64-43-122 0-174 43 52 43 110 0 174z" fill="currentColor" opacity=".82"/>`,
+  path: `<path d="M322 720c75-92 133-145 174-159 42-14 88-5 139 27 50 32 99 41 145 27 45-14 92-55 140-123v130c-45 50-91 82-138 96-69 21-139 8-208-38-33-22-65-26-95-12-30 13-70 52-119 116l-38-64zM346 382c49-58 101-92 156-102 56-10 109 7 160 51 37 32 74 43 112 33 37-10 80-46 129-108v115c-51 51-103 81-157 89-54 8-105-10-154-54-32-29-65-39-100-30-35 8-75 41-120 98l-26-92z" fill="currentColor" opacity=".82"/>`,
+  lamp: `<path d="M462 714h316v52H462v-52zm80-80h156v50H542v-50zm-52-293c0-85 59-147 130-147s130 62 130 147c0 61-34 105-70 143-28 29-43 55-43 95h-34c0-40-15-66-43-95-36-38-70-82-70-143zm130-78c-37 0-68 34-68 78 0 35 18 62 45 91 8 9 16 18 23 28 7-10 15-19 23-28 27-29 45-56 45-91 0-44-31-78-68-78z" fill="currentColor" opacity=".86"/>`,
+  flame: `<path d="M622 748c-104 0-177-74-177-172 0-79 46-128 89-175 35-38 68-73 69-121 85 64 150 151 94 267 46-27 68-73 68-135 58 49 88 108 88 172 0 93-89 164-231 164z" fill="currentColor" opacity=".84"/>`,
+  hands: `<path d="M330 586c94 20 159 51 196 94 22 26 48 39 80 39h189c-25 36-63 55-114 55H536c-57 0-100-19-130-57l-76-97v-34zm580 0v34l-76 97c-30 38-73 57-130 57h-41c38-21 66-49 84-84 15-30 8-59-18-88-37 5-72 2-105-10-55-20-102-56-141-108 90 6 168 30 234 72 41 26 105 36 193 30z" fill="currentColor" opacity=".82"/>`,
+  bible: `<path d="M382 255h380c60 0 96 36 96 96v379H438c-60 0-96-36-96-96V295c0-22 18-40 40-40zm46 76v303c0 15 11 26 26 26h318V351c0-15-11-26-26-26H428zm155 56h54v84h84v54h-84v84h-54v-84h-84v-54h84v-84z" fill="currentColor" opacity=".84"/>`,
+  shield: `<path d="M620 760c-142-69-229-181-229-349V284l229-80 229 80v127c0 168-87 280-229 349zm0-75c102-57 163-144 163-274v-80l-163-57-163 57v80c0 130 61 217 163 274z" fill="currentColor" opacity=".86"/>`
+};
 
 const THEME_INSIGHTS = {
   Ansiedade: "A ansiedade tenta deslocar Deus do centro da confiança e colocar o peso da vida sobre os ombros humanos. A Escritura conduz o coração de volta à oração, à entrega e à certeza de que o Pai governa até aquilo que não conseguimos controlar.",
@@ -60,6 +114,80 @@ function formatDate(date) {
 
 function cleanTitle(title, index) {
   return String(title || `Devocional Diário ${index + 1}`).replace(/\s+—\s+(Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro|Janeiro|Fevereiro|Março|Abril|Maio)$/i, "");
+}
+
+function escapeXml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function imageName(index, title) {
+  const slug = String(title || "devocional")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 46);
+  return `dia-${String(index + 1).padStart(3, "0")}-${slug || "devocional"}.svg`;
+}
+
+function buildImageSvg(dev, index) {
+  const visual = THEME_VISUALS[dev.theme] || THEME_VISUALS.default;
+  const [primary, secondary] = visual.colors;
+  const symbol = SYMBOLS[visual.symbol] || SYMBOLS.cross;
+  const day = String(index + 1).padStart(3, "0");
+  const title = escapeXml(cleanTitle(dev.title, index));
+  const reference = escapeXml(dev.reference || "João 3:16");
+  const theme = escapeXml(dev.theme || "Palavra");
+  const words = escapeXml(visual.words);
+  const rotation = (index % 13) - 6;
+  const circleX = 160 + ((index * 37) % 160);
+  const circleY = 120 + ((index * 53) % 120);
+  const lineOffset = (index * 29) % 220;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">${title} - ${reference}</title>
+  <desc id="desc">Arte devocional única sobre ${theme}, ${words}, baseada em ${reference}.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="${primary}"/>
+      <stop offset="1" stop-color="${secondary}"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#fff8dc" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#1f231d" flood-opacity=".22"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#glow)"/>
+  <g opacity=".16" stroke="#fff" stroke-width="2">
+    <path d="M${-200 + lineOffset} 120 C 150 30, 330 210, 590 120 S 990 40, 1320 150" fill="none"/>
+    <path d="M${-80 + lineOffset} 700 C 230 600, 390 740, 650 650 S 1030 590, 1280 710" fill="none"/>
+  </g>
+  <circle cx="${circleX}" cy="${circleY}" r="180" fill="#fff" opacity=".12"/>
+  <circle cx="1010" cy="610" r="230" fill="#2b312a" opacity=".10"/>
+  <g transform="rotate(${rotation} 620 470)" color="#ffffff" filter="url(#soft)">${symbol}</g>
+  <rect x="76" y="70" width="1048" height="660" rx="44" fill="#fff" opacity=".13" stroke="#fff" stroke-opacity=".26"/>
+  <text x="96" y="130" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" letter-spacing="3">DEVOCIONAL DIÁRIO ${day}</text>
+  <text x="96" y="188" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="700">${reference}</text>
+  <text x="96" y="590" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">${title}</text>
+  <text x="96" y="646" fill="#fff" font-family="Arial, sans-serif" font-size="26" opacity=".92">${theme} • ${words}</text>
+  <text x="96" y="696" fill="#fff" font-family="Arial, sans-serif" font-size="22" opacity=".82">Pr. Marco Lima</text>
+</svg>`;
+}
+
+function writeDevotionalImage(dev, index) {
+  fs.mkdirSync(imageDir, { recursive: true });
+  const name = imageName(index, dev.title);
+  fs.writeFileSync(path.join(imageDir, name), buildImageSvg(dev, index), "utf8");
+  return `assets/devotional-images/${name}`;
 }
 
 function buildReflection(dev, index) {
@@ -135,7 +263,8 @@ function normalizeDevotional(sourceDev, index) {
     title,
     theme,
     reference,
-    image: sourceDev.image || IMAGES[index % IMAGES.length],
+    image: writeDevotionalImage({ ...sourceDev, title, reference, theme }, index),
+    imageAlt: `Arte devocional única sobre ${theme}, baseada em ${reference}, para ${title}.`,
     scripture: sourceDev.scripture || "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito...",
     reflection: buildReflection({ ...sourceDev, reference, theme }, index),
     application: buildApplication({ ...sourceDev, reference, theme }, index),
@@ -148,6 +277,8 @@ const base = source.length ? source : [];
 if (!base.length) {
   throw new Error("Nenhum devocional base encontrado em data/devocionais.json");
 }
+
+fs.rmSync(imageDir, { recursive: true, force: true });
 
 const result = Array.from({ length: TOTAL_DAYS }, (_, index) => {
   const sourceDev = base[index % base.length];
