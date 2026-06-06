@@ -112,8 +112,12 @@ function formatDate(date) {
   return date.toISOString().slice(0, 10);
 }
 
-function cleanTitle(title, index) {
-  return String(title || `Devocional Diário ${index + 1}`).replace(/\s+—\s+(Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro|Janeiro|Fevereiro|Março|Abril|Maio)$/i, "");
+function cleanTitle(title, index, fallback) {
+  const raw = String(title || "").trim();
+  const base = !raw || raw.toLowerCase() === "undefined" || raw.toLowerCase() === "null"
+    ? (fallback || `Devocional Diário ${index + 1}`)
+    : raw;
+  return String(base).replace(/\s+—\s+(Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro|Janeiro|Fevereiro|Março|Abril|Maio)$/i, "");
 }
 
 function escapeXml(value) {
@@ -140,7 +144,7 @@ function buildImageSvg(dev, index) {
   const [primary, secondary] = visual.colors;
   const symbol = SYMBOLS[visual.symbol] || SYMBOLS.cross;
   const day = String(index + 1).padStart(3, "0");
-  const title = escapeXml(cleanTitle(dev.title, index));
+  const title = escapeXml(cleanTitle(dev.title, index, dev.theme));
   const reference = escapeXml(dev.reference || "João 3:16");
   const theme = escapeXml(dev.theme || "Palavra");
   const words = escapeXml(visual.words);
@@ -256,7 +260,7 @@ function normalizeDevotional(sourceDev, index) {
   const date = dateForIndex(index);
   const reference = sourceDev.reference || "João 3:16";
   const theme = sourceDev.theme || "Palavra";
-  const title = cleanTitle(sourceDev.title, index);
+  const title = cleanTitle(sourceDev.title, index, theme);
 
   return {
     id: `dia-${String(index + 1).padStart(3, "0")}-${formatDate(date)}`,
