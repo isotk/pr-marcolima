@@ -49,28 +49,126 @@ const THEME_INSIGHTS = {
 };
 
 const BOOK_CONTEXTS = {
+  Rute: "Rute mostra a providência de Deus agindo em meio à perda, lealdade e redenção familiar. A história prepara o caminho da linhagem davídica e aponta para a fidelidade do Senhor em detalhes comuns da vida.",
+  "1 Samuel": "1 Samuel narra a transição de Israel para a monarquia e destaca que Deus vê o coração, levanta líderes e governa acima das aparências humanas.",
+  "2 Samuel": "2 Samuel acompanha o reinado de Davi, mostrando tanto a fidelidade da aliança quanto as consequências do pecado. O texto aponta para a necessidade de um Rei justo e fiel.",
+  "1 Reis": "1 Reis mostra a glória e a queda progressiva da monarquia, contrastando sabedoria, idolatria, profecia e fidelidade ao Senhor.",
+  "2 Reis": "2 Reis expõe as consequências espirituais da infidelidade de Israel e Judá, mas também preserva testemunhos da graça e do poder de Deus em meio ao declínio.",
+  Esdras: "Esdras trata do retorno do exílio, da restauração do culto e da centralidade da Palavra para reconstruir a identidade espiritual do povo de Deus.",
+  Neemias: "Neemias mostra reconstrução física e espiritual. Os muros importam, mas a restauração mais profunda acontece quando o povo volta a ouvir e obedecer à Palavra.",
+  Ester: "Ester revela a providência silenciosa de Deus preservando Seu povo em ambiente hostil. Mesmo quando o nome de Deus não aparece, Sua mão conduz a história.",
   Salmos: "Nos Salmos, oração, louvor, dor e esperança aparecem diante de Deus sem máscaras. O texto deve ser lido como expressão da vida de fé que aprende a levar tudo ao Senhor.",
   Provérbios: "Em Provérbios, a sabedoria é apresentada como caminho de vida no temor do Senhor. O texto fala à rotina, às decisões e à formação do caráter diante de Deus.",
+  Eclesiastes: "Eclesiastes examina a vida debaixo do sol e confronta a vaidade de buscar sentido longe de Deus. Sua conclusão chama ao temor do Senhor e à obediência.",
   Isaías: "Isaías anuncia juízo, consolo e esperança messiânica. Suas promessas apontam para a soberania de Deus e para a restauração que encontra cumprimento final em Cristo.",
+  Jeremias: "Jeremias denuncia a infidelidade do povo e anuncia juízo, mas também preserva promessas de restauração, nova aliança e esperança fundada na fidelidade de Deus.",
+  Ezequiel: "Ezequiel fala a um povo exilado, mostrando a glória de Deus, a gravidade do pecado e a promessa de renovação espiritual por iniciativa do Senhor.",
+  Daniel: "Daniel apresenta fidelidade em ambiente pagão e revela que Deus governa reinos, tempos e autoridades. O livro chama à coragem, santidade e confiança soberana.",
+  Joel: "Joel usa a crise nacional para chamar o povo ao arrependimento e anunciar restauração, derramamento do Espírito e o Dia do Senhor.",
+  Habacuque: "Habacuque registra o diálogo honesto entre o profeta e Deus diante da injustiça. O livro ensina que o justo vive pela fé mesmo sem compreender todo o processo divino.",
+  Ageu: "Ageu chama o povo pós-exílio a reorganizar prioridades e reconstruir o templo, mostrando que a glória de Deus deve ocupar o centro da vida comunitária.",
+  Zacarias: "Zacarias encoraja o povo restaurado com visões de esperança, purificação e promessa messiânica, lembrando que a obra de Deus avança pelo Seu Espírito.",
+  Malaquias: "Malaquias confronta culto negligente, infidelidade e frieza espiritual, chamando o povo a voltar ao Senhor com reverência e aliança renovada.",
   Mateus: "Mateus apresenta Jesus como o Messias prometido e Rei do Reino de Deus. Seus ensinos chamam o discípulo a uma justiça que nasce do coração transformado.",
   João: "O Evangelho de João revela a identidade de Jesus como o Filho eterno de Deus. Cada sinal e discurso conduz o leitor a crer e a encontrar vida em Seu nome.",
   Romanos: "Romanos expõe o evangelho com profundidade: pecado, graça, justificação, vida no Espírito e prática cristã. O texto deve ser lido à luz da obra redentora de Cristo.",
   Filipenses: "Filipenses foi escrito em meio à prisão, mas transborda alegria, paz e confiança em Cristo. Paulo mostra que a vida cristã encontra firmeza não nas circunstâncias, mas no Senhor.",
   Efésios: "Efésios mostra a riqueza da graça e a nova vida da Igreja em Cristo. A teologia da salvação se transforma em unidade, santidade e vida prática.",
+  "1 Tessalonicenses": "1 Tessalonicenses encoraja uma igreja jovem a permanecer firme, santa e esperançosa enquanto aguarda a volta de Cristo. As exortações finais mostram como a fé deve aparecer na vida comunitária cotidiana.",
+  "2 Tessalonicenses": "2 Tessalonicenses corrige confusões sobre o fim dos tempos e fortalece a igreja para perseverar com discernimento, trabalho fiel e esperança na justiça de Deus.",
+  "1 Coríntios": "1 Coríntios corrige uma igreja marcada por divisões, orgulho e mau uso dos dons. Paulo mostra que maturidade cristã exige santidade, amor e ordem no corpo de Cristo.",
+  "2 Coríntios": "2 Coríntios revela o ministério cristão sob fraqueza, sofrimento e consolação. Paulo mostra que o poder de Deus se manifesta em vasos frágeis para que a glória seja do Senhor.",
+  Gálatas: "Gálatas defende a liberdade do evangelho contra toda tentativa de acrescentar mérito humano à graça. A fé em Cristo produz vida no Espírito, não escravidão religiosa.",
+  Colossenses: "Colossenses exalta a supremacia de Cristo sobre toda a criação e sobre a vida da Igreja. A nova vida cristã nasce de estar unido Àquele que é antes de todas as coisas.",
+  Hebreus: "Hebreus apresenta Cristo como superior aos anjos, a Moisés, ao sacerdócio antigo e aos sacrifícios da antiga aliança. O livro chama os crentes a perseverar olhando para Jesus.",
   Tiago: "Tiago aplica a fé à vida concreta. Ele insiste que a verdadeira fé aparece em perseverança, sabedoria, domínio da língua, humildade e obras coerentes com o evangelho.",
   "1 Pedro": "1 Pedro fala a cristãos sob pressão, chamando-os à esperança, santidade e testemunho fiel. O sofrimento é interpretado à luz da obra de Cristo e da glória futura.",
+  "2 Pedro": "2 Pedro alerta contra falsos ensinos e chama a igreja a crescer na graça e no conhecimento de Cristo, mantendo esperança firme na promessa do Senhor.",
+  "1 João": "1 João foi escrito para fortalecer a certeza da fé, distinguir verdade e erro, e mostrar que comunhão com Deus aparece em amor, obediência e fidelidade a Cristo.",
+  Judas: "Judas exorta os crentes a batalhar pela fé entregue aos santos, resistindo a distorções do evangelho e permanecendo firmes na misericórdia de Deus.",
+  Apocalipse: "Apocalipse revela Cristo exaltado, confronta igrejas reais em sua fidelidade ou frieza, e aponta para a consumação da história quando Deus julgará o mal e fará novas todas as coisas.",
   default: "O contexto bíblico imediato deve ser lido considerando o livro, o tema e o fluxo da revelação. O versículo não é uma frase isolada, mas parte da história de Deus conduzindo Seu povo à fé e à obediência."
 };
 
-const COMMENTATORS = [
-  "Charles Spurgeon",
-  "Matthew Henry",
-  "João Calvino",
-  "John Stott",
-  "Warren Wiersbe",
-  "D.A. Carson",
-  "F.F. Bruce",
-  "Albert Barnes"
+const BOOK_SETTINGS = {
+  Salmos: "O livro nasce da vida de adoração de Israel e reúne orações, cânticos, confissões e lamentos usados pelo povo de Deus em culto e caminhada diária.",
+  Provérbios: "A coleção de sabedoria de Israel ensina a viver diante de Deus nas escolhas comuns: fala, trabalho, família, dinheiro, amizades e domínio do coração.",
+  Isaías: "O profeta fala a um povo dividido entre pecado, juízo e esperança, anunciando que Deus disciplina, consola e promete restauração por meio do Servo do Senhor.",
+  Jeremias: "Jeremias ministra em um tempo de crise espiritual e queda nacional, chamando o povo ao arrependimento e apontando para a fidelidade de Deus mesmo em meio ao juízo.",
+  Mateus: "Mateus apresenta Jesus como o Messias prometido, o Rei que cumpre as Escrituras e chama Seus discípulos a viverem a justiça do Reino.",
+  João: "João organiza sinais e discursos para revelar que Jesus é o Filho eterno de Deus, a Palavra encarnada, e para conduzir o leitor à fé que gera vida.",
+  Romanos: "Romanos expõe a lógica do evangelho: culpa universal, justificação pela fé, vida no Espírito e uma obediência que nasce da misericórdia de Deus.",
+  Filipenses: "Filipenses é uma carta marcada por alegria e firmeza em Cristo, escrita por Paulo em prisão, mostrando que a fé permanece quando as circunstâncias são adversas.",
+  Efésios: "Efésios revela a identidade da Igreja em Cristo e mostra como a graça recebida se transforma em unidade, santidade, amor e batalha espiritual.",
+  Tiago: "Tiago confronta uma fé apenas verbal e mostra que a verdadeira confiança em Deus aparece em perseverança, sabedoria, domínio da língua e obras coerentes.",
+  "1 Tessalonicenses": "Paulo escreve a uma igreja jovem, encorajando santidade, esperança na volta de Cristo e fidelidade em meio a pressões externas.",
+  "1 Coríntios": "A carta corrige uma comunidade cheia de dons, mas marcada por divisões, orgulho e imaturidade, mostrando que tudo deve ser governado pelo amor e pela santidade.",
+  "1 Pedro": "Pedro escreve a cristãos como peregrinos, ensinando-os a sofrer com esperança, viver em santidade e testemunhar Cristo em uma sociedade hostil.",
+  Apocalipse: "Apocalipse consola igrejas pressionadas, revelando Cristo exaltado, o juízo de Deus e a vitória final do Cordeiro sobre todo mal.",
+  default: "O livro deve ser lido dentro da história maior da redenção, percebendo o que o texto revela sobre Deus, sobre o ser humano e sobre a resposta de fé esperada do povo do Senhor."
+};
+
+const BOOK_GENRES = {
+  Rute: "narrativa histórica de redenção familiar",
+  "1 Samuel": "narrativa histórica e teológica",
+  "2 Samuel": "narrativa histórica e aliança davídica",
+  "1 Reis": "história profética da monarquia",
+  "2 Reis": "história profética do declínio de Israel e Judá",
+  Esdras: "narrativa de restauração pós-exílio",
+  Neemias: "memória de reconstrução e reforma espiritual",
+  Ester: "narrativa de providência e preservação",
+  Salmos: "poesia e oração",
+  Provérbios: "sabedoria prática",
+  Eclesiastes: "sabedoria reflexiva",
+  Isaías: "profecia",
+  Jeremias: "profecia de juízo e esperança",
+  Ezequiel: "profecia exílica e visão da glória de Deus",
+  Daniel: "narrativa de fidelidade e visão apocalíptica",
+  Joel: "profecia de arrependimento e restauração",
+  Habacuque: "diálogo profético e teologia da fé",
+  Ageu: "profecia pós-exílica de reconstrução",
+  Zacarias: "profecia visionária e messiânica",
+  Malaquias: "profecia de aliança e correção espiritual",
+  Mateus: "evangelho narrativo e ensino de Jesus",
+  Marcos: "evangelho narrativo",
+  Lucas: "evangelho narrativo",
+  João: "evangelho teológico",
+  Atos: "narrativa da expansão da igreja",
+  Romanos: "carta doutrinária",
+  Filipenses: "carta pastoral",
+  Efésios: "carta doutrinária e prática",
+  "1 Tessalonicenses": "carta pastoral e escatológica",
+  "2 Tessalonicenses": "carta pastoral e escatológica",
+  "1 Coríntios": "carta pastoral corretiva",
+  "2 Coríntios": "carta pastoral e defesa apostólica",
+  Gálatas: "carta doutrinária e polêmica",
+  Colossenses: "carta cristológica e pastoral",
+  Hebreus: "sermão/carta de exortação",
+  Tiago: "exortação sapiencial cristã",
+  "1 Pedro": "carta de esperança em sofrimento",
+  "2 Pedro": "carta de advertência e perseverança",
+  "1 João": "carta pastoral sobre certeza e comunhão",
+  Judas: "exortação contra falso ensino",
+  Apocalipse: "profecia apocalíptica",
+  default: "texto bíblico"
+};
+
+const CONTEXT_OPENINGS = [
+  "Para entender bem esta passagem, é importante observar primeiro o lugar que ela ocupa no livro.",
+  "O contexto desta leitura impede uma aplicação apressada e ajuda a ouvir o texto com mais fidelidade.",
+  "Antes de transformar este versículo em conselho pessoal, precisamos escutar sua ênfase dentro da própria Escritura.",
+  "Esta passagem ganha profundidade quando lida no movimento do livro, e não como uma frase isolada.",
+  "O pano de fundo bíblico desta leitura mostra que Deus está formando Seu povo por meio de uma verdade específica.",
+  "A força deste texto aparece quando percebemos quem está sendo confrontado, consolado ou instruído pela Palavra."
+];
+
+const CONTEXT_BRIDGES = [
+  "A passagem concentra uma resposta de fé que nasce do caráter de Deus, não de mero entusiasmo humano.",
+  "O texto aproxima doutrina e vida prática: aquilo que Deus revela precisa moldar aquilo que o crente faz.",
+  "A ênfase bíblica aqui não é apenas informar, mas reorganizar desejos, prioridades e atitudes diante do Senhor.",
+  "O versículo aponta para uma verdade que corrige leituras superficiais e chama a uma obediência concreta.",
+  "A aplicação correta nasce quando o leitor percebe a tensão do texto e se submete à direção que Deus oferece.",
+  "O centro da passagem não é a experiência humana em si, mas Deus agindo, falando e chamando Seu povo a responder."
 ];
 
 function parseBook(reference) {
@@ -95,11 +193,18 @@ function cleanTitle(title, index) {
 function buildContext(dev, index) {
   const book = parseBook(dev.reference);
   const bookContext = BOOK_CONTEXTS[book] || BOOK_CONTEXTS.default;
+  const bookSetting = BOOK_SETTINGS[book] || BOOK_SETTINGS.default;
+  const genre = BOOK_GENRES[book] || BOOK_GENRES.default;
   const themeInsight = THEME_INSIGHTS[dev.theme] || THEME_INSIGHTS.default;
+  const opening = CONTEXT_OPENINGS[index % CONTEXT_OPENINGS.length];
+  const bridge = CONTEXT_BRIDGES[index % CONTEXT_BRIDGES.length];
+  const theme = String(dev.theme || "Palavra").toLowerCase();
 
-  return `${dev.reference} deve ser lido dentro do fluxo de ${book || "seu livro bíblico"}. ${bookContext} O versículo escolhido concentra uma verdade que não pode ser separada do caráter de Deus, da resposta de fé esperada do Seu povo e da obra de Cristo como centro da revelação.
+  return `${opening} ${dev.reference} está em ${book || "um livro bíblico"}, dentro de um ambiente de ${genre}. ${bookSetting} ${bookContext}
 
-No devocional de hoje, o tema é ${String(dev.theme || "Palavra").toLowerCase()}. ${themeInsight} Assim, o contexto bíblico não serve apenas para informar, mas para corrigir leituras superficiais: antes de aplicar o texto à vida, ouvimos o que Deus está revelando sobre Si mesmo, sobre nossa condição e sobre o caminho de obediência que a Palavra apresenta para este dia ${index + 1} do plano anual.`;
+Dentro desse cenário, o tema de ${theme} não aparece como uma ideia solta. ${bridge} ${themeInsight} Por isso, o contexto bíblico deste devocional deve ser lido em três movimentos: primeiro, o que Deus revela sobre Si mesmo; segundo, que resposta Ele exige do Seu povo; terceiro, como essa verdade encontra seu cumprimento e direção final em Cristo.
+
+Para o dia ${index + 1} do plano anual, a leitura pastoral é esta: antes de perguntar “como isso me ajuda?”, pergunte “o que este texto está dizendo no seu próprio lugar na Bíblia?”. Só depois disso a aplicação se torna saudável, profunda e fiel.`;
 }
 
 function buildReflection(dev, index) {
@@ -155,91 +260,6 @@ function buildReflection(dev, index) {
 ${movements[index % movements.length]} Por isso, no dia ${day} do plano anual, não leia apenas para concordar; leia para obedecer. Pergunte ao Senhor onde essa verdade precisa ganhar forma: em uma conversa, em uma escolha, em um perdão, em uma renúncia ou em uma atitude de fé. ${endings[index % endings.length]}`;
 }
 
-function chooseCommentator(dev, index) {
-  const book = parseBook(dev.reference);
-  const theme = dev.theme || "Palavra";
-
-  const byBook = {
-    Salmos: "Charles Spurgeon",
-    Provérbios: "Matthew Henry",
-    Isaías: "João Calvino",
-    Jeremias: "Matthew Henry",
-    Mateus: "John Stott",
-    Marcos: "William Lane",
-    Lucas: "Joel B. Green",
-    João: "D.A. Carson",
-    Atos: "F.F. Bruce",
-    Romanos: "João Calvino",
-    "1 Coríntios": "Gordon Fee",
-    "2 Coríntios": "John Stott",
-    Gálatas: "Martinho Lutero",
-    Efésios: "John Stott",
-    Filipenses: "Warren Wiersbe",
-    Colossenses: "N.T. Wright",
-    "1 Tessalonicenses": "Warren Wiersbe",
-    "2 Tessalonicenses": "Warren Wiersbe",
-    Hebreus: "F.F. Bruce",
-    Tiago: "Douglas Moo",
-    "1 Pedro": "Edmund Clowney",
-    "2 Pedro": "Michael Green",
-    "1 João": "John Stott",
-    Apocalipse: "G.K. Beale"
-  };
-
-  const byTheme = {
-    Oração: "Matthew Henry",
-    Graça: "João Calvino",
-    Fé: "Martinho Lutero",
-    Amor: "John Stott",
-    Esperança: "Charles Spurgeon",
-    Perseverança: "D.A. Carson",
-    Santidade: "J.C. Ryle",
-    Sabedoria: "Matthew Henry",
-    Serviço: "John Stott",
-    Gratidão: "Charles Spurgeon",
-    Perdão: "John Stott"
-  };
-
-  return byBook[book] || byTheme[theme] || COMMENTATORS[index % COMMENTATORS.length];
-}
-
-function buildCommentatorInsight(dev, commentator) {
-  const book = parseBook(dev.reference) || "o livro bíblico";
-  const theme = String(dev.theme || "Palavra").toLowerCase();
-  const themeInsight = THEME_INSIGHTS[dev.theme] || THEME_INSIGHTS.default;
-
-  const perspectives = {
-    "Charles Spurgeon": `Comentário inspirado na abordagem pastoral de Charles Spurgeon: ${dev.reference} coloca a alma diante do Deus que sustenta, consola e chama à confiança. Em sua pregação, Spurgeon frequentemente conduzia o leitor do texto para a experiência viva da fé; por isso, sua leitura destacaria que ${theme} não deve permanecer como sentimento religioso, mas tornar-se dependência do Senhor, adoração e descanso nas promessas divinas.`,
-    "Matthew Henry": `Comentário inspirado na abordagem de Matthew Henry: ${dev.reference} apresenta doutrina e dever. Henry costumava perguntar o que o texto revela sobre Deus e que resposta exige do crente. Nessa linha, a passagem ensina que ${theme} precisa formar uma vida ordenada pela piedade, com reverência, humildade e obediência nas práticas comuns.`,
-    "João Calvino": `Comentário inspirado na abordagem de João Calvino: ${dev.reference} deve ser lido reconhecendo a soberania de Deus e a dependência humana da graça. Calvino enfatizaria que ${theme} não nasce da autossuficiência, mas de um coração governado pela Palavra, submetido à vontade divina e sustentado pela fidelidade do Senhor.`,
-    "John Stott": `Comentário inspirado na abordagem de John Stott: ${dev.reference} une fidelidade bíblica e discipulado. Stott destacaria que o texto precisa ser compreendido com a mente e obedecido com a vida. Assim, ${theme} não é uma ideia devocional isolada, mas uma expressão concreta de seguir Cristo no mundo.`,
-    "Warren Wiersbe": `Comentário inspirado na abordagem de Warren Wiersbe: ${dev.reference} mostra uma verdade bíblica que precisa funcionar na rotina. Wiersbe tenderia a destacar o movimento do texto para a prática: ${theme} amadurece quando a Palavra começa a orientar pensamentos, escolhas, relacionamentos e reações cotidianas.`,
-    "D.A. Carson": `Comentário inspirado na abordagem de D.A. Carson: ${dev.reference} precisa ser interpretado dentro do argumento de ${book}, evitando usos isolados do versículo. Carson chamaria atenção para a relação da passagem com o evangelho, com o caráter de Deus e com a resposta esperada do povo da aliança.`,
-    "F.F. Bruce": `Comentário inspirado na abordagem de F.F. Bruce: ${dev.reference} deve ser observado dentro do desenvolvimento bíblico e da vida da Igreja. Bruce destacaria o sentido histórico e apostólico do texto, mostrando que ${theme} é uma verdade revelada para sustentar fé, perseverança e prática cristã sóbria.`,
-    "Albert Barnes": `Comentário inspirado na abordagem de Albert Barnes: ${dev.reference} deve ser lido buscando seu sentido claro e suas implicações morais. Barnes destacaria que a Escritura foi dada para corrigir, consolar e dirigir; portanto, ${theme} é resposta objetiva ao que Deus torna evidente no texto.`,
-    "Martinho Lutero": `Comentário inspirado na abordagem de Martinho Lutero: ${dev.reference} aponta para a fé que se agarra à promessa de Deus. Lutero ressaltaria que a segurança do crente não repousa em mérito pessoal, mas na Palavra fiel do Senhor; por isso, ${theme} deve brotar da confiança no evangelho.`,
-    "J.C. Ryle": `Comentário inspirado na abordagem de J.C. Ryle: ${dev.reference} exige santidade prática. Ryle destacaria que a fé verdadeira não fica invisível; ela aparece em arrependimento, disciplina espiritual, reverência e decisões concretas. O tema de ${theme} deve alcançar hábitos e prioridades.`,
-    "Gordon Fee": `Comentário inspirado na abordagem de Gordon Fee: ${dev.reference} deve ser lido considerando a obra do Espírito na comunidade cristã. Fee destacaria que ${theme} não é apenas experiência individual, mas fruto da presença de Deus formando um povo que vive o evangelho em unidade e testemunho.`,
-    "Douglas Moo": `Comentário inspirado na abordagem de Douglas Moo: ${dev.reference} mostra que fé e prática caminham juntas. Moo destacaria a lógica ética da passagem: a Palavra recebida com fé precisa produzir obediência verificável. O tema de ${theme} deve ser testado nas decisões e nos relacionamentos reais.`,
-    "Edmund Clowney": `Comentário inspirado na abordagem de Edmund Clowney: ${dev.reference} deve ser lido apontando para Cristo e para a identidade do povo de Deus. Clowney destacaria que a passagem forma peregrinos chamados à esperança e fidelidade; ${theme} fortalece a consciência de pertencimento ao Senhor.`,
-    "Michael Green": `Comentário inspirado na abordagem de Michael Green: ${dev.reference} chama o cristão a uma fé perseverante e pública. Green destacaria que ${theme} confronta acomodação espiritual e encoraja o crente a viver com clareza, coragem e fidelidade em meio a uma cultura resistente ao evangelho.`,
-    "G.K. Beale": `Comentário inspirado na abordagem de G.K. Beale: ${dev.reference} deve ser lido dentro da grande história bíblica, da criação à nova criação. Beale destacaria ecos da revelação e sua consumação em Cristo, mostrando que ${theme} aponta para esperança final e fidelidade presente.`
-  };
-
-  return `${perspectives[commentator] || perspectives["Matthew Henry"]} ${themeInsight} Essa leitura enfatiza o sentido bíblico antes da aplicação pessoal: primeiro entendemos o que o texto afirma sobre Deus e Sua obra; depois respondemos com fé, arrependimento e obediência.`;
-}
-
-function buildCommentary(dev, index) {
-  const commentator = chooseCommentator(dev, index);
-
-  return [
-    {
-      author: commentator,
-      text: buildCommentatorInsight(dev, commentator)
-    }
-  ];
-}
-
 function buildApplication(dev, index) {
   return [
     `Leia ${dev.reference} lentamente e destaque uma palavra ou expressão central do texto.`,
@@ -266,7 +286,6 @@ function normalizeDevotional(sourceDev, index) {
     image: sourceDev.image || IMAGES[index % IMAGES.length],
     scripture: sourceDev.scripture || "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito...",
     context: buildContext({ ...sourceDev, reference, theme }, index),
-    commentary: buildCommentary({ ...sourceDev, reference, theme }, index),
     reflection: buildReflection({ ...sourceDev, reference, theme }, index),
     application: buildApplication({ ...sourceDev, reference, theme }, index),
     prayer: buildPrayer({ ...sourceDev, reference, theme }),

@@ -412,62 +412,6 @@ body {
   text-align: justify;
 }
 
-/* ─── Commentary ─── */
-.devo-commentary {
-  background: linear-gradient(135deg, #fdf8ef, #faf3e5);
-  border: 1px solid #ead8ad;
-  border-radius: var(--radius);
-  padding: 20px 24px;
-  margin-bottom: 24px;
-  border-left: 4px solid var(--color-gold);
-}
-
-.devo-commentary h4 {
-  font-family: var(--font-display);
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-gold);
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.devo-commentary h4::before { content: '📚'; font-size: 0.85rem; }
-
-.devo-commentary p {
-  font-size: 0.95rem;
-  line-height: 1.75;
-  color: #4a3c1e;
-  margin: 0;
-  font-style: italic;
-  text-align: justify;
-}
-
-.commentary-item {
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-}
-
-.commentary-item:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
-}
-
-.commentary-author {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--color-gold);
-  margin-bottom: 6px;
-  font-style: normal;
-}
-
 /* ─── Application ─── */
 .devo-application { margin-bottom: 24px; }
 
@@ -1311,7 +1255,6 @@ body {
 
   .devo-reflection p { font-size: 1rem; }
   .devo-context p { font-size: 0.9rem; }
-  .devo-commentary p { font-size: 0.9rem; }
   .devo-prayer p { font-size: 0.95rem; }
   .devo-application li { font-size: 0.95rem; }
   .verse-box blockquote { font-size: 1rem; }

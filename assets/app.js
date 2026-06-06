@@ -103,17 +103,6 @@ function renderCard(devotional, offset, isToday) {
           <p>${devotional.context}</p>
         </div>` : ""}
 
-        ${devotional.commentary ? `
-        <div class="devo-section devo-commentary">
-          <h4><span class="section-icon">📚</span> Comentário</h4>
-          ${devotional.commentary.map(c => `
-            <div class="commentary-item">
-              <span class="commentary-author">${c.author}</span>
-              <p>${c.text}</p>
-            </div>
-          `).join("")}
-        </div>` : ""}
-
         <div class="devo-section devo-reflection">
           <h4><span class="section-icon">💭</span> Reflexão</h4>
           <p>${devotional.reflection}</p>
