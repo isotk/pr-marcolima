@@ -233,7 +233,7 @@ async function main() {
   const startIdx = existing.length;
   const newDevotionals = [];
 
-  for (let i = 0; i < references.length && newDevotionals.length < 70; i++) {
+  for (let i = 0; i < references.length; i++) {
     const ref = references[i];
     console.log(`${i + 1}/${references.length} - ${ref.reference} (${ref.theme})`);
 
