@@ -131,10 +131,6 @@ function renderCard(devotional, offset, isToday) {
             <span class="share-letter">f</span>
             Facebook
           </button>
-          <button class="btn-x" data-id="${devotional.id}" title="Copiar para X">
-            <span class="share-letter">X</span>
-            X
-          </button>
           <button class="btn-copy" data-id="${devotional.id}" title="Copiar texto">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
             Copiar
@@ -207,24 +203,6 @@ function attachEvents(container) {
       navigator.clipboard.writeText(buildShareText(dev)).then(() => {
         msg.textContent = "Texto copiado! Cole no Facebook ✓";
         window.open("https://www.facebook.com/", "_blank");
-        setTimeout(() => { msg.textContent = ""; }, 3000);
-      }).catch(() => {
-        msg.textContent = "Erro ao copiar";
-        setTimeout(() => { msg.textContent = ""; }, 2000);
-      });
-    });
-  });
-
-  container.querySelectorAll(".btn-x").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.dataset.id;
-      const dev = findDevotionalById(id);
-      if (!dev) return;
-      const msg = container.querySelector(`.share-msg[data-id="${id}"]`);
-      const text = buildShareText(dev);
-      navigator.clipboard.writeText(text).then(() => {
-        msg.textContent = "Texto copiado! Cole no X ✓";
-        window.open("https://x.com/compose/post", "_blank");
         setTimeout(() => { msg.textContent = ""; }, 3000);
       }).catch(() => {
         msg.textContent = "Erro ao copiar";

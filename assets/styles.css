@@ -465,7 +465,6 @@ body {
 .btn-whatsapp,
 .btn-instagram,
 .btn-facebook,
-.btn-x,
 .btn-copy {
   display: inline-flex;
   align-items: center;
@@ -510,17 +509,6 @@ body {
   background: #1463c7;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(24,119,242,0.35);
-}
-
-.btn-x {
-  background: #111;
-  color: #fff;
-}
-
-.btn-x:hover {
-  background: #333;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 
 .share-letter {
@@ -1260,7 +1248,7 @@ body {
   .verse-box blockquote { font-size: 1rem; }
 
   .devo-share { flex-direction: column; }
-  .btn-whatsapp, .btn-instagram, .btn-facebook, .btn-x, .btn-copy { width: 100%; justify-content: center; }
+  .btn-whatsapp, .btn-instagram, .btn-facebook, .btn-copy { width: 100%; justify-content: center; }
 
   .about-grid { grid-template-columns: 1fr; }
   .about-card { padding: 24px 20px; }
