@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pr. Marco Lima — Devocional Diário</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <img src="./assets/images/logo.png" alt="Pr. Marco Lima" class="header-logo" />
+        <div class="header-info">
+          <h1 class="header-name">Pr. Marco Lima</h1>
+          <a href="https://instagram.com/prmarcolima" target="_blank" rel="noopener noreferrer" class="header-social">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            @prmarcolima
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- Verse of the Day -->
+      <section class="section-vod" id="versiculo">
+        <div class="container">
+          <div id="verse-of-the-day"></div>
+        </div>
+      </section>
+
+      <section class="section-today" id="hoje">
+        <div class="container">
+          <div class="section-label">
+            <span class="label-icon">☀</span>
+            <span>Devocional de Hoje</span>
+          </div>
+          <div id="today-card"></div>
+        </div>
+      </section>
+
+      <section class="section-past" id="devocionais">
+        <div class="container">
+          <div class="section-label">
+            <span class="label-icon">📖</span>
+            <span>Devocionais Anteriores</span>
+          </div>
+          <div id="past-cards"></div>
+        </div>
+      </section>
+
+      <section class="section-about" id="sobre">
+        <div class="container">
+          <div class="section-label">
+            <span class="label-icon">✝</span>
+            <span>Sobre o Devocional</span>
+          </div>
+          <div class="about-grid">
+            <div class="about-card">
+              <div class="about-icon">📖</div>
+              <h3>O que é?</h3>
+              <p>Um momento diário para ouvir a voz de Deus através da Sua Palavra, com meditação profunda e oração.</p>
+            </div>
+            <div class="about-card">
+              <div class="about-icon">🙏</div>
+              <h3>Como fazer?</h3>
+              <p>Reserve um momento, leia com atenção, reflita, anote suas descobertas e compartilhe o que aprendeu.</p>
+            </div>
+            <div class="about-card">
+              <div class="about-icon">✝</div>
+              <h3>Por que fazer?</h3>
+              <p>A Palavra de Deus fortalece sua fé e aprofunda seu relacionamento com o Senhor Jesus Cristo.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <img src="./assets/images/logo.png" alt="Pr. Marco Lima" class="footer-main-logo" />
+        <div class="footer-logos">
+          <a href="https://legadomc.com.br" target="_blank" rel="noopener noreferrer" class="footer-logo-link">
+            <img src="https://legadomc.com.br/legado.png" alt="Legado MC" class="footer-logo" />
+            <span>Legado MC</span>
+          </a>
+          <a href="https://boladeneve.com" target="_blank" rel="noopener noreferrer" class="footer-logo-link">
+            <img src="https://boladeneve.com/wp-content/uploads/2025/02/bola_de_neve_branco.png" alt="Bola de Neve" class="footer-logo" />
+          </a>
+        </div>
+        <div class="footer-social">
+          <a href="https://instagram.com/prmarcolima" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            @prmarcolima
+          </a>
+        </div>
+        <p class="footer-sub">Fortalecendo fé a cada dia</p>
+      </div>
+    </footer>
+
+    <script src="./assets/app.js"></script>
+  </body>
+</html>
