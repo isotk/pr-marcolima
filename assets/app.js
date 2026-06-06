@@ -9,7 +9,6 @@ const WEEKDAYS = [
 
 const state = {
   devotionals: [],
-  references: [],
   currentDevotionals: [],
   favorites: new Set(JSON.parse(localStorage.getItem("devocional:favorites") || "[]")),
 };
@@ -32,7 +31,7 @@ function daysSinceStart(date) {
   return Math.floor((start - START_DATE) / 86400000);
 }
 
-function fallbackDevotionalForOffset(offset) {
+function devotionalForOffset(offset) {
   const today = new Date();
   const target = new Date(today);
   target.setDate(today.getDate() + offset);
@@ -43,170 +42,6 @@ function fallbackDevotionalForOffset(offset) {
 
   const rotatingIndex = (dayNum - FIXED_COUNT) % (state.devotionals.length - FIXED_COUNT);
   return state.devotionals[FIXED_COUNT + rotatingIndex];
-}
-
-function referenceForOffset(offset) {
-  if (!state.references.length) return null;
-
-  const today = new Date();
-  const target = new Date(today);
-  target.setDate(today.getDate() + offset);
-  const dayNum = daysSinceStart(target);
-
-  if (dayNum < 0) return null;
-  return state.references[dayNum % state.references.length];
-}
-
-function apiReferencePath(reference) {
-  const match = reference.match(/^(\d?\s*[^\d]+?)\s+(\d+):(\d+)(?:-(\d+))?$/);
-  if (!match) return null;
-
-  const bookMap = {
-    "gênesis": "gen", "genesis": "gen", "êxodo": "exo", "exodo": "exo",
-    "números": "num", "numeros": "num", "deuteronômio": "deu", "deuteronomio": "deu",
-    "josué": "jos", "josue": "jos", "juízes": "jdg", "juizes": "jdg", "rute": "rut",
-    "1 samuel": "1sa", "2 samuel": "2sa", "1 reis": "1ki", "2 reis": "2ki",
-    "1 crônicas": "1ch", "1 cronicas": "1ch", "2 crônicas": "2ch", "2 cronicas": "2ch",
-    "esdras": "ezr", "neemias": "neh", "ester": "est", "esther": "est", "jó": "job", "jo": "job",
-    "salmos": "psa", "salmo": "psa", "provérbios": "pro", "proverbios": "pro",
-    "eclesiastes": "ecc", "isaías": "isa", "isaias": "isa", "jeremias": "jer", "lamentações": "lam",
-    "ezequiel": "eze", "daniel": "dan", "joel": "jol", "amós": "amo", "amos": "amo",
-    "miqueias": "mic", "habacuque": "hab", "ageu": "hag", "zacarias": "zec", "malaquias": "mal",
-    "mateus": "mat", "marcos": "mar", "lucas": "luk", "joão": "jhn", "joao": "jhn", "atos": "act",
-    "romanos": "rom", "1 coríntios": "1co", "1 corintios": "1co", "2 coríntios": "2co", "2 corintios": "2co",
-    "gálatas": "gal", "galatas": "gal", "efésios": "eph", "efesios": "eph", "filipenses": "php",
-    "colossenses": "col", "1 tessalonicenses": "1th", "2 tessalonicenses": "2th",
-    "1 timóteo": "1ti", "1 timoteo": "1ti", "2 timóteo": "2ti", "2 timoteo": "2ti",
-    "tito": "tit", "hebreus": "heb", "tiago": "jas", "1 pedro": "1pe", "2 pedro": "2pe",
-    "1 joão": "1jn", "1 joao": "1jn", "2 joão": "2jn", "2 joao": "2jn", "3 joão": "3jn", "3 joao": "3jn",
-    "judas": "jud", "apocalipse": "rev"
-  };
-
-  const book = match[1].trim().toLowerCase();
-  const chapter = match[2];
-  const start = match[3];
-  const end = match[4];
-  const apiBook = bookMap[book];
-
-  if (!apiBook) return null;
-  return `${apiBook}+${chapter}:${end ? `${start}-${end}` : start}`;
-}
-
-async function fetchApiVerse(reference) {
-  const apiPath = apiReferencePath(reference);
-  if (!apiPath) return null;
-
-  const response = await fetch(`https://bible-api.com/${apiPath}?translation=almeida`);
-  const data = await response.json();
-  if (!response.ok || data.error || !data.text) return null;
-
-  const context = await fetchApiContext(data);
-
-  return {
-    reference: data.reference,
-    scripture: data.text.replace(/\s+/g, " ").trim(),
-    context
-  };
-}
-
-async function fetchApiContext(verseData) {
-  if (!verseData.verses?.length) return null;
-
-  const firstVerse = verseData.verses[0];
-  const lastVerse = verseData.verses[verseData.verses.length - 1];
-  const chapterPath = `${firstVerse.book_id.toLowerCase()}+${firstVerse.chapter}`;
-
-  try {
-    const response = await fetch(`https://bible-api.com/${chapterPath}?translation=almeida`);
-    const chapterData = await response.json();
-    if (!response.ok || chapterData.error || !chapterData.verses?.length) return null;
-
-    const before = chapterData.verses
-      .filter(v => v.verse >= Math.max(1, firstVerse.verse - 2) && v.verse < firstVerse.verse)
-      .map(v => `${v.verse}. ${v.text.replace(/\s+/g, " ").trim()}`)
-      .join(" ");
-
-    const after = chapterData.verses
-      .filter(v => v.verse > lastVerse.verse && v.verse <= lastVerse.verse + 2)
-      .map(v => `${v.verse}. ${v.text.replace(/\s+/g, " ").trim()}`)
-      .join(" ");
-
-    const beforeText = before ? `Antes do versículo, o capítulo diz: “${before}” ` : "";
-    const afterText = after ? `Na sequência, o texto continua: “${after}” ` : "";
-
-    return `${verseData.reference} está dentro de ${firstVerse.book_name} ${firstVerse.chapter}. ${beforeText}${afterText}Esse contexto imediato ajuda a ler o versículo dentro do fluxo do capítulo, evitando uma aplicação isolada e fortalecendo a meditação bíblica do dia.`;
-  } catch (_) {
-    return null;
-  }
-}
-
-function buildApiDevotional(reference, verse, fallback, offset) {
-  const theme = reference.theme || fallback?.theme || "Palavra";
-  const title = reference.title || fallback?.title || `Devocional em ${verse.reference}`;
-
-  return {
-    ...(fallback || {}),
-    id: `api-${fullDate(offset).replace(/\D/g, "")}-${verse.reference.replace(/[^a-z0-9]/gi, "-").toLowerCase()}`,
-    title,
-    theme,
-    reference: verse.reference,
-    scripture: verse.scripture,
-    context: verse.context || `Devocional diário gerado a partir da leitura bíblica de ${verse.reference}. O texto foi buscado automaticamente na API Bible API, tradução Almeida, e aplicado como meditação para este dia.`,
-    commentary: [
-      { author: "Charles Spurgeon", text: "A Palavra de Deus deve ser lida como voz viva do Senhor para a alma, conduzindo o coração à fé e à obediência." },
-      { author: "Matthew Henry", text: "Cada passagem das Escrituras possui proveito espiritual quando recebida com reverência, oração e desejo sincero de obedecer." },
-      { author: "John Stott", text: "A verdadeira meditação bíblica não termina na compreensão do texto, mas na transformação da vida diante de Deus." }
-    ],
-    reflection: `A Palavra de hoje nos chama a olhar para ${theme.toLowerCase()} à luz da vontade de Deus. Leia o texto com atenção, observe o que Deus revela sobre Si mesmo e responda em fé, oração e obediência prática.`,
-    application: [
-      `Leia ${verse.reference} novamente em voz alta.`,
-      "Identifique uma verdade sobre Deus revelada neste texto.",
-      "Transforme essa verdade em uma atitude prática para hoje."
-    ],
-    prayer: `Senhor, fala comigo por meio de ${verse.reference}. Que a Tua Palavra molde meus pensamentos, minhas decisões e minha caminhada contigo hoje. Em nome de Jesus. Amém.`,
-    author: "Pr. Marco Lima"
-  };
-}
-
-async function fetchAiReflection({ reference, scripture, context, theme }) {
-  try {
-    const response = await fetch("/api/reflection", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ reference, scripture, context, theme })
-    });
-
-    const data = await response.json();
-    if (!response.ok || !data.reflection) return null;
-    return data.reflection;
-  } catch (_) {
-    return null;
-  }
-}
-
-async function devotionalForOffset(offset) {
-  const fallback = fallbackDevotionalForOffset(offset);
-  const reference = referenceForOffset(offset);
-
-  if (!reference) return fallback;
-
-  try {
-    const verse = await fetchApiVerse(reference.reference);
-    if (!verse) return fallback;
-
-    const devotional = buildApiDevotional(reference, verse, fallback, offset);
-    const aiReflection = await fetchAiReflection({
-      reference: devotional.reference,
-      scripture: devotional.scripture,
-      context: devotional.context,
-      theme: devotional.theme
-    });
-
-    if (aiReflection) devotional.reflection = aiReflection;
-    return devotional;
-  } catch (_) {
-    return fallback;
-  }
 }
 
 function noteKey(id) { return `devocional:notes:${id}`; }
@@ -533,13 +368,8 @@ function markToday() {
 
 /* ─── Boot ─── */
 async function boot() {
-  const [devotionalsResponse, referencesResponse] = await Promise.all([
-    fetch("./data/devocionais.json"),
-    fetch("./data/references.json")
-  ]);
-
+  const devotionalsResponse = await fetch("./data/devocionais.json");
   state.devotionals = await devotionalsResponse.json();
-  state.references = await referencesResponse.json();
   await renderAll();
   markToday();
 }
