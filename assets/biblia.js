@@ -193,6 +193,10 @@ function openReference(ref) {
 function renderResults(query) {
   const normalizedQuery = normalize(query);
   const results = [];
+  const url = new URL(location.href);
+  url.search = "";
+  url.searchParams.set("q", query);
+  history.replaceState(null, "", url);
 
   for (const book of state.bible.books) {
     const bookName = BOOK_NAMES[book.book] || book.englishName || book.book;
@@ -287,6 +291,7 @@ function bootFromUrl() {
 }
 
 async function boot() {
+  const initialQuery = new URLSearchParams(location.search).get("q") || "";
   const response = await fetch("../data/biblia-almeida-livre.json");
   state.bible = await response.json();
   bootFromUrl();
@@ -294,6 +299,10 @@ async function boot() {
   fillChapters();
   attachEvents();
   renderChapter();
+  if (initialQuery) {
+    searchInput.value = initialQuery;
+    runSearch();
+  }
 }
 
 boot().catch(() => {
