@@ -1015,7 +1015,7 @@ body {
 /* ─── About Cards ─── */
 .about-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 24px;
 }
 
@@ -1267,6 +1267,167 @@ body {
 .bible-result:hover {
   border-color: var(--color-sage);
   box-shadow: var(--shadow-soft);
+}
+
+/* ─── Books ─── */
+.books-main { min-height: 70vh; }
+
+.books-hero { padding: 34px 0 16px; }
+
+.books-hero-card {
+  background: linear-gradient(135deg, var(--color-warm-white), var(--color-parchment));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 30px 32px;
+}
+
+.books-hero-card h2 {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.books-hero-card p {
+  color: var(--color-ink-soft);
+  margin: 0;
+  max-width: 760px;
+}
+
+.books-section { padding: 12px 0 54px; }
+
+.books-toolbar {
+  background: var(--color-warm-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 22px;
+  padding: 22px;
+}
+
+.books-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.book-card {
+  background: var(--color-warm-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  overflow: hidden;
+}
+
+.book-cover,
+.book-cover-placeholder {
+  height: 100%;
+  min-height: 230px;
+  width: 100%;
+}
+
+.book-cover {
+  display: block;
+  object-fit: cover;
+}
+
+.book-cover-placeholder {
+  align-items: center;
+  background: linear-gradient(150deg, var(--color-sage-deep), var(--color-sage-light));
+  color: var(--color-gold-light);
+  display: flex;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  justify-content: center;
+  letter-spacing: 0.08em;
+}
+
+.book-card-body { padding: 22px; }
+
+.book-kind {
+  color: var(--color-sage-deep);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.book-card h3 {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.25;
+  margin: 5px 0;
+}
+
+.book-author {
+  color: var(--color-gold);
+  font-size: 0.86rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.book-description {
+  color: var(--color-ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  margin-bottom: 12px;
+  text-align: justify;
+}
+
+.book-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 15px;
+}
+
+.book-tags span {
+  background: var(--color-gold-light);
+  border-radius: 999px;
+  color: var(--color-sage-deep);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 9px;
+}
+
+.book-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.books-empty {
+  background: var(--color-warm-white);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  color: var(--color-ink-soft);
+  grid-column: 1 / -1;
+  padding: 42px 28px;
+  text-align: center;
+}
+
+.books-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+
+.books-empty h3 {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  margin-bottom: 8px;
+}
+
+.books-empty p {
+  margin: 6px auto;
+  max-width: 640px;
 }
 
 .about-card:hover {
@@ -1725,6 +1886,7 @@ body {
   .about-grid { grid-template-columns: repeat(2, 1fr); }
   .bible-layout { grid-template-columns: 1fr; }
   .bible-controls { position: static; }
+  .books-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 700px) {
@@ -1767,6 +1929,10 @@ body {
   .bible-verses { padding: 22px 20px; }
   .bible-verse { font-size: 1.03rem; line-height: 1.8; }
   .bible-results { padding: 0 20px 22px; }
+  .books-hero-card { padding: 24px 20px; }
+  .book-card { grid-template-columns: 1fr; }
+  .book-cover, .book-cover-placeholder { height: 220px; min-height: 0; }
+  .book-actions { flex-direction: column; }
 
   .footer-main-logo { max-width: 160px; }
   .footer-logos { gap: 16px; }

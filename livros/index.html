@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Livros e PDFs | Pr. Marco Lima</title>
+    <meta name="description" content="Livros, apostilas e materiais em PDF disponibilizados por Pr. Marco Lima para leitura e download." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://pr-marcolima.vercel.app/livros/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Livros e PDFs | Pr. Marco Lima" />
+    <meta property="og:description" content="Materiais em PDF para leitura, estudo bíblico e crescimento espiritual." />
+    <meta property="og:url" content="https://pr-marcolima.vercel.app/livros/" />
+    <meta property="og:image" content="https://pr-marcolima.vercel.app/assets/devotional-images/dia-001-a-gratidao-que-transforma.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="../" class="header-logo-link"><img src="../assets/images/logo.png" alt="Pr. Marco Lima" class="header-logo" /></a>
+        <div class="header-info">
+          <h1 class="header-name">Pr. Marco Lima</h1>
+          <a href="https://instagram.com/prmarcolima" target="_blank" rel="noopener noreferrer" class="header-social">@prmarcolima</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="main books-main">
+      <section class="books-hero">
+        <div class="container">
+          <a class="back-link" href="../">← Voltar aos devocionais</a>
+          <div class="books-hero-card">
+            <span class="intro-kicker">Biblioteca</span>
+            <h2>Livros e Materiais em PDF</h2>
+            <p>Um espaço para disponibilizar livros, apostilas e materiais de estudo autorizados para leitura online ou download.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="books-section">
+        <div class="container">
+          <div class="books-toolbar">
+            <label class="search-label" for="books-search">Buscar livros</label>
+            <input id="books-search" class="search-input" type="search" placeholder="Ex.: discipulado, oração, liderança..." autocomplete="off" />
+            <p id="books-summary" class="search-summary"></p>
+          </div>
+          <div id="books-grid" class="books-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../assets/livros.js"></script>
+  </body>
+</html>

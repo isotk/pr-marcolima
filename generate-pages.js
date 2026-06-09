@@ -195,7 +195,7 @@ for (const [index, devotional] of devotionals.entries()) {
   fs.writeFileSync(path.join(dir, "index.html"), renderPage(devotional, index), "utf8");
 }
 
-const sitemap = [`${SITE_URL}/`, `${SITE_URL}/biblia/`, ...devotionals.map(pageUrl)].map(url => `  <url><loc>${url}</loc></url>`).join("\n");
+const sitemap = [`${SITE_URL}/`, `${SITE_URL}/biblia/`, `${SITE_URL}/livros/`, ...devotionals.map(pageUrl)].map(url => `  <url><loc>${url}</loc></url>`).join("\n");
 fs.writeFileSync(path.join(root, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap}\n</urlset>\n`, "utf8");
 fs.writeFileSync(path.join(root, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`, "utf8");
 
