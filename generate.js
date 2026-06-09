@@ -102,6 +102,59 @@ const THEME_INSIGHTS = {
   default: "Este tema aponta para a maneira como Deus forma o coração do Seu povo por meio da Palavra. A aplicação correta não nasce de frases soltas, mas de uma leitura reverente, contextual e obediente do texto bíblico."
 };
 
+const REFERENCE_INSIGHTS = {
+  "1 Tessalonicenses 5:16-18": "Paulo une alegria, oração e gratidão como marcas de uma vida que aprendeu a enxergar Deus no centro da rotina. A gratidão cristã não depende de tudo estar fácil; ela nasce da certeza de que Cristo governa até os dias comuns.",
+  "Filipenses 4:6-7": "A ansiedade é chamada para fora do coração e levada à presença de Deus em oração. A paz prometida não é ausência de luta, mas guarda espiritual para a mente e para os afetos em Cristo Jesus.",
+  "Tiago 1:2-4": "Tiago não romantiza a dor; ele mostra que a provação, quando entregue a Deus, pode produzir perseverança madura. A fé testada deixa de ser apenas discurso e passa a formar caráter diante do Senhor.",
+  "1 Coríntios 13:4-7": "O amor descrito por Paulo confronta a imaturidade da igreja. Ele não é sentimento solto, mas expressão do caráter de Cristo: paciente, humilde, verdadeiro e disposto a permanecer quando o ego quer dominar.",
+  "João 8:12": "Jesus não apenas aponta para a luz; Ele declara ser a própria luz do mundo. Segui-Lo significa sair das sombras da autossuficiência, do pecado escondido e da confusão espiritual.",
+  "Salmos 23:1-3": "Davi apresenta Deus como Pastor que guia, alimenta e restaura a alma. A segurança do rebanho não está na força da ovelha, mas no cuidado fiel Daquele que conduz cada passo.",
+  "Salmos 46:10": "A quietude bíblica não é fuga; é rendição. Deus chama o coração a parar de lutar como se tudo dependesse de sua força e reconhecer que Ele é Senhor sobre a história.",
+  "Salmos 91:1-2": "O abrigo do Altíssimo fala de proximidade, confiança e permanência. Não é uma promessa de vida sem batalha, mas de presença segura em meio às ameaças que cercam a alma.",
+  "Salmos 119:105": "A Palavra é lâmpada para os passos, não holofote para controlar todo o futuro. Deus guia o obediente um passo de cada vez, chamando-o a confiar no que já foi revelado.",
+  "Salmos 37:4": "Deleitar-se no Senhor reorganiza desejos. Quando Deus se torna o centro do prazer da alma, o coração aprende a pedir de modo mais santo e a esperar com mais confiança.",
+  "Salmos 55:22": "Lançar o fardo sobre o Senhor é admitir que há pesos que não foram feitos para serem carregados sozinhos. Deus sustenta o justo não por causa da força humana, mas por Sua fidelidade.",
+  "Salmos 138:8": "A obra de Deus não fica pela metade. O salmista descansa na fidelidade do Senhor, sabendo que a graça que começou a conduzir também é capaz de completar.",
+  "Salmos 27:1": "Quando o Senhor é luz e salvação, o medo perde seu trono. A coragem nasce de saber quem Deus é antes de olhar para quem ou o que ameaça a vida.",
+  "Salmos 34:8": "Provar e ver é mais que ouvir informações sobre Deus; é experimentar Sua bondade pela confiança obediente. A fé deixa de ser conceito distante e se torna encontro com o Senhor.",
+  "Salmos 40:8": "Obedecer não é apenas cumprir regras externas; é ter a vontade de Deus gravada no íntimo. O coração transformado começa a desejar aquilo que antes apenas suportava.",
+  "Salmos 51:10": "Davi não pede apenas alívio da culpa; pede um coração novo. O arrependimento verdadeiro não quer esconder o pecado, mas ser purificado por Deus desde a raiz.",
+  "Salmos 62:1-2": "A alma aprende descanso quando para de procurar salvadores menores. Só Deus é rocha firme; tudo o mais pode ajudar, mas não pode substituir o Senhor.",
+  "Salmos 73:26": "O corpo e o coração podem falhar, mas Deus permanece como porção eterna. A esperança cristã não depende da estabilidade humana, mas da suficiência do Senhor.",
+  "Salmos 84:11": "Deus não retém o que é bom para os que andam com integridade. Isso não significa receber tudo o que se deseja, mas confiar que o Pai sabe o que realmente conduz à vida.",
+  "Salmos 103:1-5": "Bendizer ao Senhor é treinar a memória espiritual. A alma esquece facilmente os benefícios de Deus, por isso precisa ser chamada de volta à gratidão, ao perdão e à adoração.",
+  "Jeremias 29:11": "A esperança dada por Deus nasce em contexto de espera, disciplina e exílio. Seus planos não alimentam pressa egoísta; sustentam confiança quando o caminho ainda é longo.",
+  "Jeremias 33:3": "O convite para clamar revela um Deus que ouve e responde segundo Sua sabedoria. A oração abre o coração para depender do Senhor, inclusive quando a resposta é maior que a expectativa.",
+  "Ezequiel 36:26": "A promessa de um novo coração mostra que a mudança mais profunda não vem de maquiagem moral, mas de intervenção divina. Deus tira a dureza e dá sensibilidade espiritual.",
+  "Daniel 3:17-18": "A fé dos amigos de Daniel não dependia do livramento acontecer do jeito esperado. Eles confiavam que Deus podia salvar, mas continuariam fiéis mesmo se a resposta fosse diferente.",
+  "Joel 2:25": "A restauração de Deus alcança áreas que pareciam perdidas. Ele não apaga toda consequência automaticamente, mas redime histórias quebradas e chama o povo de volta à aliança.",
+  "Habacuque 2:4": "O justo vive pela fé quando as respostas ainda não chegaram. Habacuque ensina a confiar no caráter de Deus mesmo quando a realidade parece contradizer a promessa.",
+  "Ageu 2:9": "A glória prometida por Deus não depende da aparência inicial da obra. O Senhor encoraja um povo cansado a reconstruir prioridades e esperar uma presença maior que o passado.",
+  "Zacarias 4:6": "A obra de Deus não avança por força humana, carisma ou pressão, mas pelo Espírito. Essa verdade humilha a autossuficiência e fortalece quem se sente pequeno diante da missão.",
+  "Malaquias 3:10": "A fidelidade nas finanças revela confiança no Senhor. O texto confronta uma espiritualidade que separa culto e vida prática, chamando o povo a honrar Deus com tudo.",
+  "Mateus 5:14-16": "Jesus chama Seus discípulos de luz do mundo. A vida transformada não deve buscar aplauso, mas apontar para o Pai por meio de obras que tornam visível a graça recebida.",
+  "Mateus 6:25-27": "Jesus confronta a ansiedade mostrando o cuidado do Pai. A preocupação tenta ocupar o lugar da confiança, mas o discípulo aprende a descansar em quem sustenta a criação.",
+  "Mateus 6:33": "Buscar primeiro o Reino reorganiza agendas, desejos e medos. Jesus não chama a acrescentar Deus à lista; Ele chama a colocar Deus no centro de tudo.",
+  "Mateus 11:28-30": "O descanso oferecido por Cristo é para cansados e sobrecarregados. Ele não entrega apenas alívio emocional; oferece um jugo novo, manso, que ensina a viver debaixo da graça.",
+  "Mateus 16:24-26": "Seguir Jesus envolve negar a si mesmo, tomar a cruz e perder a vida para encontrá-la. O evangelho confronta a ilusão de ganhar o mundo e perder a alma.",
+  "Mateus 19:26": "O impossível humano não limita Deus. Jesus aponta para a incapacidade do homem de salvar a si mesmo e para o poder de Deus em realizar o que a graça exige.",
+  "2 Pedro 3:9": "A paciência do Senhor é misericórdia, não demora vazia. Deus chama ao arrependimento enquanto ainda há tempo, revelando que Sua longanimidade tem propósito salvador.",
+  "Judas 1:24-25": "Judas termina olhando para Deus, que é poderoso para guardar. A perseverança final não se apoia em orgulho espiritual, mas na graça que sustenta os Seus diante da queda.",
+  "Apocalipse 3:20": "Cristo se apresenta à porta de uma igreja morna. O convite é íntimo e urgente: abrir a vida ao Senhor, abandonar a autossuficiência e restaurar comunhão verdadeira.",
+  "Apocalipse 21:4": "A promessa de Deus enxugar lágrimas aponta para a consumação da esperança. A dor não terá a última palavra, porque Cristo fará novas todas as coisas.",
+  "Apocalipse 22:20": "O clamor 'Vem, Senhor Jesus' é a oração de uma igreja que espera. A esperança futura purifica a vida presente e desperta fidelidade até o fim.",
+  "Rute 1:16": "A lealdade de Rute revela compromisso que ultrapassa conveniência. Sua entrega mostra como Deus conduz histórias simples para dentro de propósitos maiores de redenção.",
+  "1 Samuel 16:7": "Deus vê além da aparência. Enquanto pessoas julgam pela superfície, o Senhor examina o coração e chama Seu povo a viver diante Dele com sinceridade.",
+  "2 Samuel 22:31": "Davi celebra um Deus cujo caminho é perfeito e cuja Palavra é provada. A proteção do Senhor não é teoria; é refúgio aprendido em batalhas reais.",
+  "1 Reis 3:11-12": "Salomão pediu sabedoria para governar, não apenas benefício pessoal. A sabedoria que agrada a Deus nasce quando o coração deseja servir melhor e não apenas vencer sozinho.",
+  "2 Reis 2:9": "O pedido de Eliseu não era vaidade espiritual, mas senso de dependência para continuar a missão. Quem serve a Deus precisa mais do Espírito do que de prestígio.",
+  "Esdras 8:23": "Jejum e oração expressam dependência pública do Senhor. Esdras ensina que planejamento e fé não competem; a jornada precisa ser entregue a Deus com humildade.",
+  "Neemias 8:10": "A alegria do Senhor nasce depois de ouvir a Palavra com arrependimento. Não é euforia superficial, mas força para recomeçar debaixo da graça.",
+  "Ester 4:14": "Ester é chamada a discernir seu tempo. A providência de Deus não elimina responsabilidade; ela convoca coragem para agir quando o silêncio seria omissão.",
+  "Eclesiastes 3:1": "Há tempo para tudo debaixo do céu, e reconhecer isso liberta o coração da ansiedade de controlar todas as estações. Deus governa ritmos que não dominamos.",
+  "Eclesiastes 12:13": "A conclusão de Eclesiastes chama ao temor de Deus e à obediência. Depois de examinar tantas buscas humanas, o sentido da vida é encontrado diante do Senhor."
+};
+
 function dateForIndex(index) {
   const date = new Date(START_DATE);
   date.setDate(START_DATE.getDate() + index);
@@ -198,50 +251,63 @@ function buildReflection(dev, index) {
   const day = index + 1;
   const theme = String(dev.theme || "Palavra").toLowerCase();
   const themeInsight = THEME_INSIGHTS[dev.theme] || THEME_INSIGHTS.default;
+  const referenceInsight = REFERENCE_INSIGHTS[dev.reference] || `${dev.reference} chama o coração a ouvir Deus com reverência e responder com fé prática. A Palavra não foi dada para enfeitar pensamentos religiosos, mas para conduzir pessoas reais ao Senhor.`;
   const openings = [
-    `${dev.reference} nos coloca diante de uma verdade simples e profunda: Deus fala para salvar, corrigir e conduzir o coração de volta a Ele.`,
-    `A Palavra de hoje não é apenas uma mensagem bonita; é um chamado de Deus para que a vida inteira se renda a Cristo.`,
-    `${dev.reference} nos lembra que a fé verdadeira começa quando paramos de fugir de Deus e ouvimos Sua voz com humildade.`,
-    `Este devocional começa com uma pergunta séria: o que esta Palavra revela sobre Deus, sobre o pecado e sobre a necessidade de Cristo?`,
-    `A mensagem de hoje aponta para o centro da fé cristã: Jesus Cristo veio buscar e salvar o pecador.`,
-    `Deus usa esta leitura para tirar o coração da religiosidade vazia e levá-lo ao evangelho vivo de Cristo Jesus.`
+    `Hoje, ${dev.reference} não deve ser lido como uma frase isolada, mas como uma Palavra de Deus para alcançar a consciência e reorganizar a vida diante de Cristo.`,
+    `Este devocional começa com uma pergunta simples: que área da sua vida precisa ser iluminada por ${dev.reference} hoje?`,
+    `Ao meditar em ${dev.reference}, não procure apenas conforto rápido; permita que Deus ensine, corrija, console e chame você para mais perto de Jesus.`,
+    `${dev.reference} coloca diante de nós uma verdade capaz de atravessar a rotina, confrontar o coração e renovar a esperança em Deus.`,
+    `A leitura de hoje convida você a diminuir o ruído, abrir a Bíblia com humildade e deixar que ${dev.reference} fale com profundidade.`,
+    `Há dias em que precisamos de uma resposta imediata; há outros em que Deus nos dá algo melhor: uma verdade para sustentar a caminhada. ${dev.reference} faz isso.`
   ];
-  const teachings = [
-    `O ensinamento principal é que ${theme} não pode ser separado do evangelho. Sem Cristo, até as melhores intenções continuam marcadas pelo pecado; com Cristo, a graça alcança, perdoa e transforma.`,
-    `A Escritura ensina que Deus não procura aparência religiosa, mas arrependimento sincero, fé obediente e um coração disposto a ser governado por Jesus.`,
-    `O texto mostra que a maior necessidade humana não é apenas alívio para problemas, mas reconciliação com Deus por meio de Jesus, o Filho que morreu e ressuscitou.`,
-    `Esta Palavra ensina que Deus é santo e misericordioso. Ele confronta o pecado, mas também oferece perdão ao que se volta para Cristo com fé verdadeira.`,
-    `A lição de hoje é clara: ninguém é salvo por mérito, esforço ou tradição. A salvação é graça de Deus recebida pela fé em Jesus Cristo.`,
-    `O ensino bíblico aqui chama o coração a sair da superfície. Deus não deseja apenas melhorar comportamentos; Ele quer dar nova vida em Cristo.`
+  const bridges = [
+    `Esse ensino precisa descer da mente para a prática. ${themeInsight}`,
+    `O ponto central não é apenas saber mais, mas viver de modo mais rendido. ${themeInsight}`,
+    `A maturidade cristã começa quando a Palavra deixa de ser apenas inspiração e passa a governar escolhas. ${themeInsight}`,
+    `O Senhor não usa esta passagem para alimentar vaidade espiritual, mas para formar obediência sincera. ${themeInsight}`,
+    `Quando essa verdade encontra resistência dentro de nós, é justamente ali que o Espírito deseja trabalhar. ${themeInsight}`,
+    `Receba esta Palavra como convite pastoral: Deus está tratando não apenas circunstâncias, mas o coração. ${themeInsight}`
   ];
-  const repentanceCalls = [
-    `Por isso, examine sua vida com sinceridade. Há pecados escondidos, orgulho, frieza espiritual, incredulidade ou desobediência que precisam ser confessados hoje? Arrependimento não é medo religioso; é voltar para Deus, abandonar o caminho errado e confiar na misericórdia de Jesus.`,
-    `O convite ao arrependimento é urgente e amoroso. Não endureça o coração. Confesse aquilo que tem afastado você do Senhor, abandone a falsa segurança e entregue sua vida a Cristo.`,
-    `Arrepender-se é parar de justificar o pecado e começar a concordar com Deus. É reconhecer: eu preciso de perdão, preciso de uma nova vida, preciso do Salvador.`,
-    `Se esta Palavra confronta você, não fuja. O confronto de Deus é graça. Ele fere o orgulho para curar a alma, revela o pecado para oferecer perdão e chama ao arrependimento para conduzir à vida.`,
-    `Hoje é dia de responder. Não adie obediência, não negocie com o pecado e não trate a graça como algo comum. Volte-se para Deus enquanto há tempo.`,
-    `O arrependimento verdadeiro começa quando a pessoa deixa de dizer apenas “eu errei” e passa a dizer “Senhor, pequei contra Ti; tem misericórdia de mim e muda meu coração”.`
+  const examinations = [
+    `Pergunte com honestidade: tenho obedecido a Deus nessa área ou apenas concordado com o texto? A fé bíblica não se contenta com admiração; ela se expressa em arrependimento, confiança e passos concretos.`,
+    `Examine se existe orgulho, comparação, medo, culpa escondida ou autossuficiência impedindo sua resposta ao Senhor. A graça não nos humilha para destruir; ela nos quebra para reconstruir em Cristo.`,
+    `Talvez o maior desafio de hoje não seja entender o versículo, mas permitir que ele exponha o que precisa ser entregue. Deus cura com verdade, não com distração espiritual.`,
+    `Não transforme este devocional em informação religiosa. Pare por alguns instantes, nomeie diante de Deus aquilo que precisa mudar e peça um coração pronto para obedecer.`,
+    `A Palavra convida você a abandonar desculpas. Onde houver pecado, confesse; onde houver incredulidade, peça fé; onde houver cansaço, volte-se para Cristo.`,
+    `O Senhor conhece aquilo que ninguém vê. Por isso, responda com sinceridade: que desejo, atitude ou decisão precisa se render ao governo de Jesus hoje?`
   ];
-  const gospelInvites = [
-    `O evangelho é simples: Jesus Cristo morreu na cruz pelos nossos pecados, ressuscitou ao terceiro dia e oferece salvação a todo aquele que crê. Receba esse convite com fé, renda-se a Ele e comece hoje uma caminhada de obediência.`,
-    `Cristo não chama você para uma religião sem vida, mas para reconciliação com Deus. Creia em Jesus, entregue seu coração a Ele e receba pela graça o perdão que você jamais conseguiria comprar.`,
-    `A salvação está em Jesus. Ele é o caminho, a verdade e a vida. Se você ainda não se entregou a Cristo, faça isso hoje: confesse seus pecados, creia no Salvador e siga-O com sinceridade.`,
-    `O convite de Deus é claro: venha a Cristo. Não venha perfeito; venha arrependido. Não venha confiando em si mesmo; venha confiando na cruz e na ressurreição do Senhor Jesus.`,
-    `Jesus salva pecadores, restaura quebrantados e dá nova vida. Hoje, abra mão da autossuficiência e diga pela fé: Senhor Jesus, eu preciso de Ti; salva-me e governa minha vida.`,
-    `A boa notícia é esta: quem se arrepende e crê em Jesus encontra perdão, paz com Deus e vida eterna. Essa é a esperança do evangelho para este dia.`
+  const gospelConnections = [
+    `O evangelho é a resposta mais profunda para essa necessidade: Jesus morreu pelos nossos pecados, ressuscitou e chama pecadores ao arrependimento e à vida nova.`,
+    `Cristo não veio apenas melhorar comportamentos, mas salvar pessoas. Na cruz, Ele trata a culpa; na ressurreição, Ele abre caminho para uma nova vida.`,
+    `A salvação não nasce do esforço humano, mas da graça de Deus em Jesus. Quem crê não precisa fingir força; pode se render, confessar e recomeçar.`,
+    `O simples evangelho de Cristo Jesus continua sendo suficiente: arrependa-se, creia, receba perdão e caminhe em obediência pelo poder do Espírito Santo.`,
+    `Deus não chama você para uma religiosidade sem vida, mas para reconciliação com Ele por meio de Cristo. Essa reconciliação começa com fé humilde e arrependimento sincero.`,
+    `Em Jesus, o convite de Deus é claro: venha como está, mas não permaneça como está. A graça que perdoa também transforma.`
+  ];
+  const practices = [
+    `Hoje, escolha uma atitude pequena e verificável: uma oração honesta, uma conversa corrigida, um pedido de perdão, uma renúncia ou uma decisão de obedecer sem adiar.`,
+    `Leve esta Palavra para o ponto mais concreto do seu dia. O fruto da meditação aparecerá quando Cristo governar uma reação, uma prioridade ou uma escolha.`,
+    `Antes de terminar, ore com simplicidade: “Senhor, mostra onde preciso me arrepender e dá-me fé para obedecer”. Depois, pratique o que Deus já deixou claro.`,
+    `Não espere sentir tudo para obedecer. Comece com fidelidade no próximo passo, confiando que Deus sustenta quem responde à Sua voz.`,
+    `Se o texto trouxe consolo, adore. Se trouxe confronto, arrependa-se. Se trouxe direção, obedeça. Em tudo, volte os olhos para Cristo.`,
+    `Faça deste dia um altar simples: menos justificativas, mais rendição; menos pressa, mais escuta; menos controle, mais confiança no Senhor.`
   ];
 
-  return `${openings[index % openings.length]} No dia ${day} do plano anual, o tema de ${theme} deve levar você a olhar para Cristo, não apenas para si mesmo. ${themeInsight}
+  return `Dia ${day}: ${openings[index % openings.length]}
 
-${teachings[index % teachings.length]} A reflexão cristã não termina em pensamento positivo; ela conduz ao Senhorio de Jesus, à cruz, à ressurreição e à nova vida que o Espírito Santo produz no coração.
+${referenceInsight}
 
-Aprenda esta verdade com simplicidade: Deus não veio apenas ajustar alguns hábitos, mas resgatar a pessoa inteira. O pecado separa, engana e endurece; a graça de Cristo perdoa, reconcilia e ensina um novo caminho. Quem crê em Jesus não recebe licença para continuar igual, mas poder para nascer de novo e viver como filho de Deus.
+No dia ${day} do plano anual, o tema de ${theme} precisa ser recebido com simplicidade e seriedade. ${bridges[index % bridges.length]}
 
-Este é o evangelho: a salvação não nasce do desempenho humano, mas da obra perfeita de Cristo. Ele tomou sobre Si a culpa do pecado, venceu a morte e chama cada pessoa a responder com arrependimento e fé.
+${examinations[index % examinations.length]}
 
-${repentanceCalls[index % repentanceCalls.length]}
+Arrependimento não é apenas sentir peso na consciência; é voltar-se para Deus, abandonar o caminho que entristece o Senhor e confiar que a graça de Cristo é suficiente para perdoar e transformar.
 
-${gospelInvites[index % gospelInvites.length]}`;
+Este é o evangelho que sustenta toda aplicação: Jesus Cristo morreu pelos pecadores, ressuscitou em vitória e chama cada pessoa a responder com fé, arrependimento e uma vida rendida ao Seu senhorio.
+
+${gospelConnections[index % gospelConnections.length]}
+
+${practices[index % practices.length]}`;
 }
 
 function buildApplication(dev, index) {
