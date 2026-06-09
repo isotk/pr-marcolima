@@ -106,5 +106,86 @@
     "file": "assets/livros/A Biblia desenterrada - Israel Finkelstein.pdf",
     "download": true,
     "tags": ["Bíblia", "arqueologia", "história"]
+  },
+  {
+    "title": "100 Curiosidades Bíblicas",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Estudo",
+    "file": "assets/livros/100 curiosidades bíblicas.pdf",
+    "download": true,
+    "tags": ["Bíblia", "curiosidades", "estudo bíblico"]
+  },
+  {
+    "title": "100 Sermões Temáticos",
+    "author": "Samuel Procópio",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Sermões",
+    "file": "assets/livros/100 Sermões temáticos de Samuel procopio_1 (1) (1).pdf",
+    "download": true,
+    "tags": ["sermões", "pregação", "estudo bíblico"]
+  },
+  {
+    "title": "100 Frases de C. S. Lewis",
+    "author": "C. S. Lewis",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/100 Frases de CS LEWIS - Livro.pdf",
+    "download": true,
+    "tags": ["C. S. Lewis", "frases", "vida cristã"]
+  },
+  {
+    "title": "Novo Dicionário de Teologia e Exegese",
+    "author": "Willem A. VanGemeren",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Dicionário",
+    "file": "assets/livros/139_Novo_Dicionário_de_Teologia_e_Exegese_Willem_A_Van_Gemeren_Vol.pdf",
+    "download": true,
+    "tags": ["teologia", "exegese", "dicionário"]
+  },
+  {
+    "title": "A História dos Judeus",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "História",
+    "file": "assets/livros/A História dos Judeus.pdf",
+    "download": true,
+    "tags": ["judeus", "história", "Bíblia"]
+  },
+  {
+    "title": "A História não Contada da Igreja do Novo Testamento",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "História",
+    "file": "assets/livros/A História não-contada da Igreja do NT (capa imagem)-1.pdf",
+    "download": true,
+    "tags": ["igreja", "Novo Testamento", "história"]
+  },
+  {
+    "title": "A Idade Média e o Dinheiro",
+    "author": "Jacques Le Goff",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "História",
+    "file": "assets/livros/A Idade Media e o dinheiro - Jacques le Goff.pdf",
+    "download": true,
+    "tags": ["história", "Idade Média", "sociedade"]
+  },
+  {
+    "title": "A Igreja do Deus Vivo",
+    "author": "Raymond D. Campbell",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/A Igreja do Deus Vivo - Raymond D. Campbell.pdf",
+    "download": true,
+    "tags": ["igreja", "doutrina", "vida cristã"]
+  },
+  {
+    "title": "A Recompensa da Honra",
+    "author": "John Bevere",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/A-Recompensa-da-Honra - John Bevere.pdf",
+    "download": true,
+    "tags": ["honra", "vida cristã", "liderança"]
   }
 ]
