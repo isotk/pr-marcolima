@@ -248,7 +248,6 @@ function writeDevotionalImage(dev, index) {
 }
 
 function buildReflection(dev, index) {
-  const day = index + 1;
   const theme = String(dev.theme || "Palavra").toLowerCase();
   const themeInsight = THEME_INSIGHTS[dev.theme] || THEME_INSIGHTS.default;
   const referenceInsight = REFERENCE_INSIGHTS[dev.reference] || `${dev.reference} chama o coração a ouvir Deus com reverência e responder com fé prática. A Palavra não foi dada para enfeitar pensamentos religiosos, mas para conduzir pessoas reais ao Senhor.`;
@@ -293,11 +292,11 @@ function buildReflection(dev, index) {
     `Faça deste dia um altar simples: menos justificativas, mais rendição; menos pressa, mais escuta; menos controle, mais confiança no Senhor.`
   ];
 
-  return `Dia ${day}: ${openings[index % openings.length]}
+  return `${openings[index % openings.length]}
 
 ${referenceInsight}
 
-No dia ${day} do plano anual, o tema de ${theme} precisa ser recebido com simplicidade e seriedade. ${bridges[index % bridges.length]}
+O tema de ${theme} precisa ser recebido com simplicidade e seriedade. ${bridges[index % bridges.length]}
 
 ${examinations[index % examinations.length]}
 
