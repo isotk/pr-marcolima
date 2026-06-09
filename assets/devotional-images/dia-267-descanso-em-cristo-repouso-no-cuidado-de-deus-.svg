@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Descanso em Cristo: Repouso no Cuidado de Deus (Salmos 37:17) - Salmos 37:17</title>
+  <desc id="desc">Arte devocional única sobre Descanso, Descanso em Cristo, baseada em Salmos 37:17.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5f8069"/>
+      <stop offset="1" stop-color="#e5dfc7"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#fff8dc" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#1f231d" flood-opacity=".22"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#glow)"/>
+  <g opacity=".16" stroke="#fff" stroke-width="2">
+    <path d="M-186 120 C 150 30, 330 210, 590 120 S 990 40, 1320 150" fill="none"/>
+    <path d="M-66 700 C 230 600, 390 740, 650 650 S 1030 590, 1280 710" fill="none"/>
+  </g>
+  <circle cx="242" cy="178" r="180" fill="#fff" opacity=".12"/>
+  <circle cx="1010" cy="610" r="230" fill="#2b312a" opacity=".10"/>
+  <g transform="rotate(0 620 470)" color="#ffffff" filter="url(#soft)"><path d="M372 694c70-122 151-210 242-264 92-55 184-74 276-57-74 31-139 74-195 129 69 18 123 58 162 120-102-24-188-18-258 19-71 37-143 55-227 53zm248-244c-43-64-43-122 0-174 43 52 43 110 0 174z" fill="currentColor" opacity=".82"/></g>
+  <rect x="76" y="70" width="1048" height="660" rx="44" fill="#fff" opacity=".13" stroke="#fff" stroke-opacity=".26"/>
+  <text x="96" y="130" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" letter-spacing="3">DEVOCIONAL DIÁRIO 267</text>
+  <text x="96" y="188" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="700">Salmos 37:17</text>
+  <text x="96" y="590" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">Descanso em Cristo: Repouso no Cuidado de Deus (Salmos 37:17)</text>
+  <text x="96" y="646" fill="#fff" font-family="Arial, sans-serif" font-size="26" opacity=".92">Descanso • Descanso em Cristo</text>
+  <text x="96" y="696" fill="#fff" font-family="Arial, sans-serif" font-size="22" opacity=".82">Pr. Marco Lima</text>
+</svg>

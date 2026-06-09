@@ -455,12 +455,358 @@ function markToday() {
   if (!localStorage.getItem(key)) localStorage.setItem(key, "1");
 }
 
+/* ─── Estatísticas Pessoais ─── */
+function getVisitedDates() {
+  const dates = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith("devocional:visited:")) {
+      dates.push(key.replace("devocional:visited:", ""));
+    }
+  }
+  return dates.sort();
+}
+
+function calcStreak(dates) {
+  if (!dates.length) return { current: 0, best: 0 };
+  const sorted = [...new Set(dates)].sort();
+  let current = 0, best = 0, streak = 1;
+  const today = new Date().toISOString().slice(0,10);
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+
+  for (let i = 1; i < sorted.length; i++) {
+    const prev = new Date(sorted[i-1]);
+    const curr = new Date(sorted[i]);
+    const diff = (curr - prev) / 86400000;
+    if (diff === 1) { streak++; } else { best = Math.max(best, streak); streak = 1; }
+  }
+  best = Math.max(best, streak);
+
+  const last = sorted[sorted.length - 1];
+  current = (last === today || last === yesterday) ? streak : 0;
+  return { current, best };
+}
+
+function countNotes() {
+  let count = 0;
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith("devocional:notes:") && localStorage.getItem(key).trim()) count++;
+  }
+  return count;
+}
+
+function animateCount(el, target) {
+  const duration = 900;
+  const start = performance.now();
+  const update = (now) => {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target);
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+function renderStats() {
+  const panel = document.getElementById("stats-panel");
+  if (!panel) return;
+
+  const dates = getVisitedDates();
+  const { current: streakCurrent, best: streakBest } = calcStreak(dates);
+  const totalRead = dates.length;
+  const totalFavs = state.favorites.size;
+  const totalNotes = countNotes();
+  const firstDate = dates.length ? new Date(dates[0]).toLocaleDateString("pt-BR") : "—";
+
+  const stats = [
+    { icon: "🔥", label: "Sequência Atual", value: streakCurrent, suffix: streakCurrent === 1 ? " dia" : " dias", color: "#e8612a" },
+    { icon: "🏆", label: "Recorde", value: streakBest, suffix: streakBest === 1 ? " dia" : " dias", color: "#c9a84c" },
+    { icon: "📖", label: "Dias Lidos", value: totalRead, suffix: "", color: "#3d5c41" },
+    { icon: "❤️", label: "Favoritos", value: totalFavs, suffix: "", color: "#c0335f" },
+    { icon: "✏️", label: "Anotações", value: totalNotes, suffix: "", color: "#5a7a5e" },
+  ];
+
+  panel.innerHTML = `
+    <div class="stats-card">
+      <div class="stats-grid">
+        ${stats.map((s, i) => `
+          <div class="stat-item" style="animation-delay:${i * 0.08}s">
+            <span class="stat-icon">${s.icon}</span>
+            <span class="stat-value" data-target="${s.value}" style="color:${s.color}">0</span>
+            <span class="stat-suffix">${s.suffix}</span>
+            <span class="stat-label">${s.label}</span>
+          </div>
+        `).join("")}
+        <div class="stat-item" style="animation-delay:${stats.length * 0.08}s">
+          <span class="stat-icon">📅</span>
+          <span class="stat-value stat-date">${firstDate}</span>
+          <span class="stat-label">Lendo desde</span>
+        </div>
+      </div>
+      <div class="stats-actions">
+        <button id="btn-export-diary" class="btn-export-diary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Exportar Diário (.txt)
+        </button>
+        <span id="export-msg" class="export-msg"></span>
+      </div>
+    </div>
+  `;
+
+  // Animar contadores
+  panel.querySelectorAll(".stat-value[data-target]").forEach(el => {
+    const target = parseInt(el.dataset.target, 10);
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        animateCount(el, target);
+        observer.disconnect();
+      }
+    }, { threshold: 0.3 });
+    observer.observe(el);
+  });
+
+  document.getElementById("btn-export-diary")?.addEventListener("click", exportDiary);
+}
+
+/* ─── Exportar Diário ─── */
+function exportDiary() {
+  const notes = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith("devocional:notes:")) {
+      const text = localStorage.getItem(key).trim();
+      if (text) {
+        const id = key.replace("devocional:notes:", "");
+        notes.push({ id, text });
+      }
+    }
+  }
+
+  if (!notes.length) {
+    const msg = document.getElementById("export-msg");
+    if (msg) { msg.textContent = "Nenhuma anotação encontrada."; setTimeout(() => { msg.textContent = ""; }, 3000); }
+    return;
+  }
+
+  const today = new Date().toLocaleDateString("pt-BR");
+  let content = `MEUS DEVOCIONAIS — Pr. Marco Lima\nExportado em: ${today}\n${"═".repeat(42)}\n\n`;
+
+  notes.sort((a, b) => a.id.localeCompare(b.id)).forEach(({ id, text }) => {
+    const dev = state.devotionals.find(d => d.id === id);
+    const title = dev ? dev.title : id;
+    const ref = dev ? dev.reference : "";
+    content += `📖 ${id.toUpperCase()} — ${title}\n`;
+    if (ref) content += `Referência: ${ref}\n`;
+    content += `Anotação:\n${text}\n\n${"═".repeat(42)}\n\n`;
+  });
+
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `devocional-diario-${today.replace(/\//g, "-")}.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  const msg = document.getElementById("export-msg");
+  if (msg) { msg.textContent = `${notes.length} anotações exportadas ✓`; setTimeout(() => { msg.textContent = ""; }, 3500); }
+}
+
+/* ─── Planos de Leitura ─── */
+const READING_PLANS = [
+  {
+    id: "fe-move-montanhas",
+    icon: "⛰️",
+    title: "Fé que Move Montanhas",
+    days: 7,
+    themes: ["Fé"],
+    color: "#5a7a5e",
+    description: "7 dias mergulhado no tema da fé que transforma e move o impossível.",
+  },
+  {
+    id: "vida-de-oracao",
+    icon: "🙏",
+    title: "Vida de Oração",
+    days: 14,
+    themes: ["Oração", "Espírito"],
+    color: "#3d5c41",
+    description: "14 dias cultivando uma vida de oração profunda e consistente.",
+  },
+  {
+    id: "vencendo-ansiedade",
+    icon: "🕊️",
+    title: "Vencendo a Ansiedade",
+    days: 7,
+    themes: ["Ansiedade", "Descanso"],
+    color: "#7a9e7e",
+    description: "7 dias de palavras de paz, descanso e confiança em Deus.",
+  },
+  {
+    id: "familia-e-amor",
+    icon: "👨‍👩‍👧‍👦",
+    title: "Família e Amor",
+    days: 14,
+    themes: ["Amor", "Esperança"],
+    color: "#c9a84c",
+    description: "14 dias fortalecendo os laços de amor no lar e na comunidade.",
+  },
+  {
+    id: "crescimento-espiritual",
+    icon: "🌱",
+    title: "Crescimento Espiritual",
+    days: 30,
+    themes: ["Discipulado", "Força", "Coragem"],
+    color: "#2c5f2e",
+    description: "30 dias de discipulado, coragem e crescimento na fé.",
+  },
+  {
+    id: "gratidao-e-alegria",
+    icon: "🌟",
+    title: "Gratidão e Alegria",
+    days: 7,
+    themes: ["Gratidão", "Alegria"],
+    color: "#c9a84c",
+    description: "7 dias cultivando um coração grato e alegre diante de Deus.",
+  },
+  {
+    id: "esperanca-momentos-dificeis",
+    icon: "🌅",
+    title: "Esperança nos Momentos Difíceis",
+    days: 14,
+    themes: ["Esperança", "Consolação"],
+    color: "#6a8fa8",
+    description: "14 dias de esperança e consolo para os momentos mais desafiadores.",
+  },
+];
+
+function getPlanDevotionals(plan) {
+  const filtered = state.devotionals.filter(d => plan.themes.includes(d.theme));
+  const result = [];
+  for (let i = 0; i < plan.days; i++) {
+    result.push(filtered[i % filtered.length]);
+  }
+  return result;
+}
+
+function planKey(planId, idx) { return `devocional:plano:${planId}:${idx}`; }
+
+function getPlanProgress(planId, total) {
+  let done = 0;
+  for (let i = 0; i < total; i++) {
+    if (localStorage.getItem(planKey(planId, i)) === "1") done++;
+  }
+  return done;
+}
+
+function renderPlans() {
+  const grid = document.getElementById("plans-grid");
+  if (!grid) return;
+
+  grid.innerHTML = READING_PLANS.map(plan => {
+    const devs = getPlanDevotionals(plan);
+    const done = getPlanProgress(plan.id, devs.length);
+    const pct = devs.length ? Math.round((done / devs.length) * 100) : 0;
+    return `
+      <div class="plan-card" data-plan-id="${plan.id}" style="border-top: 3px solid ${plan.color}">
+        <div class="plan-card-top">
+          <span class="plan-card-icon">${plan.icon}</span>
+          <div class="plan-card-info">
+            <h3>${escapeHtml(plan.title)}</h3>
+            <span class="plan-card-meta">${plan.days} dias · ${plan.themes.join(", ")}</span>
+          </div>
+        </div>
+        <p class="plan-card-desc">${escapeHtml(plan.description)}</p>
+        <div class="plan-mini-bar"><div class="plan-mini-fill" style="width:${pct}%;background:${plan.color}"></div></div>
+        <div class="plan-card-footer">
+          <span class="plan-card-progress" style="color:${plan.color}">${done}/${devs.length} concluídos</span>
+          <button class="btn-open-plan" data-plan-id="${plan.id}" style="background:${plan.color}">
+            ${done === 0 ? "Iniciar Plano" : done === devs.length ? "Ver Plano ✓" : "Continuar"}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  grid.querySelectorAll(".btn-open-plan").forEach(btn => {
+    btn.addEventListener("click", () => openPlanDrawer(btn.dataset.planId));
+  });
+}
+
+function openPlanDrawer(planId) {
+  const plan = READING_PLANS.find(p => p.id === planId);
+  if (!plan) return;
+
+  const devs = getPlanDevotionals(plan);
+  const done = getPlanProgress(planId, devs.length);
+  const pct = devs.length ? Math.round((done / devs.length) * 100) : 0;
+
+  document.getElementById("plan-drawer-icon").textContent = plan.icon;
+  document.getElementById("plan-drawer-title").textContent = plan.title;
+  document.getElementById("plan-drawer-subtitle").textContent = `${plan.days} dias · ${plan.themes.join(", ")}`;
+  document.getElementById("plan-progress-fill").style.width = pct + "%";
+  document.getElementById("plan-progress-fill").style.background = plan.color;
+  document.getElementById("plan-progress-label").textContent = `${done} de ${devs.length} concluídos (${pct}%)`;
+
+  const list = document.getElementById("plan-drawer-list");
+  list.innerHTML = devs.map((dev, i) => {
+    const isDone = localStorage.getItem(planKey(planId, i)) === "1";
+    return `
+      <li class="plan-list-item ${isDone ? "plan-item-done" : ""}" data-plan-id="${planId}" data-idx="${i}">
+        <label class="plan-item-check">
+          <input type="checkbox" ${isDone ? "checked" : ""} data-plan-id="${planId}" data-idx="${i}" />
+          <span class="plan-check-box" style="${isDone ? `background:${plan.color};border-color:${plan.color}` : ""}">
+            ${isDone ? "✓" : ""}
+          </span>
+        </label>
+        <div class="plan-item-body">
+          <span class="plan-item-num">Dia ${i + 1}</span>
+          <span class="plan-item-title">${escapeHtml(dev.title)}</span>
+          <span class="plan-item-ref">${escapeHtml(dev.reference)}</span>
+        </div>
+        <a class="plan-item-link" href="${devotionalPath(dev)}" title="Abrir devocional">→</a>
+      </li>
+    `;
+  }).join("");
+
+  list.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.addEventListener("change", () => {
+      const pid = cb.dataset.planId;
+      const idx = cb.dataset.idx;
+      localStorage.setItem(planKey(pid, idx), cb.checked ? "1" : "0");
+      openPlanDrawer(pid);
+      renderPlans();
+    });
+  });
+
+  const drawer = document.getElementById("plan-drawer");
+  drawer.setAttribute("aria-hidden", "false");
+  drawer.classList.add("plan-drawer-open");
+  document.body.style.overflow = "hidden";
+}
+
+function closePlanDrawer() {
+  const drawer = document.getElementById("plan-drawer");
+  drawer.setAttribute("aria-hidden", "true");
+  drawer.classList.remove("plan-drawer-open");
+  document.body.style.overflow = "";
+}
+
+function attachPlanDrawerEvents() {
+  document.getElementById("plan-drawer-close")?.addEventListener("click", closePlanDrawer);
+  document.getElementById("plan-drawer-backdrop")?.addEventListener("click", closePlanDrawer);
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closePlanDrawer(); });
+}
+
 /* ─── Boot ─── */
 async function boot() {
   const devotionalsResponse = await fetch("./data/devocionais.json");
   state.devotionals = await devotionalsResponse.json();
   attachSearchEvents();
   await renderAll();
+  renderStats();
+  renderPlans();
+  attachPlanDrawerEvents();
   markToday();
 }
 

@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/styles.css" />
   </head>
   <body>
@@ -44,6 +44,8 @@
               <a href="./biblia/">Ler a Bíblia</a>
               <a href="./livros/">Livros em PDF</a>
               <a href="#buscar">Buscar por tema</a>
+              <a href="#meu-progresso">Meu Progresso</a>
+              <a href="#planos">Planos de Leitura</a>
             </div>
           </div>
         </div>
@@ -63,6 +65,17 @@
             <span>Devocional de Hoje</span>
           </div>
           <div id="today-card"></div>
+        </div>
+      </section>
+
+      <!-- Estatísticas Pessoais -->
+      <section class="section-stats" id="meu-progresso">
+        <div class="container">
+          <div class="section-label">
+            <span class="label-icon">📊</span>
+            <span>Meu Progresso</span>
+          </div>
+          <div id="stats-panel"></div>
         </div>
       </section>
 
@@ -91,6 +104,37 @@
           <div id="past-cards"></div>
         </div>
       </section>
+
+      <!-- Planos de Leitura -->
+      <section class="section-plans" id="planos">
+        <div class="container">
+          <div class="section-label">
+            <span class="label-icon">🔖</span>
+            <span>Planos de Leitura</span>
+          </div>
+          <div id="plans-grid"></div>
+        </div>
+      </section>
+
+      <!-- Drawer lateral do Plano -->
+      <div id="plan-drawer" class="plan-drawer" aria-hidden="true">
+        <div class="plan-drawer-backdrop" id="plan-drawer-backdrop"></div>
+        <div class="plan-drawer-panel">
+          <div class="plan-drawer-header">
+            <div>
+              <span class="plan-drawer-icon" id="plan-drawer-icon"></span>
+              <h2 id="plan-drawer-title"></h2>
+              <p id="plan-drawer-subtitle"></p>
+            </div>
+            <button class="plan-drawer-close" id="plan-drawer-close" aria-label="Fechar">✕</button>
+          </div>
+          <div class="plan-drawer-progress-wrap">
+            <div class="plan-drawer-progress-bar"><div class="plan-drawer-progress-fill" id="plan-progress-fill"></div></div>
+            <span class="plan-drawer-progress-label" id="plan-progress-label"></span>
+          </div>
+          <ul class="plan-drawer-list" id="plan-drawer-list"></ul>
+        </div>
+      </div>
 
       <section class="section-about" id="sobre">
         <div class="container">
