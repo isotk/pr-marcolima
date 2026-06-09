@@ -1,1 +1,110 @@
-[]
+[
+  {
+    "title": "A Unção",
+    "author": "Benny Hinn",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/A Unção - Benny Hinn.pdf",
+    "download": true,
+    "tags": ["fé", "vida cristã", "estudo"]
+  },
+  {
+    "title": "A Cultura do Jejum",
+    "author": "Luciano Subirá",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/A CULTURA DO JEJUM - LUCIANO SUBIRÁ.pdf",
+    "download": true,
+    "tags": ["jejum", "oração", "vida cristã"]
+  },
+  {
+    "title": "A Distração do Pecado",
+    "author": "Jorge F. Isah",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/A Distração do Pecado -Jorge-F. Isah.pdf",
+    "download": true,
+    "tags": ["pecado", "santidade", "vida cristã"]
+  },
+  {
+    "title": "A Dádiva que Ninguém Quer",
+    "author": "Paul Washer",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/A Dadiva que Ninguem Quer - Paul Washer.pdf",
+    "download": true,
+    "tags": ["evangelho", "arrependimento", "vida cristã"]
+  },
+  {
+    "title": "A Depressão de Spurgeon",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/A depressão de spurgeon .pdf",
+    "download": true,
+    "tags": ["Spurgeon", "sofrimento", "pastoral"]
+  },
+  {
+    "title": "A Bíblia e seus Intérpretes",
+    "author": "Augustus Nicodemus",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/A Bíblia e seus Intérpretes - Augustus Nicodemos.pdf",
+    "download": true,
+    "tags": ["Bíblia", "hermenêutica", "estudo bíblico"]
+  },
+  {
+    "title": "A Crucificação de Cristo Descrita por Cirurgião",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Estudo",
+    "file": "assets/livros/A Crucificação de Cristo Descrita por Cirurgião (1).pdf",
+    "download": true,
+    "tags": ["Cristo", "cruz", "evangelho"]
+  },
+  {
+    "title": "A Bíblia e Como Chegou Até Nós",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Estudo",
+    "file": "assets/livros/A Biblia e como chegou ate nós.pdf",
+    "download": true,
+    "tags": ["Bíblia", "história", "estudo bíblico"]
+  },
+  {
+    "title": "Pentateuco para Todos",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Estudo",
+    "file": "assets/livros/01-Pentateuco para Todos.pdf",
+    "download": true,
+    "tags": ["Pentateuco", "Antigo Testamento", "estudo bíblico"]
+  },
+  {
+    "title": "Escatologia EETAD",
+    "author": "EETAD",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Apostila",
+    "file": "assets/livros/-Escatologia_eetad.pdf",
+    "download": true,
+    "tags": ["escatologia", "doutrina", "estudo bíblico"]
+  },
+  {
+    "title": "A Bíblia e a Arqueologia",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Estudo",
+    "file": "assets/livros/A biblia e a arqueologia..pdf",
+    "download": true,
+    "tags": ["Bíblia", "arqueologia", "história"]
+  },
+  {
+    "title": "A Bíblia Desenterrada",
+    "author": "Israel Finkelstein",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/A Biblia desenterrada - Israel Finkelstein.pdf",
+    "download": true,
+    "tags": ["Bíblia", "arqueologia", "história"]
+  }
+]
