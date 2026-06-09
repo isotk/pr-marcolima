@@ -9,19 +9,19 @@ const devotionals = JSON.parse(fs.readFileSync(path.join(root, "data/devocionais
 const outDir = path.join(root, "devocional");
 
 const BOOK_MAP = {
-  "gênesis": "gn", "genesis": "gn", "êxodo": "ex", "exodo": "ex", "levítico": "lv", "levitico": "lv",
-  "números": "nm", "numeros": "nm", "deuteronômio": "dt", "deuteronomio": "dt", "josué": "js",
-  "juízes": "jz", "juizes": "jz", "rute": "rt", "1 samuel": "1sm", "2 samuel": "2sm",
-  "1 reis": "1rs", "2 reis": "2rs", "esdras": "ed", "neemias": "ne", "ester": "et",
-  "jó": "jb", "jo": "jb", "salmos": "sl", "salmo": "sl", "provérbios": "pv", "proverbios": "pv",
-  "eclesiastes": "ec", "isaías": "is", "isaias": "is", "jeremias": "jr", "ezequiel": "ez",
-  "daniel": "dn", "joel": "jl", "habacuque": "hc", "ageu": "ag", "zacarias": "zc", "malaquias": "ml",
-  "mateus": "mt", "marcos": "mc", "lucas": "lc", "joão": "jo", "joao": "jo", "atos": "at", "romanos": "rm",
-  "1 coríntios": "1co", "1 corintios": "1co", "2 coríntios": "2co", "2 corintios": "2co",
-  "gálatas": "gl", "galatas": "gl", "efésios": "ef", "efesios": "ef", "filipenses": "fp",
-  "colossenses": "cl", "1 tessalonicenses": "1ts", "2 tessalonicenses": "2ts", "hebreus": "hb",
-  "tiago": "tg", "1 pedro": "1pe", "2 pedro": "2pe", "1 joão": "1jo", "1 joao": "1jo",
-  "judas": "jd", "apocalipse": "ap"
+  "gênesis": "Gen", "genesis": "Gen", "êxodo": "Exod", "exodo": "Exod", "levítico": "Lev", "levitico": "Lev",
+  "números": "Num", "numeros": "Num", "deuteronômio": "Deut", "deuteronomio": "Deut", "josué": "Josh",
+  "juízes": "Judg", "juizes": "Judg", "rute": "Ruth", "1 samuel": "1Sam", "2 samuel": "2Sam",
+  "1 reis": "1Kgs", "2 reis": "2Kgs", "esdras": "Ezra", "neemias": "Neh", "ester": "Esth",
+  "jó": "Job", "jo": "Job", "salmos": "Ps", "salmo": "Ps", "provérbios": "Prov", "proverbios": "Prov",
+  "eclesiastes": "Eccl", "isaías": "Isa", "isaias": "Isa", "jeremias": "Jer", "ezequiel": "Ezek",
+  "daniel": "Dan", "joel": "Joel", "habacuque": "Hab", "ageu": "Hag", "zacarias": "Zech", "malaquias": "Mal",
+  "mateus": "Matt", "marcos": "Mark", "lucas": "Luke", "joão": "John", "joao": "John", "atos": "Acts", "romanos": "Rom",
+  "1 coríntios": "1Cor", "1 corintios": "1Cor", "2 coríntios": "2Cor", "2 corintios": "2Cor",
+  "gálatas": "Gal", "galatas": "Gal", "efésios": "Eph", "efesios": "Eph", "filipenses": "Phil",
+  "colossenses": "Col", "1 tessalonicenses": "1Thess", "2 tessalonicenses": "2Thess", "hebreus": "Heb",
+  "tiago": "Jas", "1 pedro": "1Pet", "2 pedro": "2Pet", "1 joão": "1John", "1 joao": "1John",
+  "judas": "Jude", "apocalipse": "Rev"
 };
 
 function escapeHtml(value) {
@@ -50,15 +50,19 @@ function devotionalDate(devotional) {
 
 function bibleUrl(reference) {
   const normalized = String(reference || "").trim().toLowerCase().replace(/\s+/g, " ").replace(/:/g, "/").replace(/–/g, "-");
-  for (const [name, abbr] of Object.entries(BOOK_MAP)) {
+  for (const [name, book] of Object.entries(BOOK_MAP)) {
     if (normalized.startsWith(name + " ")) {
       const parts = normalized.slice(name.length).trim().split("/").filter(Boolean);
       const chapter = parts[0] || "";
-      const verses = (parts[1] || "").replace(/-/g, ",").replace(/\s/g, "");
-      if (chapter) return `https://www.bibliaonline.com.br/nvt/${abbr}/${chapter}${verses ? "/" + verses : ""}`;
+      const verse = ((parts[1] || "").match(/\d+/) || [""])[0];
+      if (chapter) {
+        const params = new URLSearchParams({ livro: book, capitulo: chapter });
+        if (verse) params.set("versiculo", verse);
+        return `../../biblia/?${params.toString()}`;
+      }
     }
   }
-  return `https://www.bibliaonline.com.br/nvt/busca?q=${encodeURIComponent(reference)}`;
+  return `../../biblia/?q=${encodeURIComponent(reference)}`;
 }
 
 function description(devotional) {
@@ -148,7 +152,7 @@ function renderPage(devotional, index) {
                 <div class="verse-label">📖 ${escapeHtml(devotional.reference)}</div>
                 <blockquote>${escapeHtml(devotional.scripture)}</blockquote>
                 <div class="verse-footer">
-                  <a class="verse-link" href="${bibleUrl(devotional.reference)}" target="_blank" rel="noopener noreferrer">Ler na Bíblia NVT →</a>
+                  <a class="verse-link" href="${bibleUrl(devotional.reference)}">Ler na Bíblia local →</a>
                 </div>
               </div>
               <div class="devo-section devo-reflection">

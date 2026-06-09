@@ -100,7 +100,7 @@ function renderVerseOfDay(dev) {
       <span class="vod-badge">Versículo do Dia</span>
       <blockquote class="vod-text">${escapeHtml(dev.scripture)}</blockquote>
       <cite class="vod-ref">— ${escapeHtml(dev.reference)}</cite>
-      <a class="vod-link" href="${bibleGatewayUrl(dev.reference)}" target="_blank" rel="noopener noreferrer">Leia na Bíblia NVT →</a>
+      <a class="vod-link" href="${bibleGatewayUrl(dev.reference)}">Leia na Bíblia local →</a>
     </div>
   `;
 }
@@ -136,7 +136,7 @@ function renderCard(devotional, offset, isToday, options = {}) {
           <div class="verse-label">📖 ${escapeHtml(devotional.reference)}</div>
           <blockquote>${escapeHtml(devotional.scripture)}</blockquote>
           <div class="verse-footer">
-            <a class="verse-link" href="${bibleGatewayUrl(devotional.reference)}" target="_blank" rel="noopener noreferrer">Ler na Bíblia NVT →</a>
+            <a class="verse-link" href="${bibleGatewayUrl(devotional.reference)}">Ler na Bíblia local →</a>
           </div>
         </div>
 
@@ -391,64 +391,26 @@ async function renderAll() {
 
 /* ─── Bible Links ─── */
 const BOOK_MAP = {
-  "gênesis": "gn", "genesis": "gn",
-  "êxodo": "ex", "exodo": "ex",
-  "levítico": "lv", "levitico": "lv",
-  "números": "nm", "numeros": "nm",
-  "deuteronômio": "dt", "deuteronomio": "dt",
-  "josué": "js", "jose": "js",
-  "juízes": "jz", "juizes": "jz",
-  "rute": "rt",
-  "1 samuel": "1sm", "2 samuel": "2sm",
-  "1 reis": "1rs", "2 reis": "2rs",
-  "1 crônicas": "1cr", "2 crônicas": "2cr",
-  "esdras": "ed",
-  "neemias": "ne",
-  "ester": "et",
-  "jó": "jb", "jo": "jb",
-  "salmos": "sl", "salmo": "sl",
-  "provérbios": "pv", "proverbios": "pv",
-  "eclesiastes": "ec",
-  "cantares": "ct",
-  "isaías": "is", "isaias": "is",
-  "jeremias": "jr",
-  "lamentações": "lm", "lamentacoes": "lm",
-  "ezequiel": "ez",
-  "daniel": "dn",
-  "oséias": "os", "oseias": "os",
-  "joel": "jl",
-  "amós": "am", "amos": "am",
-  "obadias": "ob",
-  "jonas": "jn",
-  "micéias": "mq", "miqueias": "mq",
-  "naum": "na",
-  "habacuque": "hc",
-  "sofonias": "sf",
-  "ageu": "ag",
-  "zacarias": "zc",
-  "malaquias": "ml",
-  "mateus": "mt",
-  "marcos": "mc",
-  "lucas": "lc",
-  "joão": "jo", "joao": "jo",
-  "atos": "at",
-  "romanos": "rm",
-  "1 coríntios": "1co", "1 corintios": "1co",
-  "2 coríntios": "2co", "2 corintios": "2co",
-  "gálatas": "gl", "galatas": "gl",
-  "efésios": "ef", "efesios": "ef",
-  "filipenses": "fp",
-  "colossenses": "cl",
-  "1 tessalonicenses": "1ts", "2 tessalonicenses": "2ts",
-  "1 timóteo": "1tm", "2 timóteo": "2tm",
-  "tito": "tt",
-  "filemom": "fm",
-  "hebreus": "hb",
-  "tiago": "tg",
-  "1 pedro": "1pe", "2 pedro": "2pe",
-  "1 joão": "1jo", "2 joão": "2jo", "3 joão": "3jo",
-  "judas": "jd",
-  "apocalipse": "ap"
+  "gênesis": "Gen", "genesis": "Gen", "êxodo": "Exod", "exodo": "Exod",
+  "levítico": "Lev", "levitico": "Lev", "números": "Num", "numeros": "Num",
+  "deuteronômio": "Deut", "deuteronomio": "Deut", "josué": "Josh", "jose": "Josh",
+  "juízes": "Judg", "juizes": "Judg", "rute": "Ruth", "1 samuel": "1Sam", "2 samuel": "2Sam",
+  "1 reis": "1Kgs", "2 reis": "2Kgs", "1 crônicas": "1Chr", "2 crônicas": "2Chr",
+  "esdras": "Ezra", "neemias": "Neh", "ester": "Esth", "jó": "Job", "jo": "Job",
+  "salmos": "Ps", "salmo": "Ps", "provérbios": "Prov", "proverbios": "Prov", "eclesiastes": "Eccl",
+  "cantares": "Song", "isaías": "Isa", "isaias": "Isa", "jeremias": "Jer",
+  "lamentações": "Lam", "lamentacoes": "Lam", "ezequiel": "Ezek", "daniel": "Dan",
+  "oséias": "Hos", "oseias": "Hos", "joel": "Joel", "amós": "Amos", "amos": "Amos",
+  "obadias": "Obad", "jonas": "Jonah", "micéias": "Mic", "miqueias": "Mic", "naum": "Nah",
+  "habacuque": "Hab", "sofonias": "Zeph", "ageu": "Hag", "zacarias": "Zech", "malaquias": "Mal",
+  "mateus": "Matt", "marcos": "Mark", "lucas": "Luke", "joão": "John", "joao": "John",
+  "atos": "Acts", "romanos": "Rom", "1 coríntios": "1Cor", "1 corintios": "1Cor",
+  "2 coríntios": "2Cor", "2 corintios": "2Cor", "gálatas": "Gal", "galatas": "Gal",
+  "efésios": "Eph", "efesios": "Eph", "filipenses": "Phil", "colossenses": "Col",
+  "1 tessalonicenses": "1Thess", "2 tessalonicenses": "2Thess", "1 timóteo": "1Tim", "2 timóteo": "2Tim",
+  "tito": "Titus", "filemom": "Phlm", "hebreus": "Heb", "tiago": "Jas",
+  "1 pedro": "1Pet", "2 pedro": "2Pet", "1 joão": "1John", "2 joão": "2John", "3 joão": "3John",
+  "judas": "Jude", "apocalipse": "Rev"
 };
 
 function parseReference(ref) {
@@ -458,9 +420,9 @@ function parseReference(ref) {
     .replace(/–/g, "-");
 
   let bookMatch = null;
-  for (const [name, abbr] of Object.entries(BOOK_MAP)) {
+  for (const [name, book] of Object.entries(BOOK_MAP)) {
     if (normalized.startsWith(name + " ") || normalized === name) {
-      bookMatch = { name, abbr, rest: normalized.slice(name.length).trim() };
+      bookMatch = { name, book, rest: normalized.slice(name.length).trim() };
       break;
     }
   }
@@ -473,17 +435,19 @@ function parseReference(ref) {
 
   if (!chapter) return null;
 
-  const cleanVerses = verses.replace(/-/g, ",").replace(/\s/g, "");
+  const firstVerse = (verses.match(/\d+/) || [""])[0];
 
-  return `${bookMatch.abbr}/${chapter}${cleanVerses ? "/" + cleanVerses : ""}`;
+  return { book: bookMatch.book, chapter, verse: firstVerse };
 }
 
 function bibleGatewayUrl(ref) {
   const parsed = parseReference(ref);
   if (parsed) {
-    return `https://www.bibliaonline.com.br/nvt/${parsed}`;
+    const params = new URLSearchParams({ livro: parsed.book, capitulo: parsed.chapter });
+    if (parsed.verse) params.set("versiculo", parsed.verse);
+    return `biblia/?${params.toString()}`;
   }
-  return `https://www.bibliaonline.com.br/nvt/busca?q=${encodeURIComponent(ref)}`;
+  return `biblia/?q=${encodeURIComponent(ref)}`;
 }
 
 function markToday() {

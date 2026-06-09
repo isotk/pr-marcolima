@@ -48,7 +48,7 @@ const BOOK_ALIASES = {
   "3jo": "3John", "3 joao": "3John", "3 joão": "3John", jd: "Jude", judas: "Jude", ap: "Rev", apocalipse: "Rev"
 };
 
-const state = { bible: null, book: null, chapter: 1 };
+const state = { bible: null, book: null, chapter: 1, verse: null };
 
 const bookSelect = document.getElementById("bible-book");
 const chapterSelect = document.getElementById("bible-chapter");
@@ -93,6 +93,8 @@ function updateUrl() {
   const url = new URL(location.href);
   url.searchParams.set("livro", state.book);
   url.searchParams.set("capitulo", state.chapter);
+  if (state.verse) url.searchParams.set("versiculo", state.verse);
+  else url.searchParams.delete("versiculo");
   history.replaceState(null, "", url);
 }
 
@@ -124,6 +126,15 @@ function renderChapter() {
   resultsEl.innerHTML = "";
   updateButtons();
   updateUrl();
+  if (state.verse) {
+    setTimeout(() => {
+      const el = document.getElementById(`v${state.verse}`);
+      if (el) {
+        el.classList.add("highlight");
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 80);
+  }
 }
 
 function updateButtons() {
@@ -152,6 +163,7 @@ function go(delta) {
     fillChapters();
   }
 
+  state.verse = null;
   renderChapter();
 }
 
@@ -172,18 +184,9 @@ function openReference(ref) {
 
   state.book = book.book;
   state.chapter = chapter.chapter;
+  state.verse = ref.verse || null;
   fillChapters();
   renderChapter();
-
-  if (ref.verse) {
-    setTimeout(() => {
-      const el = document.getElementById(`v${ref.verse}`);
-      if (el) {
-        el.classList.add("highlight");
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    }, 80);
-  }
   return true;
 }
 
@@ -239,12 +242,14 @@ function attachEvents() {
   bookSelect.addEventListener("change", () => {
     state.book = bookSelect.value;
     state.chapter = 1;
+    state.verse = null;
     fillChapters();
     renderChapter();
   });
 
   chapterSelect.addEventListener("change", () => {
     state.chapter = Number(chapterSelect.value);
+    state.verse = null;
     renderChapter();
   });
 
@@ -273,10 +278,12 @@ function bootFromUrl() {
   const params = new URLSearchParams(location.search);
   const bookParam = params.get("livro");
   const chapterParam = Number(params.get("capitulo"));
+  const verseParam = Number(params.get("versiculo"));
   const book = state.bible.books.find(item => item.book === bookParam) || state.bible.books[0];
   const chapter = book.chapters.find(item => item.chapter === chapterParam) || book.chapters[0];
   state.book = book.book;
   state.chapter = chapter.chapter;
+  state.verse = chapter.verses.some(item => item.number === verseParam) ? verseParam : null;
 }
 
 async function boot() {
