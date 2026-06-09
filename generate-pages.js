@@ -41,6 +41,13 @@ function pageUrl(devotional) {
   return `${SITE_URL}/devocional/${daySlug(devotional)}/`;
 }
 
+function devotionalDate(devotional) {
+  const match = String(devotional.id || "").match(/(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return "Devocional Diário";
+  const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  return new Intl.DateTimeFormat("pt-BR", { dateStyle: "long" }).format(date);
+}
+
 function bibleUrl(reference) {
   const normalized = String(reference || "").trim().toLowerCase().replace(/\s+/g, " ").replace(/:/g, "/").replace(/–/g, "-");
   for (const [name, abbr] of Object.entries(BOOK_MAP)) {
@@ -66,8 +73,10 @@ function paragraphs(text) {
     .join("\n");
 }
 
-function renderPage(devotional) {
+function renderPage(devotional, index) {
   const url = pageUrl(devotional);
+  const prev = devotionals[index - 1];
+  const next = devotionals[index + 1];
   const title = `${devotional.title} | Devocional Diário | Pr. Marco Lima`;
   const desc = description(devotional);
   const image = `${SITE_URL}/${devotional.image}`;
@@ -125,6 +134,10 @@ function renderPage(devotional) {
           <article class="devo-card single-devo-card">
             <img src="../../${devotional.image}" alt="${escapeHtml(devotional.imageAlt || devotional.title)}" class="devo-image" />
             <div class="devo-card-header">
+              <div class="devo-date-full">
+                <span class="devo-date-icon">📅</span>
+                <span class="devo-date-text">${escapeHtml(devotionalDate(devotional))}</span>
+              </div>
               <div class="devo-header-text">
                 <span class="devo-today-badge">${escapeHtml(devotional.theme)}</span>
                 <h2>${escapeHtml(devotional.title)}</h2>
@@ -139,15 +152,15 @@ function renderPage(devotional) {
                 </div>
               </div>
               <div class="devo-section devo-reflection">
-                <h4><span class="section-icon">💭</span> Reflexão</h4>
+                <h4><span class="section-icon">💭</span> Pensamento</h4>
                 ${paragraphs(devotional.reflection)}
               </div>
               <div class="devo-section devo-application">
-                <h4><span class="section-icon">✅</span> Aplicação Prática</h4>
+                <h4><span class="section-icon">✅</span> Para Praticar Hoje</h4>
                 <ul>${devotional.application.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
               </div>
               <div class="devo-section devo-prayer">
-                <h4><span class="section-icon">🙏</span> Para Orar</h4>
+                <h4><span class="section-icon">🙏</span> Oração</h4>
                 <p>${escapeHtml(devotional.prayer)}</p>
               </div>
               <div class="devo-share">
@@ -158,6 +171,10 @@ function renderPage(devotional) {
               </div>
             </div>
           </article>
+          <nav class="single-nav" aria-label="Navegação entre devocionais">
+            ${prev ? `<a href="../${daySlug(prev)}/">← ${escapeHtml(prev.title)}</a>` : `<span></span>`}
+            ${next ? `<a href="../${daySlug(next)}/">${escapeHtml(next.title)} →</a>` : `<span></span>`}
+          </nav>
         </div>
       </section>
     </main>
@@ -168,10 +185,10 @@ function renderPage(devotional) {
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
-for (const devotional of devotionals) {
+for (const [index, devotional] of devotionals.entries()) {
   const dir = path.join(outDir, daySlug(devotional));
   fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, "index.html"), renderPage(devotional), "utf8");
+  fs.writeFileSync(path.join(dir, "index.html"), renderPage(devotional, index), "utf8");
 }
 
 const sitemap = [`${SITE_URL}/`, ...devotionals.map(pageUrl)].map(url => `  <url><loc>${url}</loc></url>`).join("\n");

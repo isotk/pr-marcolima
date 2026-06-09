@@ -69,6 +69,25 @@ function devotionalForOffset(offset) {
 
 function noteKey(id) { return `devocional:notes:${id}`; }
 
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function absoluteDevotionalUrl(dev) {
+  return `${location.origin}/${devotionalPath(dev)}`;
+}
+
+function shortExcerpt(text, limit = 180) {
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  if (clean.length <= limit) return clean;
+  return `${clean.slice(0, limit).trim()}...`;
+}
+
 function findDevotionalById(id) {
   return state.currentDevotionals.find(d => d.id === id) || state.devotionals.find(d => d.id === id);
 }
@@ -79,9 +98,9 @@ function renderVerseOfDay(dev) {
   vodContainer.innerHTML = `
     <div class="vod-inner">
       <span class="vod-badge">Versículo do Dia</span>
-      <blockquote class="vod-text">${dev.scripture}</blockquote>
-      <cite class="vod-ref">— ${dev.reference}</cite>
-      <a class="vod-link" href="${bibleGatewayUrl(dev.reference)}" target="_blank" rel="noopener noreferrer">Leia no contexto completo →</a>
+      <blockquote class="vod-text">${escapeHtml(dev.scripture)}</blockquote>
+      <cite class="vod-ref">— ${escapeHtml(dev.reference)}</cite>
+      <a class="vod-link" href="${bibleGatewayUrl(dev.reference)}" target="_blank" rel="noopener noreferrer">Leia na Bíblia NVT →</a>
     </div>
   `;
 }
@@ -89,87 +108,87 @@ function renderVerseOfDay(dev) {
 /* ─── Devotional Card ─── */
 function renderCard(devotional, offset, isToday, options = {}) {
   const dateStr = options.dateLabel || fullDate(offset);
-  const label = isToday ? "Devocional de Hoje" : dateStr;
   const isFav = state.favorites.has(devotional.id);
   const savedNote = localStorage.getItem(noteKey(devotional.id)) || "";
   const path = devotionalPath(devotional);
+  const safeId = escapeHtml(devotional.id);
 
   return `
-    <article class="devo-card" data-id="${devotional.id}" style="animation-delay: ${Math.abs(offset) * 0.15}s">
-      ${devotional.image ? `<img src="${devotional.image}" alt="${devotional.imageAlt || devotional.title}" class="devo-image" loading="lazy" />` : ""}
+    <article class="devo-card" data-id="${safeId}" style="animation-delay: ${Math.abs(offset) * 0.15}s">
+      ${devotional.image ? `<img src="${escapeHtml(devotional.image)}" alt="${escapeHtml(devotional.imageAlt || devotional.title)}" class="devo-image" loading="lazy" />` : ""}
       <div class="devo-card-header">
         <div class="devo-date-full">
           <span class="devo-date-icon">📅</span>
-          <span class="devo-date-text">${dateStr}</span>
+          <span class="devo-date-text">${escapeHtml(dateStr)}</span>
         </div>
         <div class="devo-header-text">
           ${isToday ? '<span class="devo-today-badge">HOJE</span>' : ""}
-          <h2>${devotional.title}</h2>
-          <span class="devo-theme-tag">${devotional.theme}</span>
+          <h2>${escapeHtml(devotional.title)}</h2>
+          <span class="devo-theme-tag">${escapeHtml(devotional.theme)}</span>
         </div>
-        <button class="devo-fav" data-id="${devotional.id}" title="Favoritar" aria-label="Favoritar devocional">
+        <button class="devo-fav" data-id="${safeId}" title="Favoritar" aria-label="Favoritar devocional">
           ${isFav ? "❤️" : "🤍"}
         </button>
       </div>
 
       <div class="devo-body">
         <div class="verse-box">
-          <div class="verse-label">📖 ${devotional.reference}</div>
-          <blockquote>${devotional.scripture}</blockquote>
+          <div class="verse-label">📖 ${escapeHtml(devotional.reference)}</div>
+          <blockquote>${escapeHtml(devotional.scripture)}</blockquote>
           <div class="verse-footer">
             <a class="verse-link" href="${bibleGatewayUrl(devotional.reference)}" target="_blank" rel="noopener noreferrer">Ler na Bíblia NVT →</a>
           </div>
         </div>
 
         <div class="devo-section devo-reflection">
-          <h4><span class="section-icon">💭</span> Reflexão</h4>
-          <p>${devotional.reflection}</p>
+          <h4><span class="section-icon">💭</span> Pensamento</h4>
+          <p>${escapeHtml(devotional.reflection)}</p>
         </div>
 
         <div class="devo-section devo-application">
-          <h4><span class="section-icon">✅</span> ${devotional.theme} — Aplicação Prática</h4>
+          <h4><span class="section-icon">✅</span> Para Praticar Hoje</h4>
           <ul>
-            ${devotional.application.map(a => `<li>${a}</li>`).join("")}
+            ${devotional.application.map(a => `<li>${escapeHtml(a)}</li>`).join("")}
           </ul>
         </div>
 
         <div class="devo-section devo-prayer">
-          <h4><span class="section-icon">🙏</span> Para Orar</h4>
-          <p>${devotional.prayer}</p>
+          <h4><span class="section-icon">🙏</span> Oração</h4>
+          <p>${escapeHtml(devotional.prayer)}</p>
         </div>
 
         <div class="devo-author">
-          <span>Enviado por: <strong>${devotional.author || "Pr. Marco Lima"}</strong></span>
+          <span>Enviado por: <strong>${escapeHtml(devotional.author || "Pr. Marco Lima")}</strong></span>
         </div>
 
         <div class="devo-share">
-          <button class="btn-whatsapp" data-id="${devotional.id}" title="Compartilhar no WhatsApp">
+          <button class="btn-whatsapp" data-id="${safeId}" title="Compartilhar no WhatsApp">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             WhatsApp
           </button>
-          <button class="btn-instagram" data-id="${devotional.id}" title="Compartilhar no Instagram">
+          <button class="btn-instagram" data-id="${safeId}" title="Compartilhar no Instagram">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             Instagram
           </button>
-          <button class="btn-facebook" data-id="${devotional.id}" title="Copiar para Facebook">
+          <button class="btn-facebook" data-id="${safeId}" title="Copiar para Facebook">
             <span class="share-letter">f</span>
             Facebook
           </button>
           <a class="btn-open" href="${path}" title="Abrir página do devocional">Abrir página</a>
-          ${devotional.image ? `<a class="btn-download" href="${devotional.image}" download title="Baixar imagem do devocional">Baixar imagem</a>` : ""}
-          <button class="btn-copy" data-id="${devotional.id}" title="Copiar texto">
+          ${devotional.image ? `<a class="btn-download" href="${escapeHtml(devotional.image)}" download title="Baixar imagem do devocional">Baixar imagem</a>` : ""}
+          <button class="btn-copy" data-id="${safeId}" title="Copiar texto">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
             Copiar
           </button>
-          <span class="share-msg" data-id="${devotional.id}"></span>
+          <span class="share-msg" data-id="${safeId}"></span>
         </div>
 
         <div class="devo-notes">
           <h4>✏️ Quer anotar algo?</h4>
-          <textarea data-id="${devotional.id}" placeholder="Escreva sua resposta, motivo de oração ou decisão prática...">${savedNote}</textarea>
+          <textarea data-id="${safeId}" placeholder="Escreva sua resposta, motivo de oração ou decisão prática...">${escapeHtml(savedNote)}</textarea>
           <div class="devo-notes-actions">
-            <button class="btn-save" data-id="${devotional.id}">Salvar no meu diário</button>
-            <span class="save-msg" data-id="${devotional.id}"></span>
+            <button class="btn-save" data-id="${safeId}">Salvar no meu diário</button>
+            <span class="save-msg" data-id="${safeId}"></span>
           </div>
         </div>
       </div>
@@ -177,9 +196,24 @@ function renderCard(devotional, offset, isToday, options = {}) {
   `;
 }
 
+function renderPreviewCard(devotional) {
+  return `
+    <article class="preview-card">
+      ${devotional.image ? `<img src="${escapeHtml(devotional.image)}" alt="${escapeHtml(devotional.imageAlt || devotional.title)}" loading="lazy" />` : ""}
+      <div class="preview-card-body">
+        <span class="preview-date">${escapeHtml(dateLabelForDevotional(devotional))}</span>
+        <h3>${escapeHtml(devotional.title)}</h3>
+        <p class="preview-reference">${escapeHtml(devotional.reference)}</p>
+        <p>${escapeHtml(shortExcerpt(devotional.reflection, 220))}</p>
+        <a href="${devotionalPath(devotional)}">Ler devocional completo</a>
+      </div>
+    </article>
+  `;
+}
+
 /* ─── Events ─── */
 function buildShareText(dev) {
-  return `📖 *${dev.title}*\n_${dev.theme}_\n\n${dev.scripture}\n— ${dev.reference}\n\n💭 ${dev.reflection}\n\n✅ ${dev.application.join("\n✅ ")}\n\n🙏 ${dev.prayer}\n\nLeia e compartilhe: ${location.origin}/${devotionalPath(dev)}\n\n— Pr. Marco Lima`;
+  return `📖 *${dev.title}*\n_${dev.theme}_\n\n${dev.scripture}\n— ${dev.reference}\n\n💭 ${shortExcerpt(dev.reflection, 260)}\n\nLeia o devocional completo: ${absoluteDevotionalUrl(dev)}\n\n— Pr. Marco Lima`;
 }
 
 function normalizeText(value) {
@@ -193,7 +227,7 @@ function renderThemeFilters() {
   if (!themeFilters) return;
   const themes = ["Todos", ...new Set(state.devotionals.map(d => d.theme).filter(Boolean).sort((a, b) => a.localeCompare(b, "pt-BR")))];
   themeFilters.innerHTML = themes.map(theme => `
-    <button class="theme-filter ${state.activeTheme === theme ? "active" : ""}" data-theme="${theme}">${theme}</button>
+    <button class="theme-filter ${state.activeTheme === theme ? "active" : ""}" data-theme="${escapeHtml(theme)}">${escapeHtml(theme)}</button>
   `).join("");
   themeFilters.querySelectorAll(".theme-filter").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -229,9 +263,8 @@ function renderExplore() {
     ? `${filtered.length} devocional${filtered.length === 1 ? "" : "ais"} encontrado${filtered.length === 1 ? "" : "s"}${filtered.length > 24 ? "; mostrando os 24 primeiros." : "."}`
     : "Digite uma palavra ou selecione um tema para pesquisar os 365 devocionais.";
   searchResults.innerHTML = shouldShow
-    ? filtered.slice(0, 24).map(dev => renderCard(dev, 0, false, { dateLabel: dateLabelForDevotional(dev) })).join("")
+    ? filtered.slice(0, 24).map(renderPreviewCard).join("")
     : "";
-  attachEvents(searchResults);
 }
 
 function attachSearchEvents() {
