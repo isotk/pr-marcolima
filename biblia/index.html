@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bíblia Online | Almeida Livre | Pr. Marco Lima</title>
+    <meta name="description" content="Leia a Bíblia completa em português, Almeida 1819 Bíblia Livre, diretamente no site Pr. Marco Lima." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://pr-marcolima.vercel.app/biblia/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bíblia Online | Pr. Marco Lima" />
+    <meta property="og:description" content="Bíblia completa em português para leitura, busca e meditação." />
+    <meta property="og:url" content="https://pr-marcolima.vercel.app/biblia/" />
+    <meta property="og:image" content="https://pr-marcolima.vercel.app/assets/devotional-images/dia-001-a-gratidao-que-transforma.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header bible-site-header">
+      <div class="container header-inner">
+        <a href="../" class="header-logo-link"><img src="../assets/images/logo.png" alt="Pr. Marco Lima" class="header-logo" /></a>
+        <div class="header-info">
+          <h1 class="header-name">Pr. Marco Lima</h1>
+          <a href="https://instagram.com/prmarcolima" target="_blank" rel="noopener noreferrer" class="header-social">@prmarcolima</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="main bible-main">
+      <section class="bible-hero">
+        <div class="container">
+          <a class="back-link" href="../">← Voltar aos devocionais</a>
+          <div class="bible-hero-card">
+            <span class="intro-kicker">Bíblia Online</span>
+            <h2>Leia a Palavra de Deus</h2>
+            <p>Bíblia completa em português, Almeida 1819 Bíblia Livre, em domínio público. Escolha um livro, avance pelos capítulos ou pesquise por palavra e referência.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bible-reader-section">
+        <div class="container">
+          <div class="bible-layout">
+            <aside class="bible-controls" aria-label="Controles da Bíblia">
+              <label for="bible-search">Buscar texto ou referência</label>
+              <div class="bible-search-row">
+                <input id="bible-search" class="search-input" type="search" placeholder="Ex.: João 3:16, Salmos 23, graça" autocomplete="off" />
+                <button id="bible-search-btn" class="btn-save" type="button">Buscar</button>
+              </div>
+              <p id="bible-search-hint" class="search-summary">Digite uma referência ou palavra com pelo menos 3 letras.</p>
+
+              <label for="bible-book">Livro</label>
+              <select id="bible-book" class="bible-select"></select>
+
+              <label for="bible-chapter">Capítulo</label>
+              <select id="bible-chapter" class="bible-select"></select>
+
+              <div class="bible-nav-buttons">
+                <button id="bible-prev" type="button">← Anterior</button>
+                <button id="bible-next" type="button">Próximo →</button>
+              </div>
+
+              <div class="bible-source-note">
+                <strong>Tradução:</strong> Almeida 1819, Bíblia Livre.
+                <span>Fonte pública: projeto bible-data/Midvash, licença public-domain.</span>
+              </div>
+            </aside>
+
+            <article class="bible-reader" aria-live="polite">
+              <div class="bible-reader-header">
+                <div>
+                  <span id="bible-version" class="devo-theme-tag">Almeida Livre</span>
+                  <h2 id="bible-title">Carregando Bíblia...</h2>
+                </div>
+                <button id="bible-copy-link" class="btn-copy" type="button">Copiar link</button>
+              </div>
+              <div id="bible-verses" class="bible-verses">
+                <p>Carregando texto bíblico local...</p>
+              </div>
+              <div id="bible-results" class="bible-results"></div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../assets/biblia.js"></script>
+  </body>
+</html>
