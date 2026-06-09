@@ -1090,6 +1090,45 @@ body {
   color: var(--color-sage-deep);
 }
 
+.member-auth-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.member-auth-tab {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-cream);
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  font-weight: 700;
+  padding: 9px 12px;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.member-auth-tab-active,
+.member-auth-tab:hover {
+  background: var(--color-sage-deep);
+  border-color: var(--color-sage-deep);
+  color: #fff;
+}
+
+.member-auth-msg {
+  color: var(--color-sage-deep);
+  font-size: 0.84rem;
+  font-weight: 600;
+  min-height: 18px;
+}
+
+.member-login-form button[disabled] {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 .members-dashboard {
   display: grid;
   gap: 22px;

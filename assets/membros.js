@@ -1,10 +1,12 @@
-const MEMBER_NAME_KEY = "devocional:member:name";
+const MEMBER_ACCOUNT_KEY = "devocional:member:account";
+const MEMBER_SESSION_KEY = "devocional:member:active";
 const FAVORITES_KEY = "devocional:favorites";
 
 const accessEl = document.getElementById("members-access");
 const dashboardEl = document.getElementById("members-dashboard");
 
 let devotionals = [];
+let authMode = "register";
 
 function escapeHtml(value) {
   return String(value || "")
@@ -23,8 +25,31 @@ function devotionalPath(devotional) {
   return `../devocional/${devotionalDay(devotional.id)}/`;
 }
 
-function getMemberName() {
-  return localStorage.getItem(MEMBER_NAME_KEY) || "";
+async function hashText(value) {
+  const data = new TextEncoder().encode(value);
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hash)).map(byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function getAccount() {
+  try {
+    return JSON.parse(localStorage.getItem(MEMBER_ACCOUNT_KEY) || "null");
+  } catch {
+    return null;
+  }
+}
+
+function saveAccount(account) {
+  localStorage.setItem(MEMBER_ACCOUNT_KEY, JSON.stringify(account));
+  localStorage.setItem(MEMBER_SESSION_KEY, "1");
+}
+
+function isSessionActive() {
+  return localStorage.getItem(MEMBER_SESSION_KEY) === "1";
+}
+
+function clearSession() {
+  localStorage.removeItem(MEMBER_SESSION_KEY);
 }
 
 function getFavorites() {
@@ -80,43 +105,95 @@ function findDevotional(id) {
   return devotionals.find(dev => dev.id === id);
 }
 
-function renderAccess() {
-  const name = getMemberName();
-  if (name) {
-    accessEl.innerHTML = "";
-    dashboardEl.hidden = false;
-    renderDashboard(name);
-    return;
-  }
-
+function renderAccess(message = "") {
   dashboardEl.hidden = true;
+  const isRegister = authMode === "register";
+  const hasAccount = Boolean(getAccount());
+
   accessEl.innerHTML = `
     <div class="member-login-card">
       <div class="member-login-copy">
-        <span class="intro-kicker">Entrar</span>
-        <h2>Comece seu painel pessoal</h2>
-        <p>Informe seu nome para personalizar a área de membros. Os dados ficam salvos apenas neste navegador.</p>
-        <p class="member-security-note">Para uma área com senha real e conteúdo restrito, será necessário integrar autenticação no futuro.</p>
+        <span class="intro-kicker">${isRegister ? "Cadastro local" : "Entrar"}</span>
+        <h2>${isRegister ? "Crie seu acesso de membro" : "Acesse sua área de membro"}</h2>
+        <p>${isRegister ? "Cadastre nome, e-mail e senha. Os dados ficam salvos neste navegador e podem ser exportados em arquivo texto." : "Entre com o e-mail e senha cadastrados neste navegador."}</p>
+        <p class="member-security-note">Sem banco de dados: este cadastro não cria usuário em servidor e não funciona em outro aparelho automaticamente.</p>
       </div>
-      <form id="member-login-form" class="member-login-form">
-        <label for="member-name">Seu nome</label>
-        <input id="member-name" class="search-input" type="text" placeholder="Ex.: Marco Lima" autocomplete="name" required />
-        <button class="btn-export-diary" type="submit">Acessar área</button>
+      <form id="member-auth-form" class="member-login-form">
+        <div class="member-auth-tabs" role="tablist" aria-label="Cadastro de membros">
+          <button class="member-auth-tab ${isRegister ? "member-auth-tab-active" : ""}" type="button" data-mode="register">Cadastrar</button>
+          <button class="member-auth-tab ${!isRegister ? "member-auth-tab-active" : ""}" type="button" data-mode="login" ${hasAccount ? "" : "disabled"}>Entrar</button>
+        </div>
+        ${isRegister ? `
+          <label for="member-name">Nome</label>
+          <input id="member-name" class="search-input" type="text" placeholder="Seu nome" autocomplete="name" required />
+        ` : ""}
+        <label for="member-email">E-mail</label>
+        <input id="member-email" class="search-input" type="email" placeholder="voce@email.com" autocomplete="email" required />
+        <label for="member-password">Senha</label>
+        <input id="member-password" class="search-input" type="password" placeholder="Mínimo 8 caracteres" autocomplete="${isRegister ? "new-password" : "current-password"}" required minlength="8" />
+        <button class="btn-export-diary" type="submit">${isRegister ? "Criar cadastro local" : "Entrar"}</button>
+        <span id="member-auth-msg" class="member-auth-msg">${escapeHtml(message)}</span>
       </form>
     </div>
   `;
 
-  document.getElementById("member-login-form")?.addEventListener("submit", event => {
-    event.preventDefault();
-    const input = document.getElementById("member-name");
-    const value = input.value.trim();
-    if (!value) return;
-    localStorage.setItem(MEMBER_NAME_KEY, value.slice(0, 80));
-    renderAccess();
+  accessEl.querySelectorAll(".member-auth-tab").forEach(button => {
+    button.addEventListener("click", () => {
+      if (button.disabled) return;
+      authMode = button.dataset.mode;
+      renderAccess();
+    });
   });
+
+  document.getElementById("member-auth-form")?.addEventListener("submit", handleAuthSubmit);
 }
 
-function renderDashboard(name) {
+async function handleAuthSubmit(event) {
+  event.preventDefault();
+  const msg = document.getElementById("member-auth-msg");
+  const isRegister = authMode === "register";
+  const email = document.getElementById("member-email").value.trim().toLowerCase();
+  const password = document.getElementById("member-password").value;
+
+  if (password.length < 8) {
+    if (msg) msg.textContent = "A senha precisa ter pelo menos 8 caracteres.";
+    return;
+  }
+
+  if (isRegister) {
+    const name = document.getElementById("member-name").value.trim();
+    if (name.length < 2) {
+      if (msg) msg.textContent = "Informe seu nome.";
+      return;
+    }
+
+    const account = {
+      name: name.slice(0, 80),
+      email,
+      passwordHash: await hashText(`${email}:${password}`),
+      createdAt: new Date().toISOString(),
+    };
+    saveAccount(account);
+    accessEl.innerHTML = "";
+    dashboardEl.hidden = false;
+    renderDashboard(account);
+    return;
+  }
+
+  const account = getAccount();
+  const passwordHash = await hashText(`${email}:${password}`);
+  if (!account || account.email !== email || account.passwordHash !== passwordHash) {
+    if (msg) msg.textContent = "E-mail ou senha inválidos neste navegador.";
+    return;
+  }
+
+  localStorage.setItem(MEMBER_SESSION_KEY, "1");
+  accessEl.innerHTML = "";
+  dashboardEl.hidden = false;
+  renderDashboard(account);
+}
+
+function renderDashboard(account) {
   const favorites = getFavorites();
   const dates = getVisitedDates();
   const streak = calcStreak(dates);
@@ -128,38 +205,23 @@ function renderDashboard(name) {
     .map(item => ({ ...item, devotional: findDevotional(item.id) }))
     .filter(item => item.devotional)
     .slice(0, 5);
+  const createdAt = account.createdAt ? new Date(account.createdAt).toLocaleDateString("pt-BR") : "—";
 
   dashboardEl.innerHTML = `
     <div class="members-card member-dashboard-card">
       <div class="members-header">
-        <div class="members-avatar">${escapeHtml(name.trim().charAt(0).toUpperCase() || "M")}</div>
+        <div class="members-avatar">${escapeHtml(account.name.trim().charAt(0).toUpperCase() || "M")}</div>
         <div>
-          <h2>Bem-vindo, ${escapeHtml(name)}</h2>
-          <p class="members-sub">Painel pessoal de leitura, oração e crescimento espiritual.</p>
+          <h2>Bem-vindo, ${escapeHtml(account.name)}</h2>
+          <p class="members-sub">${escapeHtml(account.email)} · cadastro local criado em ${escapeHtml(createdAt)}</p>
         </div>
         <button id="member-logout" class="members-btn" type="button">Sair</button>
       </div>
       <div class="members-grid member-stats-grid">
-        <div class="members-box">
-          <span class="members-box-icon">🔥</span>
-          <h3>${streak.current} ${streak.current === 1 ? "dia" : "dias"}</h3>
-          <p>Sequência atual</p>
-        </div>
-        <div class="members-box">
-          <span class="members-box-icon">📖</span>
-          <h3>${dates.length}</h3>
-          <p>Dias lidos</p>
-        </div>
-        <div class="members-box">
-          <span class="members-box-icon">❤️</span>
-          <h3>${favorites.size}</h3>
-          <p>Favoritos</p>
-        </div>
-        <div class="members-box">
-          <span class="members-box-icon">✏️</span>
-          <h3>${notesCount}</h3>
-          <p>Anotações</p>
-        </div>
+        <div class="members-box"><span class="members-box-icon">🔥</span><h3>${streak.current} ${streak.current === 1 ? "dia" : "dias"}</h3><p>Sequência atual</p></div>
+        <div class="members-box"><span class="members-box-icon">📖</span><h3>${dates.length}</h3><p>Dias lidos</p></div>
+        <div class="members-box"><span class="members-box-icon">❤️</span><h3>${favorites.size}</h3><p>Favoritos</p></div>
+        <div class="members-box"><span class="members-box-icon">✏️</span><h3>${notesCount}</h3><p>Anotações</p></div>
       </div>
     </div>
 
@@ -183,15 +245,18 @@ function renderDashboard(name) {
 
     <div class="member-footer-actions">
       <button id="member-export" class="btn-export-diary" type="button">Exportar minhas anotações</button>
+      <button id="member-export-account" class="members-btn" type="button">Exportar cadastro .txt</button>
       <span id="member-export-msg" class="export-msg"></span>
     </div>
   `;
 
   document.getElementById("member-logout")?.addEventListener("click", () => {
-    localStorage.removeItem(MEMBER_NAME_KEY);
-    renderAccess();
+    clearSession();
+    authMode = "login";
+    renderAccess("Você saiu da área de membros.");
   });
   document.getElementById("member-export")?.addEventListener("click", exportNotes);
+  document.getElementById("member-export-account")?.addEventListener("click", exportAccount);
 }
 
 function renderDevotionalList(items, emptyText) {
@@ -222,6 +287,16 @@ function renderNoteList(items) {
   `;
 }
 
+function downloadText(filename, content) {
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 function exportNotes() {
   const notes = getKeys("devocional:notes:")
     .map(key => ({ id: key.replace("devocional:notes:", ""), text: (localStorage.getItem(key) || "").trim() }))
@@ -242,14 +317,29 @@ function exportNotes() {
     content += `${text}\n\n${"=".repeat(42)}\n\n`;
   });
 
-  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `area-membros-anotacoes-${today.replace(/\//g, "-")}.txt`;
-  link.click();
-  URL.revokeObjectURL(url);
+  downloadText(`area-membros-anotacoes-${today.replace(/\//g, "-")}.txt`, content);
   if (msg) msg.textContent = `${notes.length} anotações exportadas.`;
+}
+
+function exportAccount() {
+  const account = getAccount();
+  const msg = document.getElementById("member-export-msg");
+  if (!account) return;
+
+  const createdAt = account.createdAt ? new Date(account.createdAt).toLocaleString("pt-BR") : "—";
+  const content = [
+    "CADASTRO LOCAL - AREA DE MEMBROS",
+    "Pr. Marco Lima",
+    "",
+    `Nome: ${account.name}`,
+    `E-mail: ${account.email}`,
+    `Criado em: ${createdAt}`,
+    "",
+    "Observação: este arquivo é apenas um comprovante/exportação local. A senha não é exportada.",
+  ].join("\n");
+
+  downloadText(`cadastro-membro-${account.email.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}.txt`, content);
+  if (msg) msg.textContent = "Cadastro exportado em arquivo texto.";
 }
 
 async function init() {
@@ -259,7 +349,16 @@ async function init() {
   } catch {
     devotionals = [];
   }
-  renderAccess();
+
+  const account = getAccount();
+  if (account && isSessionActive()) {
+    accessEl.innerHTML = "";
+    dashboardEl.hidden = false;
+    renderDashboard(account);
+  } else {
+    authMode = account ? "login" : "register";
+    renderAccess();
+  }
 }
 
 init();
