@@ -1013,10 +1013,166 @@ body {
   font-style: italic;
 }
 
+/* ─── Members Page ─── */
+.members-main { padding-bottom: 60px; }
+
+.members-hero { padding: 34px 0 20px; }
+
+.members-hero-card,
+.member-login-card {
+  background: linear-gradient(135deg, var(--color-warm-white), var(--color-parchment));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.members-hero-card {
+  padding: 30px 32px;
+  text-align: center;
+}
+
+.members-hero-card h2,
+.member-login-copy h2 {
+  font-family: var(--font-display);
+  color: var(--color-sage-deep);
+  line-height: 1.2;
+}
+
+.members-hero-card h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 12px;
+}
+
+.members-hero-card p,
+.member-login-copy p {
+  color: var(--color-ink-soft);
+  line-height: 1.75;
+}
+
+.members-access-section { padding: 18px 0 0; }
+
+.member-login-card {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 28px;
+  padding: 30px 32px;
+  align-items: center;
+}
+
+.member-login-copy h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 6px 0 10px;
+}
+
+.member-security-note {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 12px;
+  background: rgba(240,228,196,0.45);
+  font-size: 0.88rem;
+}
+
+.member-login-form {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-warm-white);
+}
+
+.member-login-form label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-sage-deep);
+}
+
+.members-dashboard {
+  display: grid;
+  gap: 22px;
+}
+
+.member-dashboard-card .members-header {
+  justify-content: space-between;
+}
+
+.member-dashboard-card .members-header > div:nth-child(2) { flex: 1; }
+
+.member-stats-grid { grid-template-columns: repeat(4, 1fr); }
+
+.member-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.member-action-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 142px;
+  padding: 22px 20px;
+  background: var(--color-warm-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  color: inherit;
+  text-decoration: none;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.member-action-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(90,122,94,0.35);
+}
+
+.member-action-card span { font-size: 1.8rem; }
+
+.member-action-card strong {
+  font-family: var(--font-display);
+  font-size: 1.04rem;
+  color: var(--color-sage-deep);
+}
+
+.member-action-card small {
+  color: var(--color-ink-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.member-content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.member-panel-card {
+  background: var(--color-warm-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.member-panel-card li { gap: 14px; }
+
+.member-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-cream);
+}
+
 /* ─── About Cards ─── */
 .about-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 24px;
 }
 
@@ -1928,6 +2084,10 @@ body {
   .about-grid { grid-template-columns: 1fr; }
   .about-card { padding: 24px 20px; }
   .steps-card { padding: 24px 20px; }
+  .members-hero-card { padding: 24px 20px; }
+  .member-login-card { grid-template-columns: 1fr; padding: 24px 20px; }
+  .member-actions-grid { grid-template-columns: repeat(2, 1fr); }
+  .member-content-grid { grid-template-columns: 1fr; }
   .bible-hero-card { padding: 24px 20px; }
   .bible-reader-header { flex-direction: column; padding: 22px 20px; }
   .bible-verses { padding: 22px 20px; }
@@ -2414,6 +2574,9 @@ body {
 
 @media (max-width: 600px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .member-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .member-stats-grid .members-box:nth-child(2n) { border-right: none; }
+  .member-stats-grid .members-box:nth-child(n+3) { border-top: 1px solid var(--color-border); }
   .stats-grid .stat-item:nth-child(2n) { border-right: none; }
   .stats-grid .stat-item:nth-child(3) { border-right: 1px solid var(--color-border); border-top: 1px solid var(--color-border); }
   .stats-grid .stat-item:nth-child(n+3) { border-top: 1px solid var(--color-border); }
@@ -2422,4 +2585,7 @@ body {
   .plan-drawer-panel { width: 100vw; }
   .stats-actions { flex-direction: column; align-items: flex-start; }
   .btn-export-diary { width: 100%; justify-content: center; }
+  .member-actions-grid { grid-template-columns: 1fr; }
+  .member-dashboard-card .members-header { align-items: flex-start; }
+  .member-footer-actions { flex-direction: column; align-items: flex-start; }
 }
