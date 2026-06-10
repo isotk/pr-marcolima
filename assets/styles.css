@@ -24,6 +24,26 @@
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+[data-theme="dark"] {
+  --color-sage: #7a9e7e;
+  --color-sage-deep: #a8c5ab;
+  --color-sage-light: #5a7a5e;
+  --color-gold: #d4b85c;
+  --color-gold-light: #3a3520;
+  --color-cream: #1a1a1a;
+  --color-warm-white: #222;
+  --color-parchment: #2a2a2a;
+  --color-ink: #e8e4db;
+  --color-ink-soft: #bbb;
+  --color-ink-muted: #888;
+  --color-border: #444;
+  --color-verse-bg: linear-gradient(135deg, #2a2a2a, #222);
+  --color-prayer-bg: linear-gradient(135deg, #2a2820, #2a2a2a);
+  --shadow-soft: 0 2px 20px rgba(0,0,0,0.3);
+  --shadow-card: 0 4px 30px rgba(0,0,0,0.4);
+  --shadow-hover: 0 8px 40px rgba(0,0,0,0.5);
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
@@ -2658,6 +2678,80 @@ body {
   border-color: var(--color-sage-deep);
 }
 
+/* ─── Dark Mode Toggle ─── */
+.theme-toggle {
+  margin-left: auto;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 999px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #fff;
+  transition: background var(--transition), transform var(--transition);
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.1);
+}
+
+[data-theme="dark"] .hero {
+  background: linear-gradient(160deg, #1a2e1c 0%, #2a4a2e 40%, #3a5a3e 70%, #4a6a4e 100%);
+}
+
+[data-theme="dark"] .section-vod {
+  background: linear-gradient(135deg, #1a2e1c, #2a4a2e);
+}
+
+[data-theme="dark"] .devo-card {
+  background: var(--color-warm-white);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .devo-verse-box {
+  background: var(--color-verse-bg);
+}
+
+[data-theme="dark"] .devo-prayer {
+  background: var(--color-prayer-bg);
+}
+
+[data-theme="dark"] .site-footer {
+  background: #111;
+}
+
+[data-theme="dark"] .footer-copy {
+  color: var(--color-ink-muted);
+}
+
+[data-theme="dark"] .footer-links {
+  color: var(--color-ink-muted);
+}
+
+[data-theme="dark"] .footer-links a {
+  color: var(--color-gold);
+}
+
+[data-theme="dark"] .bible-verse.bible-marked {
+  background: #5c5200;
+}
+
+[data-theme="dark"] .bible-verse:hover {
+  background: #3a3520;
+}
+
+[data-theme="dark"] .search-input {
+  background: var(--color-warm-white);
+  color: var(--color-ink);
+  border-color: var(--color-border);
+}
+
 /* ─── Responsividade dos novos recursos ─── */
 @media (max-width: 900px) {
   .stats-grid { grid-template-columns: repeat(3, 1fr); }
@@ -2684,4 +2778,5 @@ body {
   .member-actions-grid { grid-template-columns: 1fr; }
   .member-dashboard-card .members-header { align-items: flex-start; }
   .member-footer-actions { flex-direction: column; align-items: flex-start; }
+  .theme-toggle { width: 36px; height: 36px; font-size: 1rem; }
 }

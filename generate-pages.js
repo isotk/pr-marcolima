@@ -182,6 +182,7 @@ function renderPage(devotional, index) {
         </div>
       </section>
     </main>
+    <script src="../../assets/theme.js"></script>
   </body>
 </html>`;
 }
