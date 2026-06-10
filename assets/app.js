@@ -981,6 +981,35 @@ function attachMotoEvents() {
   document.getElementById("moto-modal-backdrop")?.addEventListener("click", closeMotoModal);
 }
 
+/* ─── Biography Modal ─── */
+function attachBioModal() {
+  const btn = document.querySelector(".footer-main-logo-btn");
+  const modal = document.getElementById("bio-modal");
+  const closeBtn = document.querySelector(".bio-modal-close");
+  const overlay = document.querySelector(".bio-modal-overlay");
+
+  if (!btn || !modal) return;
+
+  function openBio() {
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    closeBtn?.focus();
+  }
+
+  function closeBio() {
+    modal.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  btn.addEventListener("click", openBio);
+  closeBtn?.addEventListener("click", closeBio);
+  overlay?.addEventListener("click", closeBio);
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && !modal.hidden) closeBio();
+  });
+}
+
 /* ─── Boot ─── */
 async function boot() {
   const [devotionalsResponse, motoResponse] = await Promise.all([
@@ -997,6 +1026,7 @@ async function boot() {
   renderPlans();
   attachPlanDrawerEvents();
   attachMotoEvents();
+  attachBioModal();
   markToday();
 }
 

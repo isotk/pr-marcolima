@@ -221,7 +221,9 @@
 
     <footer class="footer">
       <div class="container footer-inner">
-        <img src="./assets/images/logo.png" alt="Pr. Marco Lima" class="footer-main-logo" />
+        <button class="footer-main-logo-btn" aria-label="Ver biografia do Pr. Marco Lima">
+          <img src="./assets/images/logo.png" alt="Pr. Marco Lima" class="footer-main-logo" />
+        </button>
         <div class="footer-logos">
           <a href="https://legadomc.com.br" target="_blank" rel="noopener noreferrer" class="footer-logo-link">
             <img src="https://legadomc.com.br/legado.png" alt="Legado MC" class="footer-logo" />
@@ -240,6 +242,22 @@
         <p class="footer-sub">Fortalecendo fé a cada dia</p>
       </div>
     </footer>
+
+    <div class="bio-modal" id="bio-modal" role="dialog" aria-modal="true" aria-labelledby="bio-title" hidden>
+      <div class="bio-modal-overlay"></div>
+      <div class="bio-modal-content">
+        <button class="bio-modal-close" aria-label="Fechar biografia">&times;</button>
+        <h2 id="bio-title">Biografia — Pr. Marco Lima</h2>
+        <div class="bio-modal-text">
+          <p>Pr. Marco Lima é pastor evangélico pentecostal, convertido há 17 anos, homem de fé, família e chamado ministerial. Casado com a Pastora Evelyn Cristina de Lima e pai da Esther Lima, tem dedicado sua vida ao serviço do Reino de Deus, à pregação da Palavra e ao cuidado de pessoas.</p>
+          <p>Atualmente, junto com sua esposa, pastoreia a cidade de Campo Largo, no Paraná, na Igreja Evangélica Bola de Neve com o propósito de anunciar Jesus Cristo, fortalecer famílias e edificar vidas através da Palavra de Deus, da comunhão e da ação do Espírito Santo.</p>
+          <p>Além do pastoreio em Campo Largo, atua como pastor auxiliar na Igreja Bola de Neve Curitiba, servindo com zelo, compromisso e amor pela obra de Deus. Também é líder do Ministério Legado em Curitiba, um ministério voltado a motociclistas cristãos, unindo fé, comunhão, evangelismo e propósito.</p>
+          <p>Motociclista cristão há 10 anos, Pr. Marco Lima carrega em sua trajetória a marca de um ministério que vai além das quatro paredes da igreja, levando a mensagem de Cristo também pelas estradas, encontros e relacionamentos.</p>
+          <p>Sua vida ministerial é marcada pelo amor à Bíblia, pela paixão em anunciar o Evangelho, pela valorização da família e pelo desejo de ver pessoas transformadas por um encontro verdadeiro com Jesus.</p>
+          <p class="bio-contact"><strong>Contato:</strong> marco.lima@boladeneve.com · <strong>Celular:</strong> 41 99626-7957</p>
+        </div>
+      </div>
+    </div>
 
     <script src="./assets/theme.js"></script>
     <script src="./assets/app.js"></script>
