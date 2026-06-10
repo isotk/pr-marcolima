@@ -9,6 +9,7 @@ const WEEKDAYS = [
 
 const state = {
   devotionals: [],
+  motoDevotionals: [],
   currentDevotionals: [],
   favorites: new Set(JSON.parse(localStorage.getItem("devocional:favorites") || "[]")),
   search: "",
@@ -678,9 +679,22 @@ const READING_PLANS = [
     color: "#6a8fa8",
     description: "14 dias de esperança e consolo para os momentos mais desafiadores.",
   },
+  {
+    id: "on-the-road-moto",
+    icon: "🏍️",
+    title: "On the Road: 7 dias na Estrada",
+    days: 7,
+    themes: [],
+    source: "moto",
+    color: "#b0413e",
+    description: "7 dias de fé, irmandade e foco na estrada. Exclusivo para Motociclistas.",
+  },
 ];
 
 function getPlanDevotionals(plan) {
+  if (plan.source === "moto") {
+    return state.motoDevotionals.slice(0, plan.days);
+  }
   const filtered = state.devotionals.filter(d => plan.themes.includes(d.theme));
   const result = [];
   for (let i = 0; i < plan.days; i++) {
@@ -798,15 +812,95 @@ function attachPlanDrawerEvents() {
   document.addEventListener("keydown", e => { if (e.key === "Escape") closePlanDrawer(); });
 }
 
+/* ─── Motociclista Cristão ─── */
+function renderMotoGrid() {
+  const grid = document.getElementById("moto-grid");
+  if (!grid) return;
+  grid.innerHTML = state.motoDevotionals.map((dev, idx) => `
+    <div class="moto-card" data-idx="${idx}">
+      <div class="moto-card-inner">
+        <span class="moto-card-theme">${escapeHtml(dev.theme)}</span>
+        <h3>${escapeHtml(dev.title)}</h3>
+        <p class="moto-card-ref">${escapeHtml(dev.reference)}</p>
+      </div>
+      <div class="moto-card-action">Ler →</div>
+    </div>
+  `).join("");
+
+  grid.querySelectorAll(".moto-card").forEach(card => {
+    card.addEventListener("click", () => openMotoModal(card.dataset.idx));
+  });
+}
+
+function openMotoModal(idx) {
+  const dev = state.motoDevotionals[idx];
+  if (!dev) return;
+  
+  const content = document.getElementById("moto-modal-content");
+  content.innerHTML = `
+    <div class="devo-body">
+      <div class="devo-header-text" style="margin-bottom: 24px;">
+        <span class="devo-label">${escapeHtml(dev.theme)}</span>
+        <h2 style="font-size: 1.8rem; margin-top: 4px;">${escapeHtml(dev.title)}</h2>
+      </div>
+      <div class="verse-box">
+        <div class="verse-label">📖 ${escapeHtml(dev.reference)}</div>
+        <blockquote>${escapeHtml(dev.scripture)}</blockquote>
+        <div class="verse-footer">
+          <a class="verse-link" href="${bibleGatewayUrl(dev.reference)}">Ler na Bíblia local →</a>
+        </div>
+      </div>
+      <div class="devo-section devo-reflection">
+        <h4><span class="section-icon">💭</span> Pensamento</h4>
+        <p>${escapeHtml(dev.reflection)}</p>
+      </div>
+      <div class="devo-section devo-application">
+        <h4><span class="section-icon">✅</span> Para Praticar Hoje</h4>
+        <ul>
+          ${dev.application.map(a => `<li>${escapeHtml(a)}</li>`).join("")}
+        </ul>
+      </div>
+      <div class="devo-section devo-prayer">
+        <h4><span class="section-icon">🙏</span> Oração</h4>
+        <p>${escapeHtml(dev.prayer)}</p>
+      </div>
+    </div>
+  `;
+  
+  const modal = document.getElementById("moto-modal");
+  modal.setAttribute("aria-hidden", "false");
+  modal.classList.add("moto-modal-open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeMotoModal() {
+  const modal = document.getElementById("moto-modal");
+  modal.setAttribute("aria-hidden", "true");
+  modal.classList.remove("moto-modal-open");
+  document.body.style.overflow = "";
+}
+
+function attachMotoEvents() {
+  document.getElementById("moto-modal-close")?.addEventListener("click", closeMotoModal);
+  document.getElementById("moto-modal-backdrop")?.addEventListener("click", closeMotoModal);
+}
+
 /* ─── Boot ─── */
 async function boot() {
-  const devotionalsResponse = await fetch("./data/devocionais.json");
+  const [devotionalsResponse, motoResponse] = await Promise.all([
+    fetch("./data/devocionais.json"),
+    fetch("./data/moto.json").catch(() => ({ json: () => [] }))
+  ]);
   state.devotionals = await devotionalsResponse.json();
+  state.motoDevotionals = await motoResponse.json();
+  
   attachSearchEvents();
   await renderAll();
   renderStats();
+  renderMotoGrid();
   renderPlans();
   attachPlanDrawerEvents();
+  attachMotoEvents();
   markToday();
 }
 
