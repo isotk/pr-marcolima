@@ -1198,6 +1198,27 @@ body {
 
 .member-panel-card li { gap: 14px; }
 
+.member-highlights-panel {
+  margin-top: 18px;
+}
+
+.member-highlights-panel h3 {
+  color: var(--color-sage-deep);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.member-highlights-panel .panel-title {
+  font-weight: 600;
+}
+
+.member-highlights-panel .panel-ref {
+  color: var(--color-ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 .member-footer-actions {
   display: flex;
   align-items: center;
@@ -1422,6 +1443,42 @@ body {
   border-radius: 8px;
   color: var(--color-ink);
   padding: 6px 8px;
+}
+
+.bible-verse.bible-marked {
+  background: #fff59d;
+  border-radius: 4px;
+  padding: 4px 6px;
+  cursor: pointer;
+  position: relative;
+}
+
+.bible-verse.bible-marked::after {
+  content: "🖍";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+.bible-verse:not(.bible-marked) {
+  cursor: pointer;
+}
+
+.bible-verse:hover {
+  background: #fff9c4;
+  border-radius: 4px;
+  padding: 4px 6px;
+}
+
+.bible-mark-hint {
+  color: var(--color-ink-light);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-bottom: 12px;
+  opacity: 0.7;
 }
 
 .bible-results {

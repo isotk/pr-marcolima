@@ -48,6 +48,8 @@ const BOOK_ALIASES = {
   "3jo": "3John", "3 joao": "3John", "3 joão": "3John", jd: "Jude", judas: "Jude", ap: "Rev", apocalipse: "Rev"
 };
 
+const BIBLE_HIGHLIGHTS_KEY = "devocional:bible-highlights";
+
 const state = { bible: null, book: null, chapter: 1, verse: null };
 
 const bookSelect = document.getElementById("bible-book");
@@ -79,6 +81,49 @@ function normalize(value) {
     .toLowerCase()
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function getHighlights() {
+  try {
+    return JSON.parse(localStorage.getItem(BIBLE_HIGHLIGHTS_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function saveHighlights(highlights) {
+  localStorage.setItem(BIBLE_HIGHLIGHTS_KEY, JSON.stringify(highlights));
+}
+
+function highlightKey(book, chapter, verse) {
+  return `${book}:${chapter}:${verse}`;
+}
+
+function toggleHighlight(bookCode, chapterNum, verseNum, verseText) {
+  const highlights = getHighlights();
+  const key = highlightKey(bookCode, chapterNum, verseNum);
+  const bookName = BOOK_NAMES[bookCode] || bookCode;
+
+  if (highlights[key]) {
+    delete highlights[key];
+  } else {
+    highlights[key] = {
+      book: bookCode,
+      bookName,
+      chapter: chapterNum,
+      verse: verseNum,
+      text: verseText,
+      at: new Date().toISOString()
+    };
+  }
+
+  saveHighlights(highlights);
+  return Boolean(highlights[key]);
+}
+
+function isHighlighted(bookCode, chapterNum, verseNum) {
+  const highlights = getHighlights();
+  return Boolean(highlights[highlightKey(bookCode, chapterNum, verseNum)]);
 }
 
 function currentBook() {
@@ -120,9 +165,10 @@ function renderChapter() {
   chapterSelect.value = String(chapter.chapter);
   titleEl.textContent = `${bookName} ${chapter.chapter}`;
   versionEl.textContent = state.bible.name || "Almeida Livre";
-  versesEl.innerHTML = chapter.verses.map(verse => `
-    <p class="bible-verse" id="v${verse.number}"><sup>${verse.number}</sup>${escapeHtml(verse.text)}</p>
-  `).join("");
+  versesEl.innerHTML = chapter.verses.map(verse => {
+    const marked = isHighlighted(book.book, chapter.chapter, verse.number);
+    return `<p class="bible-verse${marked ? " bible-marked" : ""}" data-book="${book.book}" data-chapter="${chapter.chapter}" data-verse="${verse.number}" data-text="${escapeHtml(verse.text)}" title="Clique para marcar/desmarcar"><sup>${verse.number}</sup>${escapeHtml(verse.text)}</p>`;
+  }).join("");
   resultsEl.innerHTML = "";
   updateButtons();
   updateUrl();
@@ -275,6 +321,14 @@ function attachEvents() {
       copyBtn.textContent = "Link copiado";
       setTimeout(() => { copyBtn.textContent = "Copiar link"; }, 1800);
     });
+  });
+
+  versesEl.addEventListener("click", event => {
+    const p = event.target.closest(".bible-verse");
+    if (!p) return;
+    const { book, chapter, verse, text } = p.dataset;
+    const kept = toggleHighlight(book, Number(chapter), Number(verse), text);
+    p.classList.toggle("bible-marked", kept);
   });
 }
 

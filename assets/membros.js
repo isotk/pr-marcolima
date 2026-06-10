@@ -1,6 +1,7 @@
 const MEMBER_ACCOUNT_KEY = "devocional:member:account";
 const MEMBER_SESSION_KEY = "devocional:member:active";
 const FAVORITES_KEY = "devocional:favorites";
+const BIBLE_HIGHLIGHTS_KEY = "devocional:bible-highlights";
 
 const accessEl = document.getElementById("members-access");
 const dashboardEl = document.getElementById("members-dashboard");
@@ -71,6 +72,19 @@ function getKeys(prefix) {
 
 function countNotes() {
   return getKeys("devocional:notes:").filter(key => (localStorage.getItem(key) || "").trim()).length;
+}
+
+function getBibleHighlights() {
+  try {
+    const highlights = JSON.parse(localStorage.getItem(BIBLE_HIGHLIGHTS_KEY) || "{}");
+    return Object.values(highlights).sort((a, b) => (a.at || "").localeCompare(b.at || "")).reverse();
+  } catch {
+    return [];
+  }
+}
+
+function highlightRef(h) {
+  return `${h.bookName} ${h.chapter}:${h.verse}`;
 }
 
 function getVisitedDates() {
@@ -198,6 +212,7 @@ function renderDashboard(account) {
   const dates = getVisitedDates();
   const streak = calcStreak(dates);
   const notesCount = countNotes();
+  const highlights = getBibleHighlights();
   const favoriteItems = [...favorites].map(findDevotional).filter(Boolean).slice(0, 5);
   const noteItems = getKeys("devocional:notes:")
     .map(key => ({ id: key.replace("devocional:notes:", ""), text: (localStorage.getItem(key) || "").trim() }))
@@ -222,6 +237,7 @@ function renderDashboard(account) {
         <div class="members-box"><span class="members-box-icon">📖</span><h3>${dates.length}</h3><p>Dias lidos</p></div>
         <div class="members-box"><span class="members-box-icon">❤️</span><h3>${favorites.size}</h3><p>Favoritos</p></div>
         <div class="members-box"><span class="members-box-icon">✏️</span><h3>${notesCount}</h3><p>Anotações</p></div>
+        <div class="members-box"><span class="members-box-icon">🖍️</span><h3>${highlights.length}</h3><p>Versículos marcados</p></div>
       </div>
     </div>
 
@@ -243,8 +259,14 @@ function renderDashboard(account) {
       </section>
     </div>
 
+    <section class="members-panel member-panel-card member-highlights-panel">
+      <h3>Versículos marcados</h3>
+      ${renderHighlightList(highlights.slice(0, 8))}
+    </section>
+
     <div class="member-footer-actions">
       <button id="member-export" class="btn-export-diary" type="button">Exportar minhas anotações</button>
+      <button id="member-export-highlights" class="btn-export-diary" type="button">Exportar versículos marcados</button>
       <button id="member-export-account" class="members-btn" type="button">Exportar cadastro .txt</button>
       <span id="member-export-msg" class="export-msg"></span>
     </div>
@@ -256,6 +278,7 @@ function renderDashboard(account) {
     renderAccess("Você saiu da área de membros.");
   });
   document.getElementById("member-export")?.addEventListener("click", exportNotes);
+  document.getElementById("member-export-highlights")?.addEventListener("click", exportHighlights);
   document.getElementById("member-export-account")?.addEventListener("click", exportAccount);
 }
 
@@ -301,24 +324,38 @@ function exportNotes() {
   const notes = getKeys("devocional:notes:")
     .map(key => ({ id: key.replace("devocional:notes:", ""), text: (localStorage.getItem(key) || "").trim() }))
     .filter(item => item.text);
+  const highlights = getBibleHighlights();
   const msg = document.getElementById("member-export-msg");
 
-  if (!notes.length) {
-    if (msg) msg.textContent = "Nenhuma anotação encontrada.";
+  if (!notes.length && !highlights.length) {
+    if (msg) msg.textContent = "Nenhuma anotação ou versículo marcado encontrado.";
     return;
   }
 
   const today = new Date().toLocaleDateString("pt-BR");
   let content = `AREA DE MEMBROS - Pr. Marco Lima\nExportado em: ${today}\n${"=".repeat(42)}\n\n`;
-  notes.forEach(({ id, text }) => {
-    const dev = findDevotional(id);
-    content += `${dev ? dev.title : id}\n`;
-    if (dev) content += `${dev.reference}\n`;
-    content += `${text}\n\n${"=".repeat(42)}\n\n`;
-  });
 
-  downloadText(`area-membros-anotacoes-${today.replace(/\//g, "-")}.txt`, content);
-  if (msg) msg.textContent = `${notes.length} anotações exportadas.`;
+  if (notes.length) {
+    content += `--- ANOTAÇÕES ---\n\n`;
+    notes.forEach(({ id, text }) => {
+      const dev = findDevotional(id);
+      content += `${dev ? dev.title : id}\n`;
+      if (dev) content += `${dev.reference}\n`;
+      content += `${text}\n\n${"-".repeat(42)}\n\n`;
+    });
+  }
+
+  if (highlights.length) {
+    content += `--- VERSÍCULOS MARCADOS ---\n\n`;
+    highlights.forEach(h => {
+      content += `${h.bookName} ${h.chapter}:${h.verse}\n`;
+      content += `${h.text}\n`;
+      content += `Marcado em: ${h.at ? new Date(h.at).toLocaleString("pt-BR") : "—"}\n\n${"-".repeat(42)}\n\n`;
+    });
+  }
+
+  downloadText(`area-membros-dados-${today.replace(/\//g, "-")}.txt`, content);
+  if (msg) msg.textContent = `${notes.length} anotações e ${highlights.length} versículos exportados.`;
 }
 
 function exportAccount() {
@@ -340,6 +377,44 @@ function exportAccount() {
 
   downloadText(`cadastro-membro-${account.email.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}.txt`, content);
   if (msg) msg.textContent = "Cadastro exportado em arquivo texto.";
+}
+
+function renderHighlightList(items) {
+  if (!items.length) return `<p class="panel-empty">Nenhum versículo marcado ainda. Abra a Bíblia e clique em um versículo para marcar.</p>`;
+  return `
+    <ul>
+      ${items.map(h => `
+        <li>
+          <span>
+            <span class="panel-title">${escapeHtml(h.bookName)} ${h.chapter}:${h.verse}</span><br>
+            <span class="panel-ref">${escapeHtml(h.text.length > 100 ? h.text.slice(0, 100) + "..." : h.text)}</span>
+          </span>
+          <a class="members-btn" href="../biblia/?livro=${h.book}&capitulo=${h.chapter}&versiculo=${h.verse}">Ler</a>
+        </li>
+      `).join("")}
+    </ul>
+  `;
+}
+
+function exportHighlights() {
+  const highlights = getBibleHighlights();
+  const msg = document.getElementById("member-export-msg");
+
+  if (!highlights.length) {
+    if (msg) msg.textContent = "Nenhum versículo marcado encontrado.";
+    return;
+  }
+
+  const today = new Date().toLocaleDateString("pt-BR");
+  let content = `AREA DE MEMBROS - Pr. Marco Lima\nVersículos Marcados\nExportado em: ${today}\n${"=".repeat(42)}\n\n`;
+  highlights.forEach(h => {
+    content += `${h.bookName} ${h.chapter}:${h.verse}\n`;
+    content += `${h.text}\n`;
+    content += `Marcado em: ${h.at ? new Date(h.at).toLocaleString("pt-BR") : "—"}\n\n${"=".repeat(42)}\n\n`;
+  });
+
+  downloadText(`versiculos-marcados-${today.replace(/\//g, "-")}.txt`, content);
+  if (msg) msg.textContent = `${highlights.length} versículos marcados exportados.`;
 }
 
 async function init() {
