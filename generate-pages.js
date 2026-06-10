@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const SITE_URL = "https://pr-marcolima.vercel.app";
+const SITE_URL = "https://prmarcolima.com.br";
 const root = __dirname;
 const devotionals = JSON.parse(fs.readFileSync(path.join(root, "data/devocionais.json"), "utf8"));
 const outDir = path.join(root, "devocional");
