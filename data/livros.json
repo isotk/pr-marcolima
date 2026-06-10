@@ -187,5 +187,77 @@
     "file": "assets/livros/A-Recompensa-da-Honra - John Bevere.pdf",
     "download": true,
     "tags": ["honra", "vida cristã", "liderança"]
+  },
+  {
+    "title": "O Designio",
+    "author": "Mike Murdock",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/O DESIGNIO - MIKE MURDOCK.pdf",
+    "download": true,
+    "tags": ["designio", "propósito", "vida cristã"]
+  },
+  {
+    "title": "O Peregrino",
+    "author": "John Bunyan",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/O peregrino - John Bunyan.pdf",
+    "download": true,
+    "tags": ["clássico", "alegoria", "vida cristã"]
+  },
+  {
+    "title": "A Isca de Satanás",
+    "author": "John Bevere",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/a-isca-de-satanas - John Bevere.pdf",
+    "download": true,
+    "tags": ["guerra espiritual", "engano", "vida cristã"]
+  },
+  {
+    "title": "As Bem-Aventuranças",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Estudo",
+    "file": "assets/livros/ebook_as-bem-aventurancas_novo.pdf",
+    "download": true,
+    "tags": ["Jesus", "ensino", "vida cristã"]
+  },
+  {
+    "title": "Bem-Vindo Espírito Santo",
+    "author": "Benny Hinn",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/evangélico - benny hinn - bem-vindo Esprito Santo.pdf",
+    "download": true,
+    "tags": ["Espírito Santo", "pentecostal", "vida cristã"]
+  },
+  {
+    "title": "Implacável",
+    "author": "John Bevere",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Livro",
+    "file": "assets/livros/implacavel - John Bevere.pdf",
+    "download": true,
+    "tags": ["juízo", "justiça de Deus", "vida cristã"]
+  },
+  {
+    "title": "O Céu e o Inferno",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Estudo",
+    "file": "assets/livros/livro-ebook-o-ceu-e-o-inferno.pdf",
+    "download": true,
+    "tags": ["céu", "inferno", "escatologia"]
+  },
+  {
+    "title": "Os Dois Efeitos do Evangelho",
+    "author": "Autor não informado",
+    "description": "Material em PDF disponibilizado para leitura e estudo.",
+    "category": "Estudo",
+    "file": "assets/livros/livro-ebook-os-dois-efeitos-do-evangelho.pdf",
+    "download": true,
+    "tags": ["evangelho", "salvação", "vida cristã"]
   }
 ]
