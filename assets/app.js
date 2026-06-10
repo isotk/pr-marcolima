@@ -680,23 +680,112 @@ const READING_PLANS = [
     description: "14 dias de esperança e consolo para os momentos mais desafiadores.",
   },
   {
-    id: "on-the-road-moto",
-    icon: "🏍️",
-    title: "On the Road: 7 dias na Estrada",
-    days: 7,
-    themes: [],
-    source: "moto",
+    id: "moto-rotas-de-paz",
+    icon: "🕊️",
+    title: "Rotas de Paz",
+    days: 5,
+    themes: ["Rotas de Paz"],
+    isMoto: true,
     color: "#b0413e",
-    description: "7 dias de fé, irmandade e foco na estrada. Exclusivo para Motociclistas.",
+    description: "5 dias para combater a ansiedade e encontrar paz na estrada da vida.",
   },
+  {
+    id: "moto-motor-forte",
+    icon: "⚙️",
+    title: "Motor Forte",
+    days: 5,
+    themes: ["Motor Forte"],
+    isMoto: true,
+    color: "#b0413e",
+    description: "Devocionais sobre fé inabalável, força interior e confiança em Deus.",
+  },
+  {
+    id: "moto-irmaos",
+    icon: "🤝",
+    title: "Irmãos de Asfalto",
+    days: 5,
+    themes: ["Irmãos de Asfalto"],
+    isMoto: true,
+    color: "#b0413e",
+    description: "Como viver a verdadeira comunhão e cuidar dos irmãos na estrada.",
+  },
+  {
+    id: "moto-chuva",
+    icon: "🌧️",
+    title: "Pilotando na Chuva",
+    days: 5,
+    themes: ["Pilotando na Chuva"],
+    isMoto: true,
+    color: "#b0413e",
+    description: "Lidando com as tempestades, perdas e dificuldades repentinas.",
+  },
+  {
+    id: "moto-revisao",
+    icon: "🔧",
+    title: "Revisão Geral",
+    days: 5,
+    themes: ["Revisão Geral"],
+    isMoto: true,
+    color: "#b0413e",
+    description: "Autoexame, arrependimento, confissão e renovação espiritual.",
+  },
+  {
+    id: "moto-bussola",
+    icon: "🧭",
+    title: "A Bússola Divina",
+    days: 5,
+    themes: ["A Bússola Divina"],
+    isMoto: true,
+    color: "#b0413e",
+    description: "Buscando direção e sabedoria na Palavra de Deus.",
+  },
+  {
+    id: "moto-destino",
+    icon: "🏁",
+    title: "Destino Final",
+    days: 5,
+    themes: ["Destino Final"],
+    isMoto: true,
+    color: "#b0413e",
+    description: "Focando na eternidade e na nossa verdadeira cidadania celestial.",
+  },
+  {
+    id: "moto-tanque",
+    icon: "⛽",
+    title: "Tanque Cheio",
+    days: 5,
+    themes: ["Tanque Cheio"],
+    isMoto: true,
+    color: "#b0413e",
+    description: "A importância da oração constante para não ficar na reserva.",
+  },
+  {
+    id: "moto-mochila",
+    icon: "🎒",
+    title: "Mochila Leve",
+    days: 5,
+    themes: ["Mochila Leve"],
+    isMoto: true,
+    color: "#b0413e",
+    description: "Desapego material, perdão e o alívio das cargas pesadas.",
+  },
+  {
+    id: "moto-condutor",
+    icon: "🚦",
+    title: "O Bom Condutor",
+    days: 5,
+    themes: ["O Bom Condutor"],
+    isMoto: true,
+    color: "#b0413e",
+    description: "Paciência, testemunho cristão e amor ao próximo no trânsito e na vida.",
+  }
 ];
 
 function getPlanDevotionals(plan) {
-  if (plan.source === "moto") {
-    return state.motoDevotionals.slice(0, plan.days);
-  }
-  const filtered = state.devotionals.filter(d => plan.themes.includes(d.theme));
+  const collection = plan.isMoto ? state.motoDevotionals : state.devotionals;
+  const filtered = collection.filter(d => plan.themes.includes(d.theme));
   const result = [];
+  if (filtered.length === 0) return result;
   for (let i = 0; i < plan.days; i++) {
     result.push(filtered[i % filtered.length]);
   }
@@ -714,10 +803,7 @@ function getPlanProgress(planId, total) {
 }
 
 function renderPlans() {
-  const grid = document.getElementById("plans-grid");
-  if (!grid) return;
-
-  grid.innerHTML = READING_PLANS.map(plan => {
+  const renderPlanCard = plan => {
     const devs = getPlanDevotionals(plan);
     const done = getPlanProgress(plan.id, devs.length);
     const pct = devs.length ? Math.round((done / devs.length) * 100) : 0;
@@ -740,9 +826,19 @@ function renderPlans() {
         </div>
       </div>
     `;
-  }).join("");
+  };
 
-  grid.querySelectorAll(".btn-open-plan").forEach(btn => {
+  const grid = document.getElementById("plans-grid");
+  if (grid) {
+    grid.innerHTML = READING_PLANS.filter(p => !p.isMoto).map(renderPlanCard).join("");
+  }
+
+  const motoGrid = document.getElementById("moto-plans-grid");
+  if (motoGrid) {
+    motoGrid.innerHTML = READING_PLANS.filter(p => p.isMoto).map(renderPlanCard).join("");
+  }
+
+  document.querySelectorAll(".btn-open-plan").forEach(btn => {
     btn.addEventListener("click", () => openPlanDrawer(btn.dataset.planId));
   });
 }
