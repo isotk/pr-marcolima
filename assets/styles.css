@@ -1703,6 +1703,70 @@ body {
   max-width: 640px;
 }
 
+.books-legal {
+  margin-top: 48px;
+  padding: 28px 20px;
+  background: var(--color-parchment);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.books-legal details {
+  cursor: pointer;
+}
+
+.books-legal summary {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-sage-deep);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.books-legal summary::-webkit-details-marker {
+  display: none;
+}
+
+.books-legal summary::before {
+  content: "⚖";
+  font-size: 1.3rem;
+}
+
+.books-legal summary::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px dotted var(--color-border);
+}
+
+.books-legal summary:hover {
+  color: var(--color-gold);
+}
+
+.books-legal .legal-text {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--color-ink-soft);
+}
+
+.books-legal .legal-text p {
+  margin-bottom: 12px;
+  text-align: justify;
+}
+
+.books-legal .legal-text p:last-child {
+  margin-bottom: 0;
+  font-weight: 600;
+  color: var(--color-sage-deep);
+  font-size: 0.85rem;
+}
+
 .about-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
