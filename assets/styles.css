@@ -3207,3 +3207,140 @@ body {
     padding: 24px 20px 10px;
   }
 }
+
+/* ─── Theme Toggle ─── */
+.theme-toggle {
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  color: var(--color-ink);
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: var(--color-gold-light);
+  transform: scale(1.05);
+  border-color: var(--color-gold);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ─── Dark Mode Adjustments ─── */
+[data-theme="dark"] .devo-image {
+  filter: brightness(0.85);
+}
+
+[data-theme="dark"] .devo-prayer {
+  border-color: #3a3520;
+}
+
+[data-theme="dark"] .devo-prayer p {
+  color: var(--color-ink-soft);
+}
+
+[data-theme="dark"] .footer {
+  background: #111;
+}
+
+[data-theme="dark"] .footer-logo-link {
+  background: rgba(255,255,255,0.08);
+}
+
+[data-theme="dark"] .footer-logo-link:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+[data-theme="dark"] .bible-verse:hover {
+  background: rgba(212,184,92,0.15);
+}
+
+[data-theme="dark"] .bible-verse.highlight {
+  background: rgba(212,184,92,0.2);
+}
+
+[data-theme="dark"] .bible-verse.bible-marked {
+  background: rgba(255,245,157,0.15);
+}
+
+[data-theme="dark"] .search-input {
+  background: var(--color-parchment);
+}
+
+[data-theme="dark"] .bible-select {
+  background: var(--color-parchment);
+}
+
+[data-theme="dark"] .theme-filter {
+  background: var(--color-parchment);
+}
+
+[data-theme="dark"] .member-login-form {
+  background: var(--color-parchment);
+}
+
+[data-theme="dark"] .member-auth-tab {
+  background: var(--color-parchment);
+}
+
+[data-theme="dark"] .btn-copy {
+  background: var(--color-parchment);
+}
+
+[data-theme="dark"] .books-legal {
+  background: var(--color-parchment);
+}
+
+[data-theme="dark"] .devo-notes textarea {
+  background: var(--color-parchment);
+}
+
+[data-theme="dark"] .member-security-note {
+  background: rgba(58,53,32,0.45);
+}
+
+[data-theme="dark"] .bible-source-note {
+  background: var(--color-parchment);
+}
+
+/* ─── Smooth Transition ─── */
+body,
+.intro-card,
+.search-panel,
+.preview-card,
+.devo-card,
+.verse-box,
+.devo-prayer,
+.footer,
+.topbar,
+.theme-toggle,
+.bible-controls,
+.bible-reader,
+.book-card,
+.member-login-card,
+.member-dashboard-card,
+.member-panel-card,
+.about-card,
+.steps-card,
+.books-legal,
+.devo-notes {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
