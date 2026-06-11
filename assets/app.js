@@ -25,7 +25,7 @@ const searchResults = document.getElementById("search-results");
 const searchSummary = document.getElementById("search-summary");
 
 const FIXED_COUNT = 5;
-const START_DATE = new Date(2026, 5, 1);
+let START_DATE = null;
 
 function fullDate(offset) {
   const d = new Date();
@@ -51,6 +51,7 @@ function devotionalPath(devotional) {
 }
 
 function daysSinceStart(date) {
+  if (!START_DATE) return -1;
   const start = new Date(date.getFullYear(), date.getMonth(), date.getDate());
   return Math.floor((start - START_DATE) / 86400000);
 }
@@ -1018,7 +1019,10 @@ async function boot() {
   ]);
   state.devotionals = await devotionalsResponse.json();
   state.motoDevotionals = await motoResponse.json();
-  
+
+  const firstDate = devotionalDate(state.devotionals[0]);
+  if (firstDate) START_DATE = new Date(firstDate.getFullYear(), firstDate.getMonth(), firstDate.getDate());
+
   attachSearchEvents();
   await renderAll();
   renderStats();
